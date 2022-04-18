@@ -77,28 +77,9 @@ const Login = (props) => {
                 <div className="cardLogin" data-aos="fade-right">
                     <div className="designFormulario">
                         <b>Email:</b>
-                        <input
-                            type="email"
-                            icon={<At />}
-                            name="email"
-                            id="email"
-                            title="email"
-                            placeholder="Email"
-                            autoComplete="off"
-                            onChange={(e) => {
-                                fillData(e);
-                            }}
-                        />
+                        <input type="email" className="input" name="email" id="email" title="email" placeholder="Correo Electrónico" autoComplete="off" onChange={(e)=>{fillData(e)}}/>
                         <b>Password:</b>
-                        <input
-                            type="password"
-                            icon={<Lock />}
-                            name="password"
-                            id="password"
-                            title="password"
-                            placeholder="Password"
-                            autoComplete="off"
-                            onChange={(e) => {
+                        <input type="password" className="input" name="password" id="password" title="password" placeholder="Contraseña" autoComplete="off" onChange={(e)=>{
                                 fillData(e);
                                 checkPassword(e);
                             }}

@@ -72,32 +72,56 @@ const Login = (props) => {
 
     return (
 
-        <div className='designLogin'>
-            <div className="designLogin">
-                <div className="cardLogin" data-aos="fade-right">
-                    <div className="designFormulario">
-                        <b>Email:</b>
-                        <input type="email" className="input" name="email" id="email" title="email" placeholder="Correo Electrónico" autoComplete="off" onChange={(e)=>{fillData(e)}}/>
-                        <b>Password:</b>
-                        <input type="password" className="input" name="password" id="password" title="password" placeholder="Contraseña" autoComplete="off" onChange={(e)=>{
-                                fillData(e);
-                                checkPassword(e);
-                            }}
-                        />
+        <div className="designLogin">
+            <div className="form">
+                <h2>Login</h2>
+                <div className="input">
+                    <div className="inputBox">
+                        <label >Email</label>
+                        <input type="text" name="email" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e) }} />
+
+                    </div>
+                    <div className="inputBox">
+                        <label >Password</label>
+                        <input type="password" name="password" id="password" title="password" placeholder="Contraseña" autoComplete="off"    onChange={(e) => { fillData(e); checkPassword(e); }} />
                         {msgError}
                         {msgError2}
                     </div>
-                    <div className="loginButton space" onClick={() => login()}>
-                        <b>Login</b>
+                    <div className="inputBox">
+                        <div className="submit" value="Sign In" onClick={() => login()}>
+
+                        </div>
+
                     </div>
-                    {/* <b>If you are not registered, you must register</b>
-                    <div className="buttonRegister2" onClick={() => takeMeRegister()}>
-                        Click here for Register
-                    </div> */}
                 </div>
+                <p className="forget">
+                    Forget Password ? <a href="#">Click Here!</a>
+                </p>
             </div>
         </div>
-            
+
+        // <div className='designLogin'>
+        //     <div className="designLogin">
+        //         <div className="cardLogin" data-aos="fade-right">
+        //             <div className="designFormulario">
+        //                 <b>Email:</b>
+        //                 <input type="email" className="input" name="email" id="email" title="email" placeholder="Correo Electrónico" autoComplete="off" onChange={(e)=>{fillData(e)}}/>
+        //                 <b>Password:</b>
+        //                 <input type="password" className="input" name="password" id="password" title="password" placeholder="Contraseña" autoComplete="off" onChange={(e)=>{ fillData(e); checkPassword(e); }}  />
+        //                 {msgError}
+        //                 {msgError2}
+        //             </div>
+        //             <div className="loginButton space" onClick={() => login()}>
+        //                 <b>Login</b>
+        //             </div>
+        //             {/* <b>If you are not registered, you must register</b>
+        //             <div className="buttonRegister2" onClick={() => takeMeRegister()}>
+        //                 Click here for Register
+        //             </div> */}
+        //         </div>
+        //     </div>
+        // </div>
+
     );
 
 };

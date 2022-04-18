@@ -1,76 +1,175 @@
 .designLogin {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    /* background-image: url(/src/images/body2.jpg); */
-    background-repeat: round;
-    background-size: cover;
+    align-items: center;
+    min-height: 100vh;
+    background: #ecf0f3;
 }
 
-.cardLogin {
-    height: 25em;
-    width: 25em;
-    background-color: rgb(23, 69, 194);
-    border-radius: 4em;
+.form {
+    position: relative;
+    width: 350px;
+    padding: 40px 40px 60px;
+    background: #ecf0f3;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
+        5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.form h2 {
+    color: #c7c7c7;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.form .input {
+    text-align: left;
+    margin-top: 40px;
+}
+
+.form .input .inputBox {
+    margin-top: 20px;
+}
+
+.form .input .inputBox label {
+    display: block;
+    color: #868686;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.form .input .inputBox input {
+    width: 100%;
+    height: 50px;
+    background: #ecf0f3;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    padding: 5px ;
+    color: #fff;
+    font-size: 18px;
+    color: #03a9f4;
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.05),
+        inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.form .input .inputBox .submit {
+    width: 100%;
+    height: 50px;
+    background: #ecf0f3;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    padding: 5px ;
+    color: #fff;
+    font-size: 18px;
+    color: #03a9f4;
+    margin-top: 3em;
+    box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.05),
+        2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.form .input .inputBox .submit:active {
+    color: #006c9c;
+    margin-top: 20px;
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.05),
+        inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.form .input .inputBox input::placeholder {
+    color: #555;
+    font-size: 18px;
+}
+
+.forget {
+    margin-top: 30px;
+    color: #555;
+}
+
+.forget a {
+    color: #ff0047;
+}
+
+
+
+/* .designLogin {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    -webkit-box-shadow: 6px 6px 17px 0px rgba(255, 255, 255, 0.64);
-    box-shadow: 6px 6px 17px 0px rgba(255, 255, 255, 0.64);
-}
-
-.loginButton {
-    height: 3em;
-    width: 8em;
-    background-color: lightsteelblue;
-    border-radius: 2em;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    color: hsl(0, 0%, 30%);
-}
-
-.loginButton:hover {
-    cursor: pointer;
-    font-weight: bolder;
-    transition: 0.2s;
-    transform: scale(0.9);
-    border-radius: 2em;
-}
-
-.space {
-    margin-bottom: 2em;
-    margin-top: 1em;
-}
-
-.designFormulario {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(23, 69, 194);
-}
-
-.buttonRegister2 {
-    height: 4em;
-    width: 14em;
-    background-color: bisque;
-    border-radius: 2em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bolder;
-    margin-top: 1em;
-}
-
-.buttonRegister2:hover {
-    cursor: pointer;
-    font-weight: bolder;
-    transition: 0.2s;
-    transform: scale(0.9);
-}
+    min-height: 100vh;
+    background: #131419;
+  }
+  .form {
+    position: relative;
+    width: 350px;
+    padding: 40px 40px 60px;
+    background: #131419;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
+      5px 5px 15px rgba(0, 0, 0, 0.5);
+  }
+  .form h2 {
+    color: #c7c7c7;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+  }
+  .form .input {
+    text-align: left;
+    margin-top: 40px;
+  }
+  .form .input .inputBox {
+    margin-top: 20px;
+  }
+  .form .input .inputBox label {
+    display: block;
+    color: #868686;
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+  .form .input .inputBox input {
+    width: 100%;
+    height: 50px;
+    background: #131419;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    padding: 5px 15px;
+    color: #fff;
+    font-size: 18px;
+    color: #03a9f4;
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.05),
+      inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+  }
+  .form .input .inputBox input[type='submit'] {
+    margin-top: 20px;
+    box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.05),
+      2px 2px 6px rgba(0, 0, 0, 0.8);
+  }
+  .form .input .inputBox input[type='submit']:active {
+    color: #006c9c;
+    margin-top: 20px;
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.05),
+      inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+  }
+  .form .input .inputBox input::placeholder {
+    color: #555;
+    font-size: 18px;
+  }
+  .forget {
+    margin-top: 30px;
+    color: #555;
+  }
+  .forget a {
+    color: #ff0047;
+  }
+   */

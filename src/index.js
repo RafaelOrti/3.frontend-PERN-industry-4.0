@@ -1,14 +1,17 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
+import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+
+import "./index.css";
+
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { MantineProvider } from "@mantine/core";
 import { NotificationsProvider } from '@mantine/notifications';
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <MantineProvider theme={{ colorScheme: "dark" }}>
@@ -17,8 +20,7 @@ ReactDOM.render(
         </NotificationsProvider>
       </MantineProvider>
     </Provider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
 
 reportWebVitals();

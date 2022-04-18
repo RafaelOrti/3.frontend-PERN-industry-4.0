@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { connect } from "react-redux";
-import { login } from "../../redux/actions/user";
+import { login } from "../../redux/actions/user.js";
 import { Input } from "@mantine/core";
 import { At, Lock } from "tabler-icons-react";
 import AOS from "aos";

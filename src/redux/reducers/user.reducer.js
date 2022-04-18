@@ -23,7 +23,7 @@ const datosLoginReducer = (state = initialState, action) => {
         case MODIFY_CREDENTIALS :
             return {
                 ...state,
-                usuario: {
+                user: {
                     ...state.usuario,
                     [action.payload.field]: action.payload.field_value
                 }

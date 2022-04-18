@@ -1,0 +1,76 @@
+.designLogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    /* background-image: url(/src/images/body2.jpg); */
+    background-repeat: round;
+    background-size: cover;
+}
+
+.cardLogin {
+    height: 25em;
+    width: 25em;
+    background-color: rgb(23, 69, 194);
+    border-radius: 4em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    -webkit-box-shadow: 6px 6px 17px 0px rgba(255, 255, 255, 0.64);
+    box-shadow: 6px 6px 17px 0px rgba(255, 255, 255, 0.64);
+}
+
+.loginButton {
+    height: 3em;
+    width: 8em;
+    background-color: lightsteelblue;
+    border-radius: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: hsl(0, 0%, 30%);
+}
+
+.loginButton:hover {
+    cursor: pointer;
+    font-weight: bolder;
+    transition: 0.2s;
+    transform: scale(0.9);
+    border-radius: 2em;
+}
+
+.space {
+    margin-bottom: 2em;
+    margin-top: 1em;
+}
+
+.designFormulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(23, 69, 194);
+}
+
+.buttonRegister2 {
+    height: 4em;
+    width: 14em;
+    background-color: bisque;
+    border-radius: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bolder;
+    margin-top: 1em;
+}
+
+.buttonRegister2:hover {
+    cursor: pointer;
+    font-weight: bolder;
+    transition: 0.2s;
+    transform: scale(0.9);
+}

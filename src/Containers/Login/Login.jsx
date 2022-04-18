@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { raiz } from '../../utiles';
+import { At, Lock } from "tabler-icons-react";
 import axios from 'axios';
+
 
 //REDUX...
 import { connect } from 'react-redux';
 import { LOGIN } from '../../redux/actions';
 // import { NOT_HOME } from "../../redux/actions";
-
-
 
 import './Login.css';
 
@@ -77,7 +77,7 @@ const Login = (props) => {
                 <div className="cardLogin" data-aos="fade-right">
                     <div className="designFormulario">
                         <b>Email:</b>
-                        <Input
+                        <input
                             type="email"
                             icon={<At />}
                             name="email"
@@ -90,7 +90,7 @@ const Login = (props) => {
                             }}
                         />
                         <b>Password:</b>
-                        <Input
+                        <input
                             type="password"
                             icon={<Lock />}
                             name="password"
@@ -106,29 +106,17 @@ const Login = (props) => {
                         {msgError}
                         {msgError2}
                     </div>
-                    <div className="loginButton space" onClick={() => onSubmit()}>
+                    <div className="loginButton space" onClick={() => login()}>
                         <b>Login</b>
                     </div>
-                    <b>If you are not registered, you must register</b>
+                    {/* <b>If you are not registered, you must register</b>
                     <div className="buttonRegister2" onClick={() => takeMeRegister()}>
                         Click here for Register
-                    </div>
+                    </div> */}
                 </div>
-            </div>
-            <div className='espacio'></div>
-            <div className='login'>
-                {/* {
-                    <pre>{JSON.stringify(dataUser, null,2)}</pre>} */}
-                <div className="designFormulario">
-                    <input type="email" className="input" name="email" id="email" title="email" placeholder="Correo Electrónico" autoComplete="off" onChange={(e) => { fillData(e) }} />
-                    <input type="password" className="input" name="password" id="password" title="password" placeholder="Contraseña" autoComplete="off" onChange={(e) => { fillData(e); }} />
-                    {msgError}
-                    {msgError2}
-                </div>
-                <br />
-                <div className="button type3 espacio" onClick={() => login()}>Logueame</div>
             </div>
         </div>
+            
     );
 
 };

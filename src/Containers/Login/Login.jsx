@@ -156,8 +156,6 @@ const Login = (props) => {
 
                                 <div className="inputBoxButton">
                                     <div className="btn " onClick={() => login()}><p>Log In</p></div>
-                                    
-                                    
                                 </div>
                             </div>
                         </div>

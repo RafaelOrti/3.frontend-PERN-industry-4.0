@@ -3,14 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { raiz } from '../../utiles';
 import { At, Lock } from "tabler-icons-react";
 import axios from 'axios';
+import { Input } from "@mantine/core";
 
 
+
+import { TabsProps, Tabs } from '@mantine/core';
+import { Photo, MessageCircle, Settings } from 'tabler-icons-react';
 //REDUX...
 import { connect } from 'react-redux';
 import { LOGIN } from '../../redux/actions';
 // import { NOT_HOME } from "../../redux/actions";
 
-import './Login.css';
+import './Login.scss';
 
 const Login = (props) => {
 
@@ -25,7 +29,7 @@ const Login = (props) => {
     const [dataUser, setDataUser] = useState({ email: "", password: "" });
     const [msgError, setMsgError] = useState("");
     const [msgError2, setMsgError2] = useState("");
-
+    const [activeTab, setActiveTab] = useState(1);
 
 
     //handlers
@@ -65,40 +69,143 @@ const Login = (props) => {
         }
     };
 
+    let StyledTabs = (props: TabsProps) => {
+        return (
+            <Tabs
+                variant="unstyled"
+                styles={(theme) => ({
+                    tabControl: {
 
+
+                        width: '50%',
+
+                        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+                        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
+                        border: `1px  solid ${theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]}`,
+                        fontSize: theme.fontSizes.md,
+                        padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
+
+                        '&:not(:first-of-type)': {
+                            borderLeft: 0,
+                        },
+
+                        '&:first-of-type': {
+                            borderTopLeftRadius: theme.radius.md,
+                            // borderBottomLeftRadius: theme.radius.md,
+                        },
+
+                        '&:last-of-type': {
+                            borderTopRightRadius: theme.radius.md,
+                            // borderBottomRightRadius: theme.radius.md,
+                        },
+                    },
+
+                    tabActive: {
+                        backgroundColor: theme.colors.blue[9],
+                        borderColor: theme.colors.blue[9],
+                        color: theme.white,
+                    },
+                })}
+                {...props}
+            />
+        );
+    }
 
 
     //2-Render (lo que pinta en pantalla)
 
     return (
 
+
+
+
+
         <div className="designLogin">
+
             <div className="form">
-                <h2>Login</h2>
-                <div className="input">
-                    <div className="inputBox">
-                        <label >Email</label>
-                        <input type="text" name="email" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e) }} />
+                <StyledTabs >
+                    <Tabs.Tab label="Settings" icon={<Settings size={16} />} >
+                        <div className="form">
+                            <div className="input">
+                            <div className="logo">
+                                        <div className="logoImg"/>
+                                    </div>
+                                <div className="inputBox">
+                                    
+                                    <div className="title">Super Dev</div>
+                                    <label >Email</label>
+                                    <div className="search">
+                                        <input type="text" className="search__input" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e) }} />
+                                        <div className="search__icon">
+                                            <Photo name="search"></Photo>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="inputBox">
+                                    <label >Password</label>
+                                    <div className="search">
+                                        <input type="password" className="search__input" id="password" title="password" placeholder="********" autoComplete="off" onChange={(e) => { fillData(e); checkPassword(e); }} />
+                                        <div className="search__icon">
+                                            <Photo name="search"></Photo>
+                                        </div>
+                                    </div>
 
-                    </div>
-                    <div className="inputBox">
-                        <label >Password</label>
-                        <input type="password" name="password" id="password" title="password" placeholder="Contraseña" autoComplete="off"    onChange={(e) => { fillData(e); checkPassword(e); }} />
-                        {msgError}
-                        {msgError2}
-                    </div>
-                    <div className="inputBox">
-                        <div className="submit" value="Sign In" onClick={() => login()}>
+                                    {msgError}
+                                    {msgError2}
+                                </div>
 
+                                <div className="inputBoxButton">
+                                    <div className="btn " onClick={() => login()}><p>Log In</p></div>
+                                    
+                                    
+                                </div>
+                            </div>
                         </div>
+                    </Tabs.Tab>
+                    <Tabs.Tab label="Messages" icon={<MessageCircle size={16} />} >
 
-                    </div>
-                </div>
-                <p className="forget">
-                    Forget Password ? <a href="#">Click Here!</a>
-                </p>
-            </div>
-        </div>
+                        <div className="form">
+                            <div className="input">
+                                <div className="inputBox">
+                                    <div className="logo">
+                                        {/* <img src="https://lh3.googleusercontent.com/a-/AOh14Gj99VObFyE8W_h8RrcwZO_aYiIHu5AAa_XpnOym=s600-k-no-rp-mo" alt="" /> */}
+                                    </div>
+                                    <div className="title">Super Dev</div>
+
+                                    <label >Email</label>
+
+                                    <div className="search">
+                                        <input type="text" className="search__input" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e) }} />
+                                        <div className="search__icon">
+                                            <Photo name="search"></Photo>
+                                        </div>
+                                    </div>
+
+                                    <Input type="text" name="email" icon={<At />} id="email" title="email" placeholder="exameeeple@test.com" autoComplete="off" onChange={(e) => { fillData(e) }} />
+
+                                </div>
+                                <div className="inputBox">
+                                    <label >Password</label>
+                                    <Input type="password" name="password" icon={<Lock />} id="password" title="password" placeholder="Contraseña" autoComplete="off" onChange={(e) => { fillData(e); checkPassword(e); }} />
+                                    {msgError}
+                                    {msgError2}
+                                </div>
+                                <div className="inputBox">
+                                    <div className="submit" value="Sign In" onClick={() => login()}>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Tabs.Tab>
+
+                </StyledTabs>
+            </div >
+
+
+
+
+
+        </div >
 
         // <div className='designLogin'>
         //     <div className="designLogin">

@@ -1,0 +1,333 @@
+//general configuration
+:root {
+  --primary-light: #8abdff;
+  --primary: #1c6db9;
+  --primary-dark: #105291;
+  --white: #FFFFFF;
+  --greyLight-1: #E4EBF5;
+  --greyLight-2: #c8d0e7;
+  --greyLight-3: #bec8e4;
+  --greyDark: #9baacf;
+}
+
+$shadow: .3rem .3rem .6rem var(--greyLight-2),
+-.2rem -.2rem .5rem var(--white);
+$inner-shadow: inset .2rem .2rem .5rem var(--greyLight-2),
+inset -.2rem -.2rem .5rem var(--white);
+
+
+.designLogin {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url(../../img/fondo-login.jpg);
+  background-size: cover;
+}
+
+.subForm {
+  position: relative;
+  width: 35em;
+  height: 35em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: #ecf0f3;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.5),
+    5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.form {
+  position: relative;
+  width: 35em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: #ecf0f3;
+
+  border-radius: 10px;
+
+}
+
+.form .input .inputBoxLogo {
+
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+}
+
+.logoImg {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  background-image: url(../../img/fondo-login.jpg);
+  box-shadow:
+    /* logo shadow */
+    0px 0px 2px #5f5f5f,
+    /* offset */
+    0px 0px 0px 5px #ecf0f3,
+    /*bottom right */
+    8px 8px 15px #a7aaaf,
+    /* top left */
+    -8px -8px 15px #ffffff;
+}
+
+.title {
+  text-align: center;
+  font-size: 28px;
+ 
+  letter-spacing: 0.5px;
+  margin-bottom: 1.5rem;
+}
+
+.form h2 {
+  color: #c7c7c7;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.form .input {
+  text-align: left;
+  margin-top: 1rem;
+  width: 70%;
+}
+
+.form .input .inputBox {
+  margin-top: 1rem;
+}
+
+.form .input .inputBox label {
+  display: block;
+  color: #868686;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+// .form .input .inputBox input {
+//     width: 100%;
+//     height: 50px;
+//     background: #ecf0f3;
+//     border: none;
+//     outline: none;
+//     border-radius: 40px;
+//     padding: 5px;
+//     color: #fff;
+//     font-size: 18px;
+//     color: #03a9f4;
+//     box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.05),
+//         inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+// }
+
+.form .input .inputBox .btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form .input .inputBox .submit:active {
+  color: #006c9c;
+  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.05),
+    inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.form .input .inputBox input::placeholder {
+  color: #555;
+  font-size: 18px;
+}
+
+
+
+
+/*  SEARCH  */
+.search {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &__icon {
+    height: 2rem;
+    position: absolute;
+    font-size: 2rem;
+    padding: 1.5rem 1rem 1rem 1rem;
+    display: flex;
+    color: var(--greyDark);
+    transition: .3s ease;
+  }
+
+  &__input {
+
+    height: 2.5rem;
+    border: none;
+    border-radius: 4rem;
+    font-size: 1.4rem;
+    padding-left: 3.5rem;
+    box-shadow: $inner-shadow;
+    background: none;
+    font-family: inherit;
+    color: var(--greyDark);
+    width: 100%;
+
+
+
+
+
+
+    &::placeholder {
+      color: var(--greyLight-3);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: $shadow;
+
+      +.search__icon {
+        color: var(--primary);
+      }
+    }
+  }
+
+
+}
+
+.form .input .inputBoxButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+/*  BUTTONS  */
+.btn {
+  width: 15rem;
+  height: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: $shadow;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: .3s ease;
+  grid-column: 1 / 2;
+  grid-row: 4 / 5;
+  background: var(--primary);
+  box-shadow: inset .2rem .2rem 1rem var(--primary-light),
+    inset -.2rem -.2rem 1rem var(--primary-dark),
+    $shadow;
+  color: var(--greyLight-1);
+
+
+
+  &:hover {
+    color: var(--white);
+  }
+
+  &:active {
+    box-shadow: inset .2rem .2rem 1rem var(--primary-dark),
+      inset -.2rem -.2rem 1rem var(--primary-light);
+  }
+
+
+  p {
+    font-size: 1rem;
+  }
+}
+
+
+
+
+/* .designLogin {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #131419;
+  }
+  .form {
+    position: relative;
+    width: 350px;
+    padding: 40px 40px 60px;
+    background: #131419;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
+      5px 5px 15px rgba(0, 0, 0, 0.5);
+  }
+  .form h2 {
+    color: #c7c7c7;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+  }
+  .form .input {
+    text-align: left;
+    margin-top: 40px;
+  }
+  .form .input .inputBox {
+    margin-top: 20px;
+  }
+  .form .input .inputBox label {
+    display: block;
+    color: #868686;
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+  .form .input .inputBox input {
+    width: 100%;
+    height: 50px;
+    background: #131419;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    padding: 5px 15px;
+    color: #fff;
+    font-size: 18px;
+    color: #03a9f4;
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.05),
+      inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+  }
+  .form .input .inputBox input[type='submit'] {
+    margin-top: 20px;
+    box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.05),
+      2px 2px 6px rgba(0, 0, 0, 0.8);
+  }
+  .form .input .inputBox input[type='submit']:active {
+    color: #006c9c;
+    margin-top: 20px;
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.05),
+      inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+  }
+  .form .input .inputBox input::placeholder {
+    color: #555;
+    font-size: 18px;
+  }
+  .forget {
+    margin-top: 30px;
+    color: #555;
+  }
+  .forget a {
+    color: #ff0047;
+  }
+   */

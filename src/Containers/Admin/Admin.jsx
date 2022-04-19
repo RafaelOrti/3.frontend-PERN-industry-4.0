@@ -6,7 +6,7 @@ import { checkError } from '../../utiles';
 import './Admin.css';
 import { connect } from "react-redux";
 import { raiz } from '../../utiles';
-import { NOT_HOME } from "../../redux/actions";
+// import { NOT_HOME } from "../../redux/actions";
 // let res="";
 const Admin = (props) => {
 
@@ -15,7 +15,7 @@ const Admin = (props) => {
 
     useEffect(() => {
         console.log('Created')
-        props.dispatch({ type: NOT_HOME })
+        // props.dispatch({ type: NOT_HOME })
     }, [])
     //Hooks
 

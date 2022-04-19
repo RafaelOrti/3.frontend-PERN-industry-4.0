@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { NOT_HOME } from "../../redux/actions";
+// import { NOT_HOME } from "../../redux/actions";
 import {raiz} from '../../utiles';
 import {MODIFY_CREDENTIALS} from '../../redux/actions';
 import axios from 'axios';
 
 import "./Profile.css";
-import Footer from '../../Components/Footer/Footer';
+// import Footer from '../../Components/Footer/Footer';
 
 const Profile = (props) => {
 
@@ -17,7 +17,7 @@ const Profile = (props) => {
 
     useEffect(() => {
         console.log('Created')
-        props.dispatch({ type: NOT_HOME })
+        // props.dispatch({ type: NOT_HOME })
     }, [])
 
     

@@ -12,8 +12,6 @@ import { Photo, MessageCircle, Settings } from 'tabler-icons-react';
 import { connect } from 'react-redux';
 
 
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-
 
 // import { NOT_HOME } from "../../redux/actions";
 
@@ -85,19 +83,7 @@ const Home = (props) => {
 
     return (
         <div className='designHome'>
-            <Navbar collapseOnSelect fixed="top" bg="light" expand="lg">
-                <Container>
-                    {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#link">Link</Nav.Link>
-                            
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
+           
         </div>
 
     );

@@ -1,51 +1,98 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { raiz } from '../../utiles';
-import { At, Lock } from "tabler-icons-react";
+
+//notificaciones
+import { useNotifications } from "@mantine/notifications";
+
+//ENDPOINTS CALL
 import axios from 'axios';
-import { Input } from "@mantine/core";
+
+/*DISEÑO*/
+import './Login.scss';
+
+//ICONS
+import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "tabler-icons-react";
 
 
 
-import { TabsProps, Tabs } from '@mantine/core';
-import { Photo, MessageCircle, Settings } from 'tabler-icons-react';
-//REDUX...
+/*DISEÑO*/
+
+
+//REDUX
 import { connect } from 'react-redux';
 import { LOGIN } from '../../redux/actions';
 // import { NOT_HOME } from "../../redux/actions";
 
-import './Login.scss';
+let a = false;
 
 const Login = (props) => {
 
+    const notifications = useNotifications();
     let navigate = useNavigate();
-
-    // useEffect(() => {
-    //     console.log('Created')
-    //     props.dispatch({ type: NOT_HOME })
-    // }, [])
 
     //1-Hooks (equivalen al estado en los componentes de clase)
     const [dataUser, setDataUser] = useState({ email: "", password: "" });
-    const [msgError, setMsgError] = useState("");
-    const [msgError2, setMsgError2] = useState("");
-    const [activeTab, setActiveTab] = useState(1);
+    // const [msgError, setMsgError] = useState("");
+    // const [msgError2, setMsgError2] = useState("");
 
 
     //handlers
     const fillData = (e) => {
         setDataUser({ ...dataUser, [e.target.name]: e.target.value })
+        // console.log("dataUser", dataUser)
     };
+
     const checkPassword = (e) => {
-        if (/^([a-zA-Z0-9@*#.,]{8,15})$/.test(e.target.value.length) !== true) {
-            setMsgError("La contraseña debe tener al menos 8 caracteres y no más de 15 caracteres y los siguientes carácteres alfanuméricos a-zA-Z0-9@*#.,");
-        } else {
-            setMsgError("");
+
+
+        if (e.target.value.length > 4) {
+      
+            a = true
         }
+        console.log(e.target.value.length)
+        console.log("gggg", a)
+        if (a && (e.target.value.length < 4)) {
+         
+            notifications.showNotification({
+                message: "La contraseña debe tener más 8 caracteres",
+                icon: <ZoomExclamation />,
+                autoClose: false,
+                id: 'size1'
+            });
+        }else if (a && (e.target.value.length > 16)) {
+ 
+            notifications.showNotification({
+                message: "La contraseña debe tener menos de 15 caracteres",
+                icon: <ZoomExclamation />,
+                autoClose: false,
+                id: 'size2'
+            });
+        } else {
+
+            notifications.hideNotification("size1");
+            notifications.hideNotification("size2");
+        }
+
+        var pattern = /^[a-zA-Z0-9]*$/;
+
+        if (!e.target.value.match(pattern)) {
+            // setMsgError("La contraseña debe tener los siguientes carácteres alfanuméricos a-zA-Z0-9@*#.,");
+            notifications.showNotification({
+                message: "La contraseña debe tener los siguientes carácteres alfanuméricos a-zA-Z0-9@*#.,",
+                icon: <ZoomExclamation />,
+                autoClose: false,
+                id: "letters"
+            });
+        } else {
+            notifications.hideNotification("letters");
+
+        }
+
+
+
     };
-
-
-    //Funciones locales
 
     const login = async () => {
         try {
@@ -54,11 +101,10 @@ const Login = (props) => {
                 password: dataUser.password
             }
             let resultado = await axios.post(raiz + "users/login", body);
-            //Cambiamos el valor del hook credenciales, por lo tanto se recargará el componente
+            console.log(resultado);
             if (resultado.data === "Usuario o contraseña inválido") {
-                setMsgError2("Usuario o contraseña inválido")
+                // setMsgError2("Usuario o contraseña inválido")
             } else {
-                //Guardaríamos los datos en redux...
                 props.dispatch({ type: LOGIN, payload: resultado.data });
                 setTimeout(() => {
                     navigate("/Home");
@@ -69,167 +115,170 @@ const Login = (props) => {
         }
     };
 
-    let StyledTabs = (props: TabsProps) => {
-        return (
-            <Tabs
-                variant="unstyled"
-                styles={(theme) => ({
-                    tabControl: {
 
-
-                        width: '50%',
-
-                        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-                        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
-                        border: `1px  solid ${theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]}`,
-                        fontSize: theme.fontSizes.md,
-                        padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
-
-                        '&:not(:first-of-type)': {
-                            borderLeft: 0,
-                        },
-
-                        '&:first-of-type': {
-                            borderTopLeftRadius: theme.radius.md,
-                            // borderBottomLeftRadius: theme.radius.md,
-                        },
-
-                        '&:last-of-type': {
-                            borderTopRightRadius: theme.radius.md,
-                            // borderBottomRightRadius: theme.radius.md,
-                        },
-                    },
-
-                    tabActive: {
-                        backgroundColor: theme.colors.blue[9],
-                        borderColor: theme.colors.blue[9],
-                        color: theme.white,
-                    },
-                })}
-                {...props}
-            />
-        );
-    }
 
 
     //2-Render (lo que pinta en pantalla)
 
     return (
 
-
-
-
-
         <div className="designLogin">
-
             <div className="form">
-                <StyledTabs >
-                    <Tabs.Tab label="Settings" icon={<Settings size={16} />} >
-                        <div className="form">
-                            <div className="input">
-                            <div className="logo">
-                                        <div className="logoImg"/>
-                                    </div>
-                                <div className="inputBox">
-                                    
-                                    <div className="title">Super Dev</div>
-                                    <label >Email</label>
-                                    <div className="search">
-                                        <input type="text" className="search__input" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e) }} />
-                                        <div className="search__icon">
-                                            <Photo name="search"></Photo>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="inputBox">
-                                    <label >Password</label>
-                                    <div className="search">
-                                        <input type="password" className="search__input" id="password" title="password" placeholder="********" autoComplete="off" onChange={(e) => { fillData(e); checkPassword(e); }} />
-                                        <div className="search__icon">
-                                            <Photo name="search"></Photo>
-                                        </div>
-                                    </div>
-
-                                    {msgError}
-                                    {msgError2}
-                                </div>
-
-                                <div className="inputBoxButton">
-                                    <div className="btn " onClick={() => login()}><p>Log In</p></div>
-                                </div>
+                <div className="selectorSection">
+                    <div className="selected"><UserCircle name="search"></UserCircle><p> &nbsp;&nbsp; Log In</p></div>
+                    <div className="btn btnGrey " onClick={() => login()}><UserPlus name="search"></UserPlus><p>&nbsp;&nbsp;Register</p></div>
+                </div>
+                <div className="formLoginSection">
+                    <div className="logoSection">
+                        <div className="logoImg" />
+                        <div className="title">Super Dev</div>
+                    </div>
+                    <div className="inputSection noMarginTop">
+                        <label >Email</label>
+                        <div className="search">
+                            <input type="email" className="search__input" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e) }} />
+                            <div className="search__icon">
+                                <Photo name="search"></Photo>
                             </div>
                         </div>
-                    </Tabs.Tab>
-                    <Tabs.Tab label="Messages" icon={<MessageCircle size={16} />} >
-
-                        <div className="form">
-                            <div className="input">
-                                <div className="inputBox">
-                                    <div className="logo">
-                                        {/* <img src="https://lh3.googleusercontent.com/a-/AOh14Gj99VObFyE8W_h8RrcwZO_aYiIHu5AAa_XpnOym=s600-k-no-rp-mo" alt="" /> */}
-                                    </div>
-                                    <div className="title">Super Dev</div>
-
-                                    <label >Email</label>
-
-                                    <div className="search">
-                                        <input type="text" className="search__input" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e) }} />
-                                        <div className="search__icon">
-                                            <Photo name="search"></Photo>
-                                        </div>
-                                    </div>
-
-                                    <Input type="text" name="email" icon={<At />} id="email" title="email" placeholder="exameeeple@test.com" autoComplete="off" onChange={(e) => { fillData(e) }} />
-
-                                </div>
-                                <div className="inputBox">
-                                    <label >Password</label>
-                                    <Input type="password" name="password" icon={<Lock />} id="password" title="password" placeholder="Contraseña" autoComplete="off" onChange={(e) => { fillData(e); checkPassword(e); }} />
-                                    {msgError}
-                                    {msgError2}
-                                </div>
-                                <div className="inputBox">
-                                    <div className="submit" value="Sign In" onClick={() => login()}>
-                                    </div>
-                                </div>
+                    </div>
+                    <div className="inputSection">
+                        <label >Password</label>
+                        <div className="search">
+                            <input type="password" className="search__input" id="password" title="password" placeholder="********" autoComplete="off" onChange={(e) => { fillData(e); checkPassword(e); }} />
+                            <div className="search__icon">
+                                <Photo name="search"></Photo>
                             </div>
                         </div>
-                    </Tabs.Tab>
 
-                </StyledTabs>
-            </div >
-
-
-
-
-
+                        {/* {msgError}
+                        {msgError2} */}
+                    </div>
+                    <div className="loginSection">
+                        <div className="btn btnBlue" onClick={() => login()}><p>Log In</p></div>
+                    </div>
+                </div>
+            </div>
         </div >
 
-        // <div className='designLogin'>
-        //     <div className="designLogin">
-        //         <div className="cardLogin" data-aos="fade-right">
-        //             <div className="designFormulario">
-        //                 <b>Email:</b>
-        //                 <input type="email" className="input" name="email" id="email" title="email" placeholder="Correo Electrónico" autoComplete="off" onChange={(e)=>{fillData(e)}}/>
-        //                 <b>Password:</b>
-        //                 <input type="password" className="input" name="password" id="password" title="password" placeholder="Contraseña" autoComplete="off" onChange={(e)=>{ fillData(e); checkPassword(e); }}  />
-        //                 {msgError}
-        //                 {msgError2}
-        //             </div>
-        //             <div className="loginButton space" onClick={() => login()}>
-        //                 <b>Login</b>
-        //             </div>
-        //             {/* <b>If you are not registered, you must register</b>
-        //             <div className="buttonRegister2" onClick={() => takeMeRegister()}>
-        //                 Click here for Register
-        //             </div> */}
-        //         </div>
-        //     </div>
-        // </div>
 
     );
 
-};
 
+
+};
+// //structure
+// const DesignLogin = styled.div`
+// font-family: 'Poppins', sans-serif;
+// margin: 0;
+// padding: 0;
+// display: flex;
+// flex-direction: column;
+// justify-content: center;
+// align-items: center;
+// min-height: 100vh;
+// background-image: url(${fondoLogin});
+// background-size: cover;
+// `;
+
+// const Form = styled.div`
+//   position: relative;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: start-flex;
+//   align-items: center;
+//   background: #ecf0f3;
+//   border-radius: 1rem;
+//   width: 33%;
+//   height: 80%;
+//   @media (max-width: 1087px) {
+//     width: 70%;
+//   }
+//   @media (max-height: 500px) {
+//     height: 100%;
+//   }
+// `;
+
+// //selector
+// const SelectorSection = styled.div`
+// width: 100%;
+// height: 2.5rem;
+// display: flex;
+// justify-content: center;
+// align-items: center;
+// `;
+
+// const Btn = styled.div`
+//   width: 15rem;
+//   height: 2.5rem;
+//   border-radius: 1rem;
+//   justify-self: center;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   transition: .3s ease;
+//   &:hover {
+//     color: var(--white);
+//   }
+//   p {
+//     font-size: 1.2rem;
+//   }
+
+// `;
+
+// const BtnBlue = styled(Btn)`
+// grid-column: 1 / 2;
+//   grid-row: 4 / 5;
+//   background: var(--primary);
+//   color: var(--greyLight-1);
+//     box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light), inset -0.2rem -0.2rem 1rem var(--primary-dark), 0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--white);
+//     &:active {
+//         box-shadow: inset .2rem .2rem 1rem var(--primary-dark),
+//           inset -.2rem -.2rem 1rem var(--primary-light);
+//       }
+// `;
+
+// const BtnGrey = styled(Btn)`
+// width: 50%;
+// grid-column: 1 / 2;
+// grid-row: 5 / 6;
+// color: var(--greyDark);
+// border-radius: 0  1rem 0 0;
+// box-shadow: inset 0.2rem 0.2rem 1rem var(--greyDark), inset -0.2rem -0.2rem 1rem var(--greyDark), -0.2rem -0.2rem 0.5rem var(--white);
+// &:hover { color: var(--primary); }
+// &:active {
+//     box-shadow: inset .2rem .2rem 1rem var(--primary-dark),
+//       inset -.2rem -.2rem 1rem var(--primary-light);
+//    background: var(--primary);
+//       color: var(--greyLight-1);
+//   }
+// `;
+
+// const Selected = styled.div`
+// text-align: center;
+// width: 50%;
+// `;
+// //Selector
+
+// //Form
+// const FormLoginSection = styled.div`
+// text-align: left;
+// height: 90%;
+// width: 70%;
+// `;
+
+// const LogoSection = styled.div`
+// height: 42%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//   `;
+
+// //Form
 
 export default connect()(Login);

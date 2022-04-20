@@ -1,13 +1,15 @@
 //general configuration
 :root {
   --primary-light: #8abdff;
-  --primary: #1c6db9;
-  --primary-dark: #105291;
+  --primary: #6d5dfc;
+  --primary-dark: #5b0eeb;
+
   --white: #FFFFFF;
   --greyLight-1: #E4EBF5;
   --greyLight-2: #c8d0e7;
   --greyLight-3: #bec8e4;
   --greyDark: #9baacf;
+
 }
 
 $shadow: .3rem .3rem .6rem var(--greyLight-2),
@@ -15,12 +17,12 @@ $shadow: .3rem .3rem .6rem var(--greyLight-2),
 $inner-shadow: inset .2rem .2rem .5rem var(--greyLight-2),
 inset -.2rem -.2rem .5rem var(--white);
 
-
 .designLogin {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
@@ -28,51 +30,142 @@ inset -.2rem -.2rem .5rem var(--white);
   background-size: cover;
 }
 
-.subForm {
-  position: relative;
-  width: 35em;
-  height: 35em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  background: #ecf0f3;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.5),
-    5px 5px 10px rgba(0, 0, 0, 0.5);
-}
-
 .form {
   position: relative;
-  width: 35em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: #ecf0f3;
+  border-radius: 1rem;
+  width: 33%;
+  height: 75%;
+
+  @media (max-width: 1087px) {
+    width: 70%;
+  }
+
+  @media (max-width: 550px) {
+    width: 100%;
+  }
+
+  @media (max-height: 600px) {
+    height: 100%;
+  }
+}
+
+
+//selector
+.selectorSection {
+  width: 100%;
+  height: 2.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  width: 15rem;
+  height: 2.5rem;
+  border-radius: 1rem;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: .3s ease;
+
+  &:hover {
+    color: var(--white);
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+
+}
+
+.btnBlue {
+  grid-column: 1 / 2;
+  grid-row: 4 / 5;
+  background: var(--primary);
+  color: var(--greyLight-1);
+  box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light), inset -0.2rem -0.2rem 1rem var(--primary-dark), 0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--white);
+
+  &:active {
+    box-shadow: inset .2rem .2rem 1rem var(--primary-dark),
+      inset -.2rem -.2rem 1rem var(--primary-light);
+  }
+}
+
+.btnGrey {
+  width: 50%;
+  grid-column: 1 / 2;
+  grid-row: 5 / 6;
+  color: var(--greyDark);
+  border-radius: 0 1rem 0 0;
+  box-shadow: inset 0.2rem 0.2rem 1rem var(--greyDark), inset -0.2rem -0.2rem 1rem var(--greyDark), -0.2rem -0.2rem 0.5rem var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: var(--primary);
+  }
+
+  &:active {
+    box-shadow: inset .2rem .2rem 1rem var(--primary-dark),
+      inset -.2rem -.2rem 1rem var(--primary-light);
+    background: var(--primary);
+    color: var(--greyLight-1);
+  }
+}
+
+.selected {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 50%;
+}
+
+//Selector
+
+
+//Form
+.formLoginSection {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+  width: 70%;
+}
+
+//logo section
+
+
+.logoSection {
+  margin-top: 1rem;
+  height: 42%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  background: #ecf0f3;
-
-  border-radius: 10px;
-
-}
-
-.form .input .inputBoxLogo {
-
-}
-
-.logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+  @media (max-height: 480px) {
+    display: none;
+  }
 
 }
 
 .logoImg {
-  width: 10rem;
-  height: 10rem;
+  width: 10vw;
+  height: 10vw;
   border-radius: 50%;
   background-image: url(../../img/fondo-login.jpg);
   box-shadow:
@@ -84,73 +177,52 @@ inset -.2rem -.2rem .5rem var(--white);
     8px 8px 15px #a7aaaf,
     /* top left */
     -8px -8px 15px #ffffff;
+
+  
+
+    @media (max-width: 900px) {
+      width: 15vw;
+  height: 15vw;
+    }
+    @media (max-width: 550px) {
+      width:40vw;
+  height: 40vw;
+    }
+
 }
 
 .title {
   text-align: center;
-  font-size: 28px;
- 
+  font-size: 2rem;
+  margin-top: 1rem;
   letter-spacing: 0.5px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.3rem;
 }
 
-.form h2 {
-  color: #c7c7c7;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-}
+//form section
 
-.form .input {
-  text-align: left;
-  margin-top: 1rem;
-  width: 70%;
-}
+//input selection
 
-.form .input .inputBox {
+.inputSection {
   margin-top: 1rem;
 }
 
-.form .input .inputBox label {
+.noMarginTop{
+  margin-top: 0;
+}
+
+.inputSection label {
   display: block;
   color: #868686;
   margin-bottom: 5px;
   font-size: 18px;
 }
 
-// .form .input .inputBox input {
-//     width: 100%;
-//     height: 50px;
-//     background: #ecf0f3;
-//     border: none;
-//     outline: none;
-//     border-radius: 40px;
-//     padding: 5px;
-//     color: #fff;
-//     font-size: 18px;
-//     color: #03a9f4;
-//     box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.05),
-//         inset 2px 2px 6px rgba(0, 0, 0, 0.8);
-// }
 
-.form .input .inputBox .btn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.form .input .inputBox .submit:active {
-  color: #006c9c;
-  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.05),
-    inset 2px 2px 6px rgba(0, 0, 0, 0.8);
-}
-
-.form .input .inputBox input::placeholder {
-  color: #555;
+.inputSection input::placeholder {
+  
   font-size: 18px;
 }
-
 
 
 
@@ -186,20 +258,18 @@ inset -.2rem -.2rem .5rem var(--white);
     width: 100%;
 
 
-
-
-
-
     &::placeholder {
+ 
       color: var(--greyLight-3);
     }
 
     &:focus {
       outline: none;
       box-shadow: $shadow;
-
+      color: #555;
       +.search__icon {
         color: var(--primary);
+        
       }
     }
   }
@@ -207,127 +277,12 @@ inset -.2rem -.2rem .5rem var(--white);
 
 }
 
-.form .input .inputBoxButton {
+//login
+
+.loginSection {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
-
-/*  BUTTONS  */
-.btn {
-  width: 15rem;
-  height: 2.5rem;
-  border-radius: 1rem;
-  box-shadow: $shadow;
-  justify-self: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: .3s ease;
-  grid-column: 1 / 2;
-  grid-row: 4 / 5;
-  background: var(--primary);
-  box-shadow: inset .2rem .2rem 1rem var(--primary-light),
-    inset -.2rem -.2rem 1rem var(--primary-dark),
-    $shadow;
-  color: var(--greyLight-1);
-
-
-
-  &:hover {
-    color: var(--white);
-  }
-
-  &:active {
-    box-shadow: inset .2rem .2rem 1rem var(--primary-dark),
-      inset -.2rem -.2rem 1rem var(--primary-light);
-  }
-
-
-  p {
-    font-size: 1rem;
-  }
-}
-
-
-
-
-/* .designLogin {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #131419;
-  }
-  .form {
-    position: relative;
-    width: 350px;
-    padding: 40px 40px 60px;
-    background: #131419;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
-      5px 5px 15px rgba(0, 0, 0, 0.5);
-  }
-  .form h2 {
-    color: #c7c7c7;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-  }
-  .form .input {
-    text-align: left;
-    margin-top: 40px;
-  }
-  .form .input .inputBox {
-    margin-top: 20px;
-  }
-  .form .input .inputBox label {
-    display: block;
-    color: #868686;
-    margin-bottom: 5px;
-    font-size: 18px;
-  }
-  .form .input .inputBox input {
-    width: 100%;
-    height: 50px;
-    background: #131419;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    padding: 5px 15px;
-    color: #fff;
-    font-size: 18px;
-    color: #03a9f4;
-    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.05),
-      inset 2px 2px 6px rgba(0, 0, 0, 0.8);
-  }
-  .form .input .inputBox input[type='submit'] {
-    margin-top: 20px;
-    box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.05),
-      2px 2px 6px rgba(0, 0, 0, 0.8);
-  }
-  .form .input .inputBox input[type='submit']:active {
-    color: #006c9c;
-    margin-top: 20px;
-    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.05),
-      inset 2px 2px 6px rgba(0, 0, 0, 0.8);
-  }
-  .form .input .inputBox input::placeholder {
-    color: #555;
-    font-size: 18px;
-  }
-  .forget {
-    margin-top: 30px;
-    color: #555;
-  }
-  .forget a {
-    color: #ff0047;
-  }
-   */

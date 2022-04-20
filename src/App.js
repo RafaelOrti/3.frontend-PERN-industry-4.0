@@ -10,6 +10,8 @@ import Graph from './Containers/Graph/Graph';
 import IndustrialPlant from './Containers/IndustrialPlant/IndustrialPlant';
 import Map from './Containers/Map/Map';
 import Profile from './Containers/Profile/Profile';
+import Register from './Containers/Register/Register';
+
 
 
 function App() {
@@ -18,14 +20,15 @@ function App() {
       <BrowserRouter> 
         <Routes> 
           <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/actionsRecord" element={<ActionsRecord />} />
-          <Route path="/alarms" element={<Alarms />} />
+          {/* <Route path="/admin" element={<Admin />} /> */}
+          {/* <Route path="/actionsRecord" element={<ActionsRecord />} /> */}
+          {/* <Route path="/alarms" element={<Alarms />} />
           <Route path="/graph" element={<Graph />} />
           <Route path="/industrialPlant" element={<IndustrialPlant />} />
           <Route path="/map" element={<Map />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} /> */}
         </Routes>
       </BrowserRouter>
     </div>

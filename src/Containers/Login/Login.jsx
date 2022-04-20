@@ -150,7 +150,7 @@ const Login = (props) => {
                                 <Photo name="search"></Photo>
                             </div>
                         </div>
-
+ 
                         {/* {msgError}
                         {msgError2} */}
                     </div>

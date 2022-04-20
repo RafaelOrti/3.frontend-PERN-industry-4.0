@@ -87,6 +87,7 @@ inset -.2rem -.2rem .5rem var(--white);
 }
 
 .btnBlue {
+  width: 75%;
   grid-column: 1 / 2;
   grid-row: 4 / 5;
   background: var(--primary);
@@ -194,9 +195,10 @@ inset -.2rem -.2rem .5rem var(--white);
 .title {
   text-align: center;
   font-size: 2rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
   letter-spacing: 0.5px;
   margin-bottom: 1.3rem;
+  
 }
 
 //form section
@@ -205,6 +207,21 @@ inset -.2rem -.2rem .5rem var(--white);
 
 .inputSection {
   margin-top: 1rem;
+}
+
+.loginSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+
+  @media (max-height: 400px) {
+    margin-bottom: 0rem;
+    margin-top: 0rem;
+    height: 25%;
+  }
 }
 
 .noMarginTop{
@@ -279,10 +296,3 @@ inset -.2rem -.2rem .5rem var(--white);
 
 //login
 
-.loginSection {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}

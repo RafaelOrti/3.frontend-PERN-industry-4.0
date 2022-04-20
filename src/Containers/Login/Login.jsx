@@ -44,25 +44,41 @@ const Login = (props) => {
         // console.log("dataUser", dataUser)
     };
 
+    // const checkEmail = (e) => {
+    //     console.log(e.target.value)
+    //     if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(e.target.value)) {
+
+    //         notifications.showNotification({
+    //             message: "Introduce un email válido",
+    //             icon: <ZoomExclamation />,
+    //             autoClose: false,
+    //             id: 'email'
+    //         })
+    //     } else {
+    //         notifications.hideNotification("email");
+    //     }
+    // }
+
+
     const checkPassword = (e) => {
 
 
         if (e.target.value.length > 4) {
-      
+
             a = true
         }
         console.log(e.target.value.length)
         console.log("gggg", a)
         if (a && (e.target.value.length < 4)) {
-         
+
             notifications.showNotification({
                 message: "La contraseña debe tener más 8 caracteres",
                 icon: <ZoomExclamation />,
                 autoClose: false,
                 id: 'size1'
             });
-        }else if (a && (e.target.value.length > 16)) {
- 
+        } else if (a && (e.target.value.length > 16)) {
+
             notifications.showNotification({
                 message: "La contraseña debe tener menos de 15 caracteres",
                 icon: <ZoomExclamation />,
@@ -94,24 +110,40 @@ const Login = (props) => {
 
     };
 
+    const navigateRegisters = () => {
+        navigate("/register");
+    };
+
     const login = async () => {
-        try {
-            let body = {
-                email: dataUser.email,
-                password: dataUser.password
+        console.log(dataUser.email)
+        if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(dataUser.email)) {
+
+            notifications.showNotification({
+                message: "Introduce un email válido",
+                icon: <ZoomExclamation />,
+                autoClose: 2000,
+                id: 'email'
+            })
+        } else {
+
+            try {
+                let body = {
+                    email: dataUser.email,
+                    password: dataUser.password
+                }
+                let resultado = await axios.post(raiz + "users/login", body);
+                console.log(resultado);
+                if (resultado.data === "Usuario o contraseña inválido") {
+                    // setMsgError2("Usuario o contraseña inválido")
+                } else {
+                    props.dispatch({ type: LOGIN, payload: resultado.data });
+                    setTimeout(() => {
+                        navigate("/Home");
+                    }, 1000);
+                }
+            } catch (error) {
+                console.log(error)
             }
-            let resultado = await axios.post(raiz + "users/login", body);
-            console.log(resultado);
-            if (resultado.data === "Usuario o contraseña inválido") {
-                // setMsgError2("Usuario o contraseña inválido")
-            } else {
-                props.dispatch({ type: LOGIN, payload: resultado.data });
-                setTimeout(() => {
-                    navigate("/Home");
-                }, 1000);
-            }
-        } catch (error) {
-            console.log(error)
         }
     };
 
@@ -126,7 +158,7 @@ const Login = (props) => {
             <div className="form">
                 <div className="selectorSection">
                     <div className="selected"><UserCircle name="search"></UserCircle><p> &nbsp;&nbsp; Log In</p></div>
-                    <div className="btn btnGrey " onClick={() => login()}><UserPlus name="search"></UserPlus><p>&nbsp;&nbsp;Register</p></div>
+                    <div className="btn btnGrey" onClick={() => navigateRegisters()}><UserPlus name="search"></UserPlus><p>&nbsp;&nbsp;Register</p></div>
                 </div>
                 <div className="formLoginSection">
                     <div className="logoSection">
@@ -136,7 +168,7 @@ const Login = (props) => {
                     <div className="inputSection noMarginTop">
                         <label >Email</label>
                         <div className="search">
-                            <input type="email" className="search__input" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e) }} />
+                            <input type="email" className="search__input" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e);  }} />
                             <div className="search__icon">
                                 <Photo name="search"></Photo>
                             </div>
@@ -150,11 +182,11 @@ const Login = (props) => {
                                 <Photo name="search"></Photo>
                             </div>
                         </div>
- 
+
                         {/* {msgError}
                         {msgError2} */}
                     </div>
-                    <div className="loginSection">
+                    <div className="inputSection loginSection">
                         <div className="btn btnBlue" onClick={() => login()}><p>Log In</p></div>
                     </div>
                 </div>

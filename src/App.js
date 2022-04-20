@@ -1,6 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.scss';
 
+//components
+import Header from './Components/Header/Header';
+import Sider from './Components/Sider/Sider';
+
+
 import Login from './Containers/Login/Login';
 import Home from './Containers/Home/Home';
 import Admin from './Containers/Admin/Admin';
@@ -18,6 +23,8 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter> 
+      <Header/>
+      <Sider/>
         <Routes> 
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />

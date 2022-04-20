@@ -50,27 +50,7 @@ const Header = (props) => {
     //     window.location.pathname === "/add" &&
     //     <div className="link" onClick={() => navegar("/film")}>Film</div>
     // }
-    const busquedaPorTitulo = async () => {
-
-        //Axios que trae resultados....
-        // window.location.pathname === "/add" &&
-        // <div className="link" onClick={() => navegar("/film")}>Film</div>
-        try {
-            let resultados = await axios.get(raiz+`peliculas/genero/titulo/${titulo}`);
-
-            //Guardo en redux los resultados de las películas
-
-            props.dispatch({ type: MOVIES_TITLE, payload: resultados.data });
-
-            setTimeout(() => {
-                navigate("/searchresults");
-            }, 500);
-
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
+   
     // console.log(window.location.pathname);
     if (!props.credentials?.token) {
         return (
@@ -78,7 +58,7 @@ const Header = (props) => {
 
                 <div className="headerSpace logoDesign">
 
-                    <img className="logo" src={require('../../img/aiflix-logo.png')} alt="logo" onClick={() => navegar("/")}></img>
+                    {/* <img className="logo" src={require('../../img/aiflix-logo.png')} alt="logo" onClick={() => navegar("/")}></img> */}
 
                 </div>
                 <div className="headerSpace searchDesign">
@@ -112,7 +92,7 @@ const Header = (props) => {
                     <div className='designHeader'>
 
                         <div className="headerSpace logoDesign">
-                            <img className="logo" src={require('../../img/aiflix-logo.png')} alt="logo" onClick={() => navegar("/")}></img>
+                            {/* <img className="logo" src={require('../../img/aiflix-logo.png')} alt="logo" onClick={() => navegar("/")}></img> */}
                         </div>
                         <div className="headerSpace searchDesign">
                             {/* {
@@ -182,7 +162,7 @@ const Header = (props) => {
                     (
 
                         <div className="headerSpace logoDesign">
-                            <img className="logoDisplay" src={require('../../img/volver.png')} alt="logo" onClick={() => navegar("/film")}></img>
+                            {/* <img className="logoDisplay" src={require('../../img/volver.png')} alt="logo" onClick={() => navegar("/film")}></img> */}
                         </div>
 
                     )

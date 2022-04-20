@@ -66,6 +66,10 @@ inset -.2rem -.2rem .5rem var(--white);
 }
 
 .btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   width: 15rem;
   height: 2.5rem;
   border-radius: 1rem;

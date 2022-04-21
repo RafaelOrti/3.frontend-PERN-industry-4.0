@@ -11,7 +11,7 @@ import {
 } from 'antd';
 import { raiz } from '../../utiles';
 
-import './Header.css';
+import './Header.scss';
 
 const Header = (props) => {
 
@@ -52,47 +52,18 @@ const Header = (props) => {
     // }
    
     // console.log(window.location.pathname);
-    if (!props.credentials?.token) {
+    if (props.credentials?.token) {
         return (
-            <div className='designHeader'>
-
-                <div className="headerSpace logoDesign">
-
-                    {/* <img className="logo" src={require('../../img/aiflix-logo.png')} alt="logo" onClick={() => navegar("/")}></img> */}
-
-                </div>
-                <div className="headerSpace searchDesign">
-                </div>
-                <div className="headerSpace linksDesign">
-                    {
-                        (window.location.pathname === "/login") &&
-                        <div className="link" onClick={() => navegar("/login")}><b>Login</b></div>
-                    }
-                    {
-                        (window.location.pathname !== "/login") &&
-                        <div className="link" onClick={() => navegar("/login")}>Login</div>
-                    }
-                    {
-                        (window.location.pathname === "/register") &&
-                        <div className="link" onClick={() => navegar("/register")}><b>Registro</b></div>
-                    }
-                    {
-                        (window.location.pathname !== "/register") &&
-                        <div className="link" onClick={() => navegar("/register")}>Registro</div>
-                    }
-                </div>
-            </div>
-        )
-    } else {
-        return (
-            <div className='designHeaderGlobal'>
+            <div className='designHeaderGlobal' style={{
+                display: props.hideFooter.isHome ? 'none' : undefined
+            }} >
                 {
                     window.location.pathname !== "/display" &&
 
                     <div className='designHeader'>
 
                         <div className="headerSpace logoDesign">
-                            {/* <img className="logo" src={require('../../img/aiflix-logo.png')} alt="logo" onClick={() => navegar("/")}></img> */}
+                            <img className="logo" src={require('../../img/logo.png')} alt="logo" onClick={() => navegar("/")}></img>
                         </div>
                         <div className="headerSpace searchDesign">
                             {/* {
@@ -122,16 +93,6 @@ const Header = (props) => {
                             {
                                 (props.credentials?.usuario.rol === true) && (window.location.pathname !== "/admin") &&
                                 <div className="link" onClick={() => navegar("/admin")}>Admin</div>
-                            }
-
-                            {
-                                (window.location.pathname === "/film") &&
-                                <div className="link" onClick={() => navegar("/film")}><b>Películas</b></div>
-
-                            }
-                            {
-                                (window.location.pathname !== "/film") &&
-                                <div className="link" onClick={() => navegar("/film")}>Películas</div>
                             }
                             {
                                 (window.location.pathname === "/profile") &&
@@ -177,5 +138,6 @@ const Header = (props) => {
 }
 
 export default connect((state) => ({
-    credentials: state.credentials
+    credentials: state.credentials,
+    hideFooter: state.hideFooter
 }))(Header);

@@ -1,117 +1,212 @@
-
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { connect } from 'react-redux';
-// import { NOT_HOME } from "../../redux/actions";
-import {raiz} from '../../utiles';
-import {MODIFY_CREDENTIALS} from '../../redux/actions';
+
+import { raiz } from '../../utiles';
+
+//notificaciones
+import { useNotifications } from "@mantine/notifications";
+
+//ENDPOINTS CALL
 import axios from 'axios';
 
-import "./Profile.css";
-// import Footer from '../../Components/Footer/Footer';
+/*DISEÑO*/
+import './Login.scss';
 
-const Profile = (props) => {
+//ICONS
+import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "tabler-icons-react";
 
-    let navigate = useNavigate();
-    const [res, setRes] = useState("");
+
+
+/*DISEÑO*/
+
+
+//REDUX
+import { connect } from 'react-redux';
+import { LOGIN } from '../../redux/actions';
+import { IS_HOME } from "../../redux/actions";
+
+let a = false;
+
+const Login = (props) => {
 
     useEffect(() => {
         console.log('Created')
-        // props.dispatch({ type: NOT_HOME })
+        props.dispatch({ type: IS_HOME })
     }, [])
 
-    
+    const notifications = useNotifications();
+    let navigate = useNavigate();
+
+    //1-Hooks (equivalen al estado en los componentes de clase)
+    const [dataUser, setDataUser] = useState({ email: "", password: "" });
+    // const [msgError, setMsgError] = useState("");
+    // const [msgError2, setMsgError2] = useState("");
 
 
-    //Hooks
-    const [datosUsuario, setDatosUsuario] = useState({
-        nombre: props.credentials.usuario.nombre, apellido: props.credentials.usuario.apellido, edad: props.credentials.usuario.edad, email: props.credentials.usuario.email, 
-        nickname: props.credentials.usuario.nickname,  password: props.credentials.usuario.password
-    });
-
-    //Handler (manejador)
-    const rellenarDatos = (e) => {
-        //para cambiar el hook
-        setDatosUsuario({...datosUsuario, 
-            [e.target.name]: e.target.value})
-        //para cambiar el redux
-        props.dispatch({ type: MODIFY_CREDENTIALS, payload: { field: e.target.name, field_value: e.target.value } })
+    //handlers
+    const fillData = (e) => {
+        setDataUser({ ...dataUser, [e.target.name]: e.target.value })
+        // console.log("dataUser", dataUser)
     };
 
-    useEffect(() => {
-        if (props.credentials.token === '') {
-            navigate("/");
+    // const checkEmail = (e) => {
+    //     console.log(e.target.value)
+    //     if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(e.target.value)) {
+
+    //         notifications.showNotification({
+    //             message: "Introduce un email válido",
+    //             icon: <ZoomExclamation />,
+    //             autoClose: false,
+    //             id: 'email'
+    //         })
+    //     } else {
+    //         notifications.hideNotification("email");
+    //     }
+    // }
+
+
+    const checkPassword = (e) => {
+
+
+        if (e.target.value.length > 4) {
+
+            a = true
         }
-    })
+        console.log(e.target.value.length)
+        console.log("gggg", a)
+        if (a && (e.target.value.length < 4)) {
 
-    const updateUser = async () => {
+            notifications.showNotification({
+                message: "La contraseña debe tener más 8 caracteres",
+                icon: <ZoomExclamation />,
+                autoClose: false,
+                id: 'size1'
+            });
+        } else if (a && (e.target.value.length > 16)) {
 
-        let body = {
-            nombre: datosUsuario.nombre,
-            apellido: datosUsuario.apellido,
-            email: datosUsuario.email,
-            edad: parseInt(datosUsuario.edad),
-            nickname: datosUsuario.nickname,
-            password: datosUsuario.password
-            
+            notifications.showNotification({
+                message: "La contraseña debe tener menos de 15 caracteres",
+                icon: <ZoomExclamation />,
+                autoClose: false,
+                id: 'size2'
+            });
+        } else {
+
+            notifications.hideNotification("size1");
+            notifications.hideNotification("size2");
         }
 
-        let config = {
-            headers: { Authorization: `Bearer ${props.credentials.token}` }
-        };
+        var pattern = /^[a-zA-Z0-9]*$/;
 
-        try {
-            //Hacemos el update en la base de datos
-            let resultado = await axios.put(raiz +`usuarios/actualizar/perfilId/${props.credentials.usuario.id}`,body, config);
-            setTimeout(() => {
-                // console.log("res2")
-                // console.log(res.data)
-                setRes(resultado.data); 
-            }, 2);
+        if (!e.target.value.match(pattern)) {
+            // setMsgError("La contraseña debe tener los siguientes carácteres alfanuméricos a-zA-Z0-9@*#.,");
+            notifications.showNotification({
+                message: "La contraseña debe tener los siguientes carácteres alfanuméricos a-zA-Z0-9@*#.,",
+                icon: <ZoomExclamation />,
+                autoClose: false,
+                id: "letters"
+            });
+        } else {
+            notifications.hideNotification("letters");
 
-            // esto para ver la respeusta del put
-            // let res = await axios.put(`https://movie-db-geekshubs.herokuapp.com/usuarios/${props.credentials.usuario.id}`,body, config);
-            
-            
-            // if(res){
-            //     //Guardamos en redux
-            //     props.dispatch({type:MODIFY_CREDENTIALS, payload: datosUsuario});
-            // }
-        } catch (error) {
-            console.log(error)
         }
 
-    }
+
+
+    };
+
+    const navigateRegisters = () => {
+        navigate("/register");
+    };
+
+    const login = async () => {
+
+        setTimeout(() => {
+            navigate("/home");
+        }, 1000);
+        // console.log(dataUser.email)
+        // if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(dataUser.email)) {
+
+        //     notifications.showNotification({
+        //         message: "Introduce un email válido",
+        //         icon: <ZoomExclamation />,
+        //         autoClose: 2000,
+        //         id: 'email'
+        //     })
+        // } else {
+
+        //     try {
+        //         let body = {
+        //             email: dataUser.email,
+        //             password: dataUser.password
+        //         }
+        //         let resultado = await axios.post(raiz + "users/login", body);
+        //         console.log(resultado);
+        //         if (resultado.data === "Usuario o contraseña inválido") {
+        //             // setMsgError2("Usuario o contraseña inválido")
+        //         } else {
+                    // props.dispatch({ type: LOGIN, payload: resultado.data });
+                    // setTimeout(() => {
+                    //     navigate("/");
+                    // }, 1000);
+        //         }
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        // }
+    };
+
+
+
+
+    //2-Render (lo que pinta en pantalla)
 
     return (
-        <div className="designProfile">
-            <div className="designProfileHalf profileLeft">
-                <div className="profileField"><b>Nombre:<input type="text" name="nombre" id="nombre" title="nombre" placeholder={props.credentials.usuario.nombre} autoComplete="off" onChange={(e) => { rellenarDatos(e) }} />
-                </b></div>
-                <div className="profileField"><b>Apellidos:</b><input type="text" name="apellido" id="apellido" title="apellido" placeholder={props.credentials.usuario.apellido} autoComplete="off" onChange={(e) => { rellenarDatos(e) }} />
+
+        <div className="designLogin">
+            <div className="form">
+                <div className="selectorSection">
+                    <div className="selected"><UserCircle name="search"></UserCircle><p> &nbsp;&nbsp; Log In</p></div>
+                    <div className="btn btnGrey" onClick={() => navigateRegisters()}><UserPlus name="search"></UserPlus><p>&nbsp;&nbsp;Register</p></div>
                 </div>
-                <div className="profileField"><b>Email:</b><input type="email" name="email" id="email" title="email" placeholder={props.credentials.usuario.email} autoComplete="off" onChange={(e) => { rellenarDatos(e) }} /></div>
-                <div className="profileField"><b>Nickname:</b><input type="text" name="nickname" id="nickname" title="nickname" placeholder={props.credentials.usuario.nickname} autoComplete="off" onChange={(e) => { rellenarDatos(e) }} />
-                </div>
-                <div className="profileField"><b>Edad:</b><input type="text" name="edad" id="edad" title="edad" placeholder={props.credentials.usuario.edad} autoComplete="off" onChange={(e) => { rellenarDatos(e) }} />
-                </div>
-                
-                <div className="profileField"><b>Password:</b><input type="text" name="password" id="password" title="password" placeholder="*****"autoComplete="off" onChange={(e) => { rellenarDatos(e) }} />
-                </div>
-                <div className="profileFieldButton">
-                    <div className="button type3 espacio" onClick={()=>updateUser()}>Actualiza</div>
-                </div>
-                <div className="profileFieldButtonMessage">
-                <div className="bottomCardAdminRegPelSub">{res}</div>
+                <div className="formLoginSection">
+                    <div className="logoSection">
+                        <div className="logoImg" />
+                        <div className="title">Super Dev</div>
+                    </div>
+                    <div className="inputSection noMarginTop">
+                        <label >Email</label>
+                        <div className="search">
+                            <input type="email" className="search__input" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e);  }} />
+                            <div className="search__icon">
+                                <Photo name="search"></Photo>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="inputSection">
+                        <label >Password</label>
+                        <div className="search">
+                            <input type="password" className="search__input" id="password" title="password" placeholder="********" autoComplete="off" onChange={(e) => { fillData(e); checkPassword(e); }} />
+                            <div className="search__icon">
+                                <Photo name="search"></Photo>
+                            </div>
+                        </div>
+
+                        {/* {msgError}
+                        {msgError2} */}
+                    </div>
+                    <div className="inputSection loginSection">
+                        <div className="btn btnBlue" onClick={() => login()}><p>Log In</p></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-    )
+        </div >
 
 
-}
+    );
 
-export default connect((state) => ({
-    credentials: state.credentials
-}))(Profile);
+
+
+};
+
+export default connect()(Login);

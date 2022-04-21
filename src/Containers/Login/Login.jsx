@@ -23,11 +23,16 @@ import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "t
 //REDUX
 import { connect } from 'react-redux';
 import { LOGIN } from '../../redux/actions';
-// import { NOT_HOME } from "../../redux/actions";
+import { IS_HOME } from "../../redux/actions";
 
 let a = false;
 
 const Login = (props) => {
+
+    useEffect(() => {
+        console.log('Created')
+        props.dispatch({ type: IS_HOME })
+    }, [])
 
     const notifications = useNotifications();
     let navigate = useNavigate();
@@ -115,36 +120,40 @@ const Login = (props) => {
     };
 
     const login = async () => {
-        console.log(dataUser.email)
-        if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(dataUser.email)) {
 
-            notifications.showNotification({
-                message: "Introduce un email válido",
-                icon: <ZoomExclamation />,
-                autoClose: 2000,
-                id: 'email'
-            })
-        } else {
+        setTimeout(() => {
+            navigate("/home");
+        }, 1000);
+        // console.log(dataUser.email)
+        // if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(dataUser.email)) {
 
-            try {
-                let body = {
-                    email: dataUser.email,
-                    password: dataUser.password
-                }
-                let resultado = await axios.post(raiz + "users/login", body);
-                console.log(resultado);
-                if (resultado.data === "Usuario o contraseña inválido") {
-                    // setMsgError2("Usuario o contraseña inválido")
-                } else {
-                    props.dispatch({ type: LOGIN, payload: resultado.data });
-                    setTimeout(() => {
-                        navigate("/Home");
-                    }, 1000);
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        }
+        //     notifications.showNotification({
+        //         message: "Introduce un email válido",
+        //         icon: <ZoomExclamation />,
+        //         autoClose: 2000,
+        //         id: 'email'
+        //     })
+        // } else {
+
+        //     try {
+        //         let body = {
+        //             email: dataUser.email,
+        //             password: dataUser.password
+        //         }
+        //         let resultado = await axios.post(raiz + "users/login", body);
+        //         console.log(resultado);
+        //         if (resultado.data === "Usuario o contraseña inválido") {
+        //             // setMsgError2("Usuario o contraseña inválido")
+        //         } else {
+                    // props.dispatch({ type: LOGIN, payload: resultado.data });
+                    // setTimeout(() => {
+                    //     navigate("/");
+                    // }, 1000);
+        //         }
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        // }
     };
 
 

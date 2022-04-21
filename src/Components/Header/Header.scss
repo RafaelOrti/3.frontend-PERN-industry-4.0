@@ -2,7 +2,7 @@
 .designHeaderGlobal {
     height: 5em;
     width: 100%;
-    z-index: 1;
+    z-index: 2;
     position: absolute;
 
     
@@ -14,7 +14,7 @@
 .designHeader {
     height: 5em;
     width: 100%;
-    z-index: 1;
+    z-index: 2;
     position: absolute;
     background-color: black;
     
@@ -24,12 +24,13 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .headerSpace {
-    width: 32vw;
+    width: 33vw;
     height: 5em;
+    left: 0;
 
 }
 
@@ -66,14 +67,14 @@
 .logoDesign{
     display: flex;
     flex-direction: row;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: flex-start;
     
 }
 
 .logo{
-    height: 4em;
-    width: 9em;
+    height: 5em;
+    width: 5.7em;
 }
 
 .logo:hover { 

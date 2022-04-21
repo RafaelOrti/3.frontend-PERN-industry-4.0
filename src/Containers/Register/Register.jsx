@@ -23,11 +23,15 @@ import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "t
 //REDUX
 import { connect } from 'react-redux';
 import { Login } from '../../redux/actions';
-// import { NOT_HOME } from "../../redux/actions";
+import { IS_HOME } from "../../redux/actions";
 
 let a = false;
 
 const Register = (props) => {
+
+    useEffect(() =>{
+        props.dispatch({ type: IS_HOME })
+    },[])
 
     const notifications = useNotifications();
     let navigate = useNavigate();

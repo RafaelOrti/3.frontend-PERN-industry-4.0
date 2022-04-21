@@ -3,7 +3,7 @@ import './App.scss';
 
 //components
 import Header from './Components/Header/Header';
-import Sider from './Components/Sider/Sider';
+import SiderG from './Components/SiderG/SiderG';
 
 
 import Login from './Containers/Login/Login';
@@ -23,12 +23,15 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter> 
+      <SiderG/>
       <Header/>
-      <Sider/>
+      
         <Routes> 
+
+          <Route path="/home" element={<Home />} />
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<Home />} />
+          
           {/* <Route path="/admin" element={<Admin />} /> */}
           {/* <Route path="/actionsRecord" element={<ActionsRecord />} /> */}
           {/* <Route path="/alarms" element={<Alarms />} />

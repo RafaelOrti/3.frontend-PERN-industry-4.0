@@ -1,0 +1,35 @@
+
+.designSider {
+
+    width: 13vw;
+    height: 100vh;
+
+    position: absolute;
+    z-index: 1;
+    
+    // background-color:black;
+
+    // background-size: cover;
+
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+    // align-items: center;
+
+}
+
+.siderI{
+    margin-top: 4.75em;
+    background-color:black;
+}
+
+.ant-layout-sider{
+    height:100% !important;
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
+  [data-theme="dark"] .site-layout .site-layout-background {
+    background: #141414;
+  }

@@ -10,7 +10,7 @@ import { useNotifications } from "@mantine/notifications";
 import axios from 'axios';
 
 /*DISEÑO*/
-import './AdminClient.scss';
+import './UserCreate.scss';
 
 //ICONS
 import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "tabler-icons-react";
@@ -27,7 +27,7 @@ import { IS_HOME } from "../../redux/actions";
 
 let a = false;
 
-const AdminClient = (props) => {
+const UserCreate = (props) => {
 
     useEffect(() => {
         console.log('Created')
@@ -163,8 +163,8 @@ const AdminClient = (props) => {
 
     return (
 
-        <div className="designLogin">
-            <div className="form">
+
+            <div className="formUserCreate">
                 <div className="selectorSection">
                     <div className="selected"><UserCircle name="search"></UserCircle><p> &nbsp;&nbsp; Log In</p></div>
                     <div className="btn btnGrey" onClick={() => navigateRegisters()}><UserPlus name="search"></UserPlus><p>&nbsp;&nbsp;Register</p></div>
@@ -200,7 +200,7 @@ const AdminClient = (props) => {
                     </div>
                 </div>
             </div>
-        </div >
+
 
 
     );
@@ -208,5 +208,6 @@ const AdminClient = (props) => {
 
 
 };
+// //Form
 
-export default connect()(AdminClient);
+export default connect()(UserCreate);

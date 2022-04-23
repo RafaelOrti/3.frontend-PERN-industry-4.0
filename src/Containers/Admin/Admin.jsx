@@ -10,7 +10,7 @@ import { useNotifications } from "@mantine/notifications";
 import axios from 'axios';
 
 /*DISEÑO*/
-import './Login.scss';
+import './Admin.scss';
 
 //ICONS
 import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "tabler-icons-react";
@@ -27,7 +27,7 @@ import { IS_HOME } from "../../redux/actions";
 
 let a = false;
 
-const Login = (props) => {
+const Admin = (props) => {
 
     useEffect(() => {
         console.log('Created')
@@ -209,4 +209,4 @@ const Login = (props) => {
 
 };
 
-export default connect()(Login);
+export default connect()(Admin);

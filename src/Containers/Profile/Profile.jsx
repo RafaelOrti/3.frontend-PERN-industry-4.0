@@ -10,7 +10,7 @@ import { useNotifications } from "@mantine/notifications";
 import axios from 'axios';
 
 /*DISEÑO*/
-import './Login.scss';
+import './Profile.scss';
 
 //ICONS
 import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "tabler-icons-react";
@@ -23,15 +23,15 @@ import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "t
 //REDUX
 import { connect } from 'react-redux';
 import { LOGIN } from '../../redux/actions';
-import { IS_HOME } from "../../redux/actions";
+import { NOT_HOME } from "../../redux/actions";
 
 let a = false;
 
-const Login = (props) => {
+const Profile = (props) => {
 
     useEffect(() => {
         console.log('Created')
-        props.dispatch({ type: IS_HOME })
+        props.dispatch({ type: NOT_HOME })
     }, [])
 
     const notifications = useNotifications();
@@ -209,4 +209,4 @@ const Login = (props) => {
 
 };
 
-export default connect()(Login);
+export default connect()(Profile);

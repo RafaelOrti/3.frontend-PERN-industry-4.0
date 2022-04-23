@@ -52,11 +52,13 @@ const Header = (props) => {
     // }
    
     // console.log(window.location.pathname);
-    if (props.credentials?.token) {
+    // if (props.credentials?.token) {
         return (
-            <div className='designHeaderGlobal' style={{
-                display: props.hideFooter.isHome ? 'none' : undefined
-            }} >
+            <div className='designHeaderGlobal'
+            //  style={{
+            //     display: props.hideFooter.isHome ? 'none' : undefined
+            // }} 
+            >
                 {
                     window.location.pathname !== "/display" &&
 
@@ -131,13 +133,14 @@ const Header = (props) => {
             </div>
 
         )
-    }
+    // }
 
 
 
 }
 
 export default connect((state) => ({
-    credentials: state.credentials,
-    hideFooter: state.hideFooter
+    credentials: state.credentials
+    // ,
+    // hideFooter: state.hideFooter
 }))(Header);

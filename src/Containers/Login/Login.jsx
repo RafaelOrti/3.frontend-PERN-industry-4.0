@@ -134,7 +134,6 @@ const Login = (props) => {
         //         id: 'email'
         //     })
         // } else {
-
         //     try {
         //         let body = {
         //             email: dataUser.email,

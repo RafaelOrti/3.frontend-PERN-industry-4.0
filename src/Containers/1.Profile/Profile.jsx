@@ -24,21 +24,24 @@ import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "t
 import { connect } from 'react-redux';
 import { UPDATE } from '../../redux/actions';
 import { LOGOUT } from '../../redux/actions';
-import { IS_HOME } from "../../redux/actions";
+import { NOT_HOME } from "../../redux/actions";
 
 let a = false;
 
 const Profile = (props) => {
 
+    console.log(props.user)
+    
     useEffect(() => {
-        props.dispatch({ type: IS_HOME })
+        props.dispatch({ type: NOT_HOME })
     }, [])
 
     const notifications = useNotifications();
     let navigate = useNavigate();
 
     //1-Hooks (equivalen al estado en los componentes de clase)
-    const [dataUser, setDataUser] = useState({ name: "", email: "", password: "", passwordConfirmation: "" });
+    const [dataUser, setDataUser] = useState({ name: props.user?.user.name, email: props.user?.user.email, password: "", passwordConfirmation: "" });
+    console.log("4444",dataUser)
     // const [msgError, setMsgError] = useState("");
     // const [msgError2, setMsgError2] = useState("");
 
@@ -105,53 +108,54 @@ const Profile = (props) => {
 
     const deleteUser = async () => {
 
-            try {
+        try {
 
-                let config = {
-                    headers: { Authorization: `Bearer ${props.user?.token}` }
-                };
-                let resultado = await axios.post(raiz + "users/profile/delete",  config);
+            let config = {
+                headers: { Authorization: `Bearer ${props.user?.token}` }
+            };
+            let resultado = await axios.delete(raiz + "users/profile/delete", config);
 
-                let x = resultado.data
-                console.log("x", x)
-                if (resultado.data.msg === "invalid password") {
-                    notifications.showNotification({
-                        message: "La contraseña debe tener al menos 8 caracteres y no más de 15 caracteres y los siguientes carácteres alfanuméricos a-zA-Z0-9@*#.,",
-                        icon: <ZoomExclamation />,
-                        autoClose: 2000,
-                        id: "letters"
-                    });
+            let x = resultado.data
+            console.log("x", x)
+            if (resultado.data.msg === "invalid password") {
+                notifications.showNotification({
+                    message: "La contraseña debe tener al menos 8 caracteres y no más de 15 caracteres y los siguientes carácteres alfanuméricos a-zA-Z0-9@*#.,",
+                    icon: <ZoomExclamation />,
+                    autoClose: 2000,
+                    id: "letters"
+                });
 
-                } else if (resultado.data.msg === "User does not exist") {
-                    notifications.showNotification({
-                        message: "El User con este e-mail ya existe en nuestra base de datos",
-                        icon: <ZoomExclamation />,
-                        autoClose: 2000,
-                        id: "letters"
-                    });
+            } else if (resultado.data.msg === "User does not exist") {
+                notifications.showNotification({
+                    message: "El User con este e-mail ya existe en nuestra base de datos",
+                    icon: <ZoomExclamation />,
+                    autoClose: 2000,
+                    id: "letters"
+                });
 
-                }
-                else if ((resultado.data.msg.includes('DB error')) === true) {
-                    notifications.showNotification({
-                        message: "Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com",
-                        icon: <ZoomExclamation />,
-                        autoClose: 2000,
-                        id: "letters"
-                    });
-
-                }
-                else if ((resultado.data.msg.includes('deleted')) === true) {
-                    console.log("88888: " + resultado)
-                    props.dispatch({ type: LOGOUT});
-                    setTimeout(() => {
-                        navigate("/Home");
-                    }, 1000);
-                }
-            } catch (error) {
-                console.log(error)
             }
+            else if ((resultado.data.msg.includes('DB error')) === true) {
+                notifications.showNotification({
+                    message: "Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com",
+                    icon: <ZoomExclamation />,
+                    autoClose: 2000,
+                    id: "letters"
+                });
 
-        
+            }
+            else if ((resultado.data.msg.includes('deleted')) === true) {
+
+                
+                setTimeout(() => {
+                    navigate("/");
+                    
+                }, 1000);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+
     };
 
 
@@ -159,65 +163,77 @@ const Profile = (props) => {
 
 
     const update = async () => {
-        console.log("dataUser", dataUser)
-        if (dataUser.password !== dataUser.passwordConfirmation) {
+
+        if (dataUser.password !== "") {
+            console.log("dataUser", dataUser)
+            if (dataUser.password !== dataUser.passwordConfirmation) {
+                notifications.showNotification({
+                    message: "Las contraseñas no son iguales",
+                    icon: <ZoomExclamation />,
+                    autoClose: 2000,
+                    id: "letters"
+                });
+            } else {
+                try {
+                    let body = {
+                        name: dataUser.name,
+                        email: dataUser.email,
+                        password: dataUser.password
+                    }
+                    let config = {
+                        headers: { Authorization: `Bearer ${props.user?.token}` }
+                    };
+                    console.log(body)
+                    let resultado = await axios.put(raiz + "users/profile/update", body, config);
+
+                    let x = resultado.data
+                    console.log("x", x)
+                    if (resultado.data.msg === "invalid password") {
+                        notifications.showNotification({
+                            message: "La contraseña debe tener al menos 8 caracteres y no más de 15 caracteres y los siguientes carácteres alfanuméricos a-zA-Z0-9@*#.,",
+                            icon: <ZoomExclamation />,
+                            autoClose: 2000,
+                            id: "letters"
+                        });
+
+                    } else if (resultado.data.msg === "User does not exist") {
+                        notifications.showNotification({
+                            message: "El usuario con este e-mail no existe",
+                            icon: <ZoomExclamation />,
+                            autoClose: 2000,
+                            id: "letters"
+                        });
+
+                    }
+                    else if ((resultado.data.msg.includes('DB error')) === true) {
+                        notifications.showNotification({
+                            message: "Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com",
+                            icon: <ZoomExclamation />,
+                            autoClose: 2000,
+                            id: "letters"
+                        });
+
+                    }
+                    else if ((resultado.data.msg.includes('updated')) === true) {
+                        console.log("88888: " + resultado)
+                        
+                        props.dispatch({ type: UPDATE, payload: resultado.data });
+                        setTimeout(() => {
+                            navigate("/Home");
+                        }, 1000);
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+
+            }
+        } else {
             notifications.showNotification({
-                message: "Las contraseñas no son iguales",
+                message: "Introduce la contraseña",
                 icon: <ZoomExclamation />,
                 autoClose: 2000,
                 id: "letters"
             });
-        } else {
-            try {
-                let body = {
-                    name: dataUser.name,
-                    email: dataUser.email,
-                    password: dataUser.password
-                }
-                let config = {
-                    headers: { Authorization: `Bearer ${props.user?.token}` }
-                };
-                let resultado = await axios.post(raiz + "users/profile/update", body, config);
-
-                let x = resultado.data
-                console.log("x", x)
-                if (resultado.data.msg === "invalid password") {
-                    notifications.showNotification({
-                        message: "La contraseña debe tener al menos 8 caracteres y no más de 15 caracteres y los siguientes carácteres alfanuméricos a-zA-Z0-9@*#.,",
-                        icon: <ZoomExclamation />,
-                        autoClose: 2000,
-                        id: "letters"
-                    });
-
-                } else if (resultado.data.msg === "User does not exist") {
-                    notifications.showNotification({
-                        message: "El User con este e-mail ya existe en nuestra base de datos",
-                        icon: <ZoomExclamation />,
-                        autoClose: 2000,
-                        id: "letters"
-                    });
-
-                }
-                else if ((resultado.data.msg.includes('DB error')) === true) {
-                    notifications.showNotification({
-                        message: "Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com",
-                        icon: <ZoomExclamation />,
-                        autoClose: 2000,
-                        id: "letters"
-                    });
-
-                }
-                else if ((resultado.data.msg.includes('updated')) === true) {
-                    console.log("88888: " + resultado)
-                    props.dispatch({ type: UPDATE, payload: resultado.data });
-                    setTimeout(() => {
-                        navigate("/Home");
-                    }, 1000);
-                }
-            } catch (error) {
-                console.log(error)
-            }
-
         }
     };
 

@@ -9,7 +9,6 @@ const Home = (props) => {
     
 
     useEffect(() => {
-        console.log('Created')
         props.dispatch({ type: NOT_HOME })
     }, [])
 

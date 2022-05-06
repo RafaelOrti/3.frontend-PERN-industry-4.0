@@ -73,7 +73,7 @@ const SiderG = (props) => {
    
     // console.log(window.location.pathname);
 
-    if (props.user?.token) {
+    if (props.user?.user) {
         return (
             <div className='designSiderGlobal' style={{
                 display: props.hideFooter.isHome ? 'none' : undefined

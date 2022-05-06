@@ -23,15 +23,17 @@ import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "t
 //REDUX
 import { connect } from 'react-redux';
 import { LOGIN } from '../../redux/actions';
+import { LOGOUT } from '../../redux/actions';
 import { IS_HOME } from "../../redux/actions";
 
 let a = false;
 
 const Login = (props) => {
-
+    
     useEffect(() => {
         console.log('Created')
         props.dispatch({ type: IS_HOME })
+        props.dispatch({ type: LOGOUT });
     }, [])
 
     const notifications = useNotifications();

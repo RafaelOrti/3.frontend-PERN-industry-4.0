@@ -54,13 +54,13 @@ const Header = (props) => {
    
     // console.log(window.location.pathname);
     console.log("34567",props)
-    if (props.user?.token) {
+    if (props.user?.user) {
         return (
             <div className='headerGlobalDesign' style={{
                 display: props.hideFooter.isHome ? 'none' : undefined
             }} >
                 {
-                    window.location.pathname !== "/display" &&
+                    (window.location.pathname !== "/" || window.location.pathname !== "/register") &&
 
                     <div className='headerDesign'>
 
@@ -72,15 +72,7 @@ const Header = (props) => {
                             <div className="headerFilled"></div>
                         </div>
                         <div className="headerSpace headerLinksDesign">
-                            {/* {
-                         ( window.location.pathname === "/add" ) &&
-                         <div className="link" onClick={() => navegar("/add")}><b>Add</b></div>
-                         
-                    }
-                    {
-                        (window.location.pathname !== "/add") &&
-                        <div className="link" onClick={() => navegar("/add")}>Add</div>
-                    } */}
+                            
                             {
                                 (props.user?.user.authorizationLevel === 3) && (window.location.pathname === "/admin") &&
                                 <div className="link" onClick={() => navegar("/admin")}><b>Admin</b></div>

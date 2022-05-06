@@ -10,7 +10,8 @@ import Login from './Containers/0.Login/Login';
 import Register from './Containers/0.Register/Register';
 
 import Home from './Containers/1.Home/Home';
-import Profile from './Containers/1.Profile/Profile';
+import Profile from './Containers/1.ProfileUpdate/ProfileUpdate';
+import ProfileUpdate from './Containers/1.ProfileUpdate/ProfileUpdate';
 import Graph from './Containers/1.Graph/Graph';
 import Alarms from './Containers/1.Alarms/Alarms';
 import ActionsRecord from './Containers/1.ActionsRecord/ActionsRecord';
@@ -42,6 +43,7 @@ function App() {
 
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profileUpdate" element={<ProfileUpdate />} />
           <Route path="/graph" element={<Graph />} />
           <Route path="/alarms" element={<Alarms />} />
           <Route path="/actionsRecord" element={<ActionsRecord />} />

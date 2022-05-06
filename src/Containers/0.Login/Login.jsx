@@ -29,7 +29,7 @@ import { IS_HOME } from "../../redux/actions";
 let a = false;
 
 const Login = (props) => {
-    
+     
     useEffect(() => {
         console.log('Created')
         props.dispatch({ type: IS_HOME })

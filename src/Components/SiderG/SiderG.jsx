@@ -83,9 +83,6 @@ const SiderG = (props) => {
 
                     <div className='designSider'>
 
-                        {/* <div className="siderSpace logoDesign">
-                            <img className="logo" src={require('../../img/logo.png')} alt="logo" onClick={() => navegar("/")}></img>
-                        </div> */}
                         
                         <div className="siderLinksDesign">
 

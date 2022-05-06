@@ -10,8 +10,7 @@ import Login from './Containers/0.Login/Login';
 import Register from './Containers/0.Register/Register';
 
 import Home from './Containers/1.Home/Home';
-import Profile from './Containers/1.ProfileUpdate/ProfileUpdate';
-import ProfileUpdate from './Containers/1.ProfileUpdate/ProfileUpdate';
+import Profile from './Containers/1.Profile/Profile';
 import Graph from './Containers/1.Graph/Graph';
 import Alarms from './Containers/1.Alarms/Alarms';
 import ActionsRecord from './Containers/1.ActionsRecord/ActionsRecord';
@@ -19,6 +18,9 @@ import ActionsRecord from './Containers/1.ActionsRecord/ActionsRecord';
 import Installation from './Containers/2.Installation/Installation';
 
 import AdminClient from './Containers/3.AdminClient/AdminClient';
+
+import Maintenance from './Containers/4.Maintenance/Maintenance';
+
 import Admin from './Containers/5.Admin/Admin';
 
 import IndustrialPlant from './Containers/6.IndustrialPlant/IndustrialPlant';
@@ -43,19 +45,22 @@ function App() {
 
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/profileUpdate" element={<ProfileUpdate />} />
-          <Route path="/graph" element={<Graph />} />
+
+          {/* <Route path="/graph" element={<Graph />} />
           <Route path="/alarms" element={<Alarms />} />
           <Route path="/actionsRecord" element={<ActionsRecord />} />
 
           <Route path="/installation" element={<Installation />} />
 
           <Route path="/clientAdmin" element={<AdminClient />} />
+
+          <Route path="/maintennace" element={<Maintenance />} />
+
           
           <Route path="/admin" element={<Admin />} />
           
           <Route path="/industrialPlant" element={<IndustrialPlant />} />
-          <Route path="/map" element={<Map />} />
+          <Route path="/map" element={<Map />} /> */}
           
         </Routes>
       </BrowserRouter>

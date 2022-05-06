@@ -122,15 +122,7 @@ const Register = (props) => {
                 
                 let x = resultado.data
                 console.log("x", x)
-                if (resultado.data.msg === "La contraseña debe tener al menos 8 caracteres y no más de 15 caracteres y los siguientes carácteres alfanuméricos a-zA-Z0-9@*#.,") {
-                    notifications.showNotification({
-                        message: "La contraseña debe tener al menos 8 caracteres y no más de 15 caracteres y los siguientes carácteres alfanuméricos a-zA-Z0-9@*#.,",
-                        icon: <ZoomExclamation />,
-                        autoClose: 2000,
-                        id: "letters"
-                    });
-
-                } else if (resultado.data.msg === "El User con este e-mail ya existe en nuestra base de datos") {
+                 if (resultado.data.msg === "this user already exists") {
                     notifications.showNotification({
                         message: "El User con este e-mail ya existe en nuestra base de datos",
                         icon: <ZoomExclamation />,
@@ -139,7 +131,7 @@ const Register = (props) => {
                     });
 
                 }
-                else if ((resultado.data.msg.includes('db error'))===true) {
+                else if ((resultado.data.msg.includes('DB error'))===true) {
                     notifications.showNotification({
                         message: "Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com",
                         icon: <ZoomExclamation />,

@@ -135,7 +135,7 @@ const Login = (props) => {
                 }
                 let resultado = await axios.post(raiz + "users/login", body);
                 console.log("00000", resultado);
-                if (resultado.data.msg === "Contraseña incorrecta") {
+                if (resultado.data.msg === "Incorrect password") {
                     notifications.showNotification({
                         message: "La contraseña es incorrecta",
                         icon: <ZoomExclamation />,
@@ -143,7 +143,7 @@ const Login = (props) => {
                         id: "letters"
                     });
 
-                } else if (resultado.data.msg === "El User no existe") {
+                } else if (resultado.data.msg === "User does not exist") {
                     notifications.showNotification({
                         message: "El usuario no existe",
                         icon: <ZoomExclamation />,
@@ -152,7 +152,7 @@ const Login = (props) => {
                     });
 
                 }
-                else if ((resultado.data.msg.includes('db error')) === true) {
+                else if ((resultado.data.msg.includes('DB error')) === true) {
                     notifications.showNotification({
                         message: "Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com",
                         icon: <ZoomExclamation />,

@@ -10,7 +10,7 @@ import { useNotifications } from "@mantine/notifications";
 import axios from 'axios';
 
 /*DISEÑO*/
-import './Login.scss';
+import './Profile.scss';
 
 //ICONS
 import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "tabler-icons-react";
@@ -22,15 +22,15 @@ import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "t
 
 //REDUX
 import { connect } from 'react-redux';
-import { LOGIN } from '../../redux/actions';
+import { UPDATE } from '../../redux/actions';
+import { LOGOUT } from '../../redux/actions';
 import { IS_HOME } from "../../redux/actions";
 
 let a = false;
 
-const Login = (props) => {
+const Profile = (props) => {
 
     useEffect(() => {
-        console.log('Created')
         props.dispatch({ type: IS_HOME })
     }, [])
 
@@ -38,7 +38,7 @@ const Login = (props) => {
     let navigate = useNavigate();
 
     //1-Hooks (equivalen al estado en los componentes de clase)
-    const [dataUser, setDataUser] = useState({ email: "", password: "" });
+    const [dataUser, setDataUser] = useState({ name: "", email: "", password: "", passwordConfirmation: "" });
     // const [msgError, setMsgError] = useState("");
     // const [msgError2, setMsgError2] = useState("");
 
@@ -48,22 +48,6 @@ const Login = (props) => {
         setDataUser({ ...dataUser, [e.target.name]: e.target.value })
         // console.log("dataUser", dataUser)
     };
-
-    // const checkEmail = (e) => {
-    //     console.log(e.target.value)
-    //     if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(e.target.value)) {
-
-    //         notifications.showNotification({
-    //             message: "Introduce un email válido",
-    //             icon: <ZoomExclamation />,
-    //             autoClose: false,
-    //             id: 'email'
-    //         })
-    //     } else {
-    //         notifications.hideNotification("email");
-    //     }
-    // }
-
 
     const checkPassword = (e) => {
 
@@ -115,44 +99,39 @@ const Login = (props) => {
 
     };
 
-    const navigateRegisters = () => {
-        navigate("/register");
+    const navigateLogin = () => {
+        navigate("/");
     };
 
-    const login = async () => {
-
-        // setTimeout(() => {
-        //     navigate("/home");
-        // }, 1000);
-        console.log("eeeee",dataUser.email)
-        if (/^([\da-z_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.exec(dataUser.email)) {
-
+    const deleteUser = async () => {
 
             try {
-                let body = {
-                    email: dataUser.email,
-                    password: dataUser.password
-                }
-                let resultado = await axios.post(raiz + "users/login", body);
-                console.log("00000", resultado);
-                if (resultado.data.msg === "Contraseña incorrecta") {
+
+                let config = {
+                    headers: { Authorization: `Bearer ${props.user?.token}` }
+                };
+                let resultado = await axios.post(raiz + "users/profile/delete",  config);
+
+                let x = resultado.data
+                console.log("x", x)
+                if (resultado.data.msg === "invalid password") {
                     notifications.showNotification({
-                        message: "La contraseña es incorrecta",
+                        message: "La contraseña debe tener al menos 8 caracteres y no más de 15 caracteres y los siguientes carácteres alfanuméricos a-zA-Z0-9@*#.,",
                         icon: <ZoomExclamation />,
                         autoClose: 2000,
                         id: "letters"
                     });
 
-                } else if (resultado.data.msg === "El User no existe") {
+                } else if (resultado.data.msg === "User does not exist") {
                     notifications.showNotification({
-                        message: "El usuario no existe",
+                        message: "El User con este e-mail ya existe en nuestra base de datos",
                         icon: <ZoomExclamation />,
                         autoClose: 2000,
                         id: "letters"
                     });
 
                 }
-                else if ((resultado.data.msg.includes('db error')) === true) {
+                else if ((resultado.data.msg.includes('DB error')) === true) {
                     notifications.showNotification({
                         message: "Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com",
                         icon: <ZoomExclamation />,
@@ -160,11 +139,10 @@ const Login = (props) => {
                         id: "letters"
                     });
 
-
-                } else if ((resultado.data.msg.includes('Welcome')) === true) {
-                    props.dispatch({ type: LOGIN, payload: resultado.data });
-                    console.log("login", resultado.data)
-                    console.log(props)
+                }
+                else if ((resultado.data.msg.includes('deleted')) === true) {
+                    console.log("88888: " + resultado)
+                    props.dispatch({ type: LOGOUT});
                     setTimeout(() => {
                         navigate("/Home");
                     }, 1000);
@@ -172,15 +150,75 @@ const Login = (props) => {
             } catch (error) {
                 console.log(error)
             }
-        } else {
+
+        
+    };
+
+
+
+
+
+    const update = async () => {
+        console.log("dataUser", dataUser)
+        if (dataUser.password !== dataUser.passwordConfirmation) {
             notifications.showNotification({
-                message: "Introduce un email válido",
+                message: "Las contraseñas no son iguales",
                 icon: <ZoomExclamation />,
                 autoClose: 2000,
-                id: 'email'
-            })
-        }
+                id: "letters"
+            });
+        } else {
+            try {
+                let body = {
+                    name: dataUser.name,
+                    email: dataUser.email,
+                    password: dataUser.password
+                }
+                let config = {
+                    headers: { Authorization: `Bearer ${props.user?.token}` }
+                };
+                let resultado = await axios.post(raiz + "users/profile/update", body, config);
 
+                let x = resultado.data
+                console.log("x", x)
+                if (resultado.data.msg === "invalid password") {
+                    notifications.showNotification({
+                        message: "La contraseña debe tener al menos 8 caracteres y no más de 15 caracteres y los siguientes carácteres alfanuméricos a-zA-Z0-9@*#.,",
+                        icon: <ZoomExclamation />,
+                        autoClose: 2000,
+                        id: "letters"
+                    });
+
+                } else if (resultado.data.msg === "User does not exist") {
+                    notifications.showNotification({
+                        message: "El User con este e-mail ya existe en nuestra base de datos",
+                        icon: <ZoomExclamation />,
+                        autoClose: 2000,
+                        id: "letters"
+                    });
+
+                }
+                else if ((resultado.data.msg.includes('DB error')) === true) {
+                    notifications.showNotification({
+                        message: "Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com",
+                        icon: <ZoomExclamation />,
+                        autoClose: 2000,
+                        id: "letters"
+                    });
+
+                }
+                else if ((resultado.data.msg.includes('updated')) === true) {
+                    console.log("88888: " + resultado)
+                    props.dispatch({ type: UPDATE, payload: resultado.data });
+                    setTimeout(() => {
+                        navigate("/Home");
+                    }, 1000);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+
+        }
     };
 
 
@@ -193,22 +231,34 @@ const Login = (props) => {
         <div className="designLogin">
             <div className="form">
                 <div className="selectorSection">
-                    <div className="selected"><UserCircle name="search"></UserCircle><p> &nbsp;&nbsp; Log In</p></div>
-                    <div className="btn btnGrey" onClick={() => navigateRegisters()}><UserPlus name="search"></UserPlus><p>&nbsp;&nbsp;Register</p></div>
+
+                    <div className="btn btnRed" onClick={() => deleteUser()}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;ELIMINAR</p></div>
+                    <div className="selected"></div>
                 </div>
                 <div className="formLoginSection">
-                    <div className="logoSection">
+                    {/* <div className="logoSection">
                         <div className="logoImg" />
                         <div className="title">Super Dev</div>
-                    </div>
+                    </div> */}
                     <div className="inputSection noMarginTop">
                         <label >Email</label>
                         <div className="search">
-                            <input type="email" className="search__input" id="email" name="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e); }} />
+                            <input type="email" className="search__input" name="email" id="email" title="email" placeholder={props.user?.user.email} autoComplete="off" onChange={(e) => { fillData(e) }} />
                             <div className="search__icon">
                                 <Photo name="search"></Photo>
                             </div>
                         </div>
+                    </div>
+                    <div className="inputSection">
+                        <label >Name</label>
+                        <div className="search">
+                            <input type="text" className="search__input" name="name" id="name" title="name" placeholder={props.user?.user.name} autoComplete="off" onChange={(e) => { fillData(e); }} />
+                            <div className="search__icon">
+                                <Photo name="search"></Photo>
+                            </div>
+                        </div>
+
+
                     </div>
                     <div className="inputSection">
                         <label >Password</label>
@@ -219,11 +269,21 @@ const Login = (props) => {
                             </div>
                         </div>
 
-                        {/* {msgError}
-                        {msgError2} */}
+
+                    </div>
+                    <div className="inputSection">
+                        <label >Password confirmation</label>
+                        <div className="search">
+                            <input type="password" className="search__input" name="passwordConfirmation" id="password2" title="password2" placeholder="********" autoComplete="off" onChange={(e) => { fillData(e); checkPassword(e); }} />
+                            <div className="search__icon">
+                                <Photo name="search"></Photo>
+                            </div>
+                        </div>
+
+
                     </div>
                     <div className="inputSection loginSection">
-                        <div className="btn btnBlue" onClick={() => login()}><p>Log In</p></div>
+                        <div className="btn btnBlue" onClick={() => update()}><p>Log In</p></div>
                     </div>
                 </div>
             </div>
@@ -235,118 +295,9 @@ const Login = (props) => {
 
 
 };
-// //structure
-// const DesignLogin = styled.div`
-// font-family: 'Poppins', sans-serif;
-// margin: 0;
-// padding: 0;
-// display: flex;
-// flex-direction: column;
-// justify-content: center;
-// align-items: center;
-// min-height: 100vh;
-// background-image: url(${fondoLogin});
-// background-size: cover;
-// `;
 
-// const Form = styled.div`
-//   position: relative;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: start-flex;
-//   align-items: center;
-//   background: #ecf0f3;
-//   border-radius: 1rem;
-//   width: 33%;
-//   height: 80%;
-//   @media (max-width: 1087px) {
-//     width: 70%;
-//   }
-//   @media (max-height: 500px) {
-//     height: 100%;
-//   }
-// `;
-
-// //selector
-// const SelectorSection = styled.div`
-// width: 100%;
-// height: 2.5rem;
-// display: flex;
-// justify-content: center;
-// align-items: center;
-// `;
-
-// const Btn = styled.div`
-//   width: 15rem;
-//   height: 2.5rem;
-//   border-radius: 1rem;
-//   justify-self: center;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   cursor: pointer;
-//   transition: .3s ease;
-//   &:hover {
-//     color: var(--white);
-//   }
-//   p {
-//     font-size: 1.2rem;
-//   }
-
-// `;
-
-// const BtnBlue = styled(Btn)`
-// grid-column: 1 / 2;
-//   grid-row: 4 / 5;
-//   background: var(--primary);
-//   color: var(--greyLight-1);
-//     box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light), inset -0.2rem -0.2rem 1rem var(--primary-dark), 0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--white);
-//     &:active {
-//         box-shadow: inset .2rem .2rem 1rem var(--primary-dark),
-//           inset -.2rem -.2rem 1rem var(--primary-light);
-//       }
-// `;
-
-// const BtnGrey = styled(Btn)`
-// width: 50%;
-// grid-column: 1 / 2;
-// grid-row: 5 / 6;
-// color: var(--greyDark);
-// border-radius: 0  1rem 0 0;
-// box-shadow: inset 0.2rem 0.2rem 1rem var(--greyDark), inset -0.2rem -0.2rem 1rem var(--greyDark), -0.2rem -0.2rem 0.5rem var(--white);
-// &:hover { color: var(--primary); }
-// &:active {
-//     box-shadow: inset .2rem .2rem 1rem var(--primary-dark),
-//       inset -.2rem -.2rem 1rem var(--primary-light);
-//    background: var(--primary);
-//       color: var(--greyLight-1);
-//   }
-// `;
-
-// const Selected = styled.div`
-// text-align: center;
-// width: 50%;
-// `;
-// //Selector
-
-// //Form
-// const FormLoginSection = styled.div`
-// text-align: left;
-// height: 90%;
-// width: 70%;
-// `;
-
-// const LogoSection = styled.div`
-// height: 42%;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-//   `;
-
-// //Form
-
-export default connect()(Login);
+export default connect((state) => ({
+    user: state.user,
+    // token: state.token,
+    hideFooter: state.hideFooter
+}))(Profile);

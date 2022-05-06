@@ -1,4 +1,4 @@
-import {LOGIN, LOGOUT, MODIFY_CREDENTIALS} from '../actions';
+import {REGISTER, LOGIN, LOGOUT, MODIFY_CREDENTIALS} from '../actions';
 
 const initialState = {
     token: "",
@@ -7,6 +7,13 @@ const initialState = {
 
 const datosLoginReducer = (state = initialState, action) => {
     switch(action.type){
+        //GUARDO EN EL ESTADO LOS DATOS DEL USUARIO CREADO
+        case REGISTER:
+        return {
+            ...state,
+            user: action.payload.user,
+            token: action.payload.token
+        };
         //GUARDO EN EL ESTADO LOS DATOS DEL USUARIO LOGUEADO
         case LOGIN:
         return {

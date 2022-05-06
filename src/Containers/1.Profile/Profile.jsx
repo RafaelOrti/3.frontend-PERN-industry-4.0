@@ -10,7 +10,7 @@ import { useNotifications } from "@mantine/notifications";
 import axios from 'axios';
 
 /*DISEÑO*/
-import './Login.scss';
+import './Profile.scss';
 
 //ICONS
 import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "tabler-icons-react";

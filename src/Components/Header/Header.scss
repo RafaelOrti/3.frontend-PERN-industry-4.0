@@ -1,8 +1,8 @@
 
-.designHeaderGlobal {
+.headerGlobalDesign {
     height: 5em;
     width: 100%;
-    z-index: 2;
+    z-index: 7;
     position: absolute;
 
     
@@ -11,10 +11,10 @@
 }
 
 
-.designHeader {
+.headerDesign {
     height: 5em;
     width: 100%;
-    z-index: 2;
+    z-index: 7;
     position: absolute;
     background-color: black;
     
@@ -34,7 +34,7 @@
 
 }
 
-.linksDesign {
+.headerLinksDesign {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
@@ -51,20 +51,8 @@
     cursor:pointer;
 }
 
-.searchDesign {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
 
-
-}
-
-.relleno {
-    height: 1em;
-}
-
-.logoDesign{
+.headerLogoDesign{
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -72,29 +60,21 @@
     
 }
 
-.logo{
+.headerLogo{
     height: 5em;
     width: 5.7em;
 }
 
-.logo:hover { 
+.headerLogo:hover { 
     cursor: pointer; 
 }
 
-.logoDisplay{
-    height: 4em;
-    width: 9em; 
-    display: none;
+
+
+
+.headerFilled {
+    height: 1em;
 }
 
-
-.headerSpace:hover .logoDisplay{
-
-    display: block;
-}
-
-input{
-    border-radius:"2em";
-}
 
 

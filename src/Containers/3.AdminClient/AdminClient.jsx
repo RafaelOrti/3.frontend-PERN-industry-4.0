@@ -10,7 +10,7 @@ import { useNotifications } from "@mantine/notifications";
 import axios from 'axios';
 
 /*DISEÑO*/
-import './Register.scss';
+import './AdminClient.scss';
 
 //ICONS
 import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "tabler-icons-react";
@@ -22,22 +22,23 @@ import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "t
 
 //REDUX
 import { connect } from 'react-redux';
-import { Login } from '../../redux/actions';
+import { LOGIN } from '../../redux/actions';
 import { IS_HOME } from "../../redux/actions";
 
 let a = false;
 
-const Register = (props) => {
+const Login = (props) => {
 
-    useEffect(() =>{
+    useEffect(() => {
+        console.log('Created')
         props.dispatch({ type: IS_HOME })
-    },[])
+    }, [])
 
     const notifications = useNotifications();
     let navigate = useNavigate();
 
     //1-Hooks (equivalen al estado en los componentes de clase)
-    const [dataUser, setDataUser] = useState({ email: "", password: "", passwordConfirmation: "" });
+    const [dataUser, setDataUser] = useState({ email: "", password: "" });
     // const [msgError, setMsgError] = useState("");
     // const [msgError2, setMsgError2] = useState("");
 
@@ -47,6 +48,22 @@ const Register = (props) => {
         setDataUser({ ...dataUser, [e.target.name]: e.target.value })
         // console.log("dataUser", dataUser)
     };
+
+    // const checkEmail = (e) => {
+    //     console.log(e.target.value)
+    //     if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(e.target.value)) {
+
+    //         notifications.showNotification({
+    //             message: "Introduce un email válido",
+    //             icon: <ZoomExclamation />,
+    //             autoClose: false,
+    //             id: 'email'
+    //         })
+    //     } else {
+    //         notifications.hideNotification("email");
+    //     }
+    // }
+
 
     const checkPassword = (e) => {
 
@@ -98,39 +115,45 @@ const Register = (props) => {
 
     };
 
-    const navigateLogin = () => {
-        navigate("/");
+    const navigateRegisters = () => {
+        navigate("/register");
     };
 
-    const register = async () => {
-        if (dataUser.password !== dataUser.passwordConfirmation) {
-            notifications.showNotification({
-                message: "Las contraseñas no son iguales",
-                icon: <ZoomExclamation />,
-                autoClose: 2000,
-                id: "letters"
-            });
-        } else {
-            try {
-                let body = {
-                    email: dataUser.email,
-                    password: dataUser.password
-                }
-                let resultado = await axios.post(raiz + "users/Register", body);
-                console.log(resultado);
-                if (resultado.data === "Usuario o contraseña inválido") {
-                    // setMsgError2("Usuario o contraseña inválido")
-                } else {
-                    props.dispatch({ type: Register, payload: resultado.data });
-                    setTimeout(() => {
-                        navigate("/Home");
-                    }, 1000);
-                }
-            } catch (error) {
-                console.log(error)
-            }
+    const login = async () => {
 
-        }
+        setTimeout(() => {
+            navigate("/home");
+        }, 1000);
+        // console.log(dataUser.email)
+        // if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(dataUser.email)) {
+
+        //     notifications.showNotification({
+        //         message: "Introduce un email válido",
+        //         icon: <ZoomExclamation />,
+        //         autoClose: 2000,
+        //         id: 'email'
+        //     })
+        // } else {
+
+        //     try {
+        //         let body = {
+        //             email: dataUser.email,
+        //             password: dataUser.password
+        //         }
+        //         let resultado = await axios.post(raiz + "users/login", body);
+        //         console.log(resultado);
+        //         if (resultado.data === "Usuario o contraseña inválido") {
+        //             // setMsgError2("Usuario o contraseña inválido")
+        //         } else {
+                    // props.dispatch({ type: LOGIN, payload: resultado.data });
+                    // setTimeout(() => {
+                    //     navigate("/");
+                    // }, 1000);
+        //         }
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        // }
     };
 
 
@@ -143,19 +166,18 @@ const Register = (props) => {
         <div className="designLogin">
             <div className="form">
                 <div className="selectorSection">
-
-                    <div className="btn btnGreyL " onClick={() => navigateLogin()}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Log In</p></div>
-                    <div className="selected"><UserPlus name="search"></UserPlus><p> &nbsp;&nbsp;Register </p></div>
+                    <div className="selected"><UserCircle name="search"></UserCircle><p> &nbsp;&nbsp; Log In</p></div>
+                    <div className="btn btnGrey" onClick={() => navigateRegisters()}><UserPlus name="search"></UserPlus><p>&nbsp;&nbsp;Register</p></div>
                 </div>
                 <div className="formLoginSection">
-                    {/* <div className="logoSection">
+                    <div className="logoSection">
                         <div className="logoImg" />
                         <div className="title">Super Dev</div>
-                    </div> */}
+                    </div>
                     <div className="inputSection noMarginTop">
                         <label >Email</label>
                         <div className="search">
-                            <input type="email" className="search__input" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e) }} />
+                            <input type="email" className="search__input" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e);  }} />
                             <div className="search__icon">
                                 <Photo name="search"></Photo>
                             </div>
@@ -170,21 +192,11 @@ const Register = (props) => {
                             </div>
                         </div>
 
-
-                    </div>
-                    <div className="inputSection">
-                        <label >Password confirmation</label>
-                        <div className="search">
-                            <input type="password2" className="search__input" id="password2" title="password2" placeholder="********" autoComplete="off" onChange={(e) => { fillData(e); checkPassword(e); }} />
-                            <div className="search__icon">
-                                <Photo name="search"></Photo>
-                            </div>
-                        </div>
-
-
+                        {/* {msgError}
+                        {msgError2} */}
                     </div>
                     <div className="inputSection loginSection">
-                        <div className="btn btnBlue" onClick={() => register()}><p>Log In</p></div>
+                        <div className="btn btnBlue" onClick={() => login()}><p>Log In</p></div>
                     </div>
                 </div>
             </div>
@@ -197,5 +209,4 @@ const Register = (props) => {
 
 };
 
-
-export default connect()(Register);
+export default connect()(Login);

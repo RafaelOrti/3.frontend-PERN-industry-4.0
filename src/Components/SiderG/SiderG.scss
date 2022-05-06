@@ -1,35 +1,54 @@
 
+.designSiderGlobal {
+  height: 100%;
+  width: 10em;
+  z-index: 7;
+  position: absolute;
+
+  
+
+ 
+}
+
+
 .designSider {
+  height: 100%;
+  width: 10em;
 
-    width: 13vw;
-    height: 100vh;
+  background-color: black;
+  
 
-    position: absolute;
-    z-index: 1;
-    
-    // background-color:black;
+  color: white;
 
-    // background-size: cover;
-
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: center;
-    // align-items: center;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.siderI{
-    margin-top: 4.75em;
-    background-color:black;
+
+
+.siderLinksDesign {
+  width: 10em;
+  height: 50vh;
+  padding-left: 1em;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
 }
 
-.ant-layout-sider{
-    height:100% !important;
+.link {
+  margin-right: 3em;
+  margin-bottom: 1em;
 }
 
-.site-layout .site-layout-background {
-  background: #fff;
+.link:hover {
+  font-weight: bold;
+  cursor:pointer;
 }
-  [data-theme="dark"] .site-layout .site-layout-background {
-    background: #141414;
-  }
+
+
+
+

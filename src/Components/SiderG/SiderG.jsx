@@ -10,7 +10,6 @@ import { raiz } from '../../utiles';
 
 import 'antd/dist/antd.css';
 import './SiderG.scss';
-import { Layout, Menu, Breadcrumb } from 'antd';
 
 //ICONS
 
@@ -23,80 +22,192 @@ import {
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-const { Header, Content, Footer, Sider } = Layout;
 
-function getItem(label, key, icon) {
-  return {
-    key,
-    icon,
-    label
-  };
-}
-// let navigate = useNavigate();
-const items = [
-  getItem((
-    <a href="/home" rel="noopener noreferrer" style={{margin:"1.24em"}}>
-      Home
-    </a>
-  ), '1', <HomeOutlined />),
-  getItem(<a href="/graph"  rel="noopener noreferrer"style={{margin:"1.24em"}}>
-  Gráficos
-</a>, '2', <DesktopOutlined />),
-  getItem(<a href="/alarm"  rel="noopener noreferrer"style={{margin:"1.24em"}}>
-  Alarmas
-</a>, '3', <PieChartOutlined />),
-  getItem(<a href="/event"  rel="noopener noreferrer"style={{margin:"1.24em"}}>
-  Eventos
-</a>, '4', <DesktopOutlined />),
-  getItem(<a href="/com"  rel="noopener noreferrer"style={{margin:"1.24em"}}>
-  Comunicaciones
-</a>, '5', <PieChartOutlined />),
-  getItem(<a href="/con"  rel="noopener noreferrer"style={{margin:"1.24em"}}>
-  Conexiones
-</a>, '6', <DesktopOutlined />),
 
-];
 
-class SiderG extends React.Component {
 
-//   navegar = (lugar) => {
 
-//     setTimeout(() => {
-//         navigate(lugar);
-//     }, 200);
+import axios from 'axios';
 
-// }
 
-  state = {
-    collapsed: false,
-  };
-  onCollapse = (collapsed) => {
-    console.log(collapsed);
-    this.setState({
-      collapsed,
-    });
-  };
 
-  render() {
-    const { collapsed } = this.state;
-    return (
+import './SiderG.scss';
 
-        <div className="designSider" style={{
-          display: this.props.hideFooter.isHome ? 'none' : undefined}} >
-        <Sider  collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
-          {/* <div className="logo" /> */}
-          <Menu className="siderI" theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
-          <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]}/>
+const SiderG = (props) => {
+
+    console.log("props.credentials?.user.rol")
+    console.log(props)
+    let navigate = useNavigate();
+
+    const [titulo, setTitulo] = useState("");
+
+    useEffect(() => {
+        // console.log("props.credentials");
+        // console.log(props.credentials);
+    })
+
+    const navegar = (lugar) => {
+
+        setTimeout(() => {
+            navigate(lugar);
+        }, 200);
+
+    }
+
+    // const logOut = () => {
+    //     //Borrar de RDX las credenciales
+    //     props.dispatch({ type: LOGOUT });
+
+    //     setTimeout(() => {
+    //         navigate("/");
+    //     }, 1500);
+    // }
+
+    const manejador = (ev) => {
+        setTitulo(ev.target.value);
+    }
+    // {
+    //     window.location.pathname === "/add" &&
+    //     <div className="link" onClick={() => navegar("/film")}>Film</div>
+    // }
    
+    // console.log(window.location.pathname);
 
-        </Sider>
+    if (props.user?.token) {
+        return (
+            <div className='designSiderGlobal' style={{
+                display: props.hideFooter.isHome ? 'none' : undefined
+            }} >
+                {
+                    window.location.pathname !== "/display" &&
 
-        </div>
-    
-    );
-  }
+                    <div className='designSider'>
+
+                        {/* <div className="siderSpace logoDesign">
+                            <img className="logo" src={require('../../img/logo.png')} alt="logo" onClick={() => navegar("/")}></img>
+                        </div> */}
+                        
+                        <div className="siderLinksDesign">
+
+                            {
+                                (props.user?.user.authorizationLevel === 3) && (window.location.pathname === "/admin") &&
+                                <div className="link" onClick={() => navegar("/admin")}><b>Admin</b></div>
+
+                            }
+                            {
+                                (props.user?.user.authorizationLevel === 3) && (window.location.pathname !== "/admin") &&
+                                <div className="link" onClick={() => navegar("/admin")}>Admin</div>
+                            }
+                            {
+                                (props.user?.user.authorizationLevel === 5) && (window.location.pathname === "/admin") &&
+                                <div className="link" onClick={() => navegar("/admin")}><b>Admin</b></div>
+
+                            }
+                            {
+                                (props.user?.user.authorizationLevel === 5) && (window.location.pathname !== "/admin") &&
+                                <div className="link" onClick={() => navegar("/admin")}>Admin</div>
+                            }
+                            {
+                                (window.location.pathname === "/profile") &&
+                                <div className="link" onClick={() => navegar("/")}>
+                                    <b>Home</b>
+                                </div>
+                            }
+                            {
+                                (window.location.pathname !== "/profile") &&
+                                <div className="link" onClick={() => navegar("/")}>
+                                    Home
+                                </div>
+                            }
+                            {
+                                (window.location.pathname === "/profile") &&
+                                <div className="link" onClick={() => navegar("/profile")}>
+                                    <b>Gráficos</b>
+                                </div>
+                            }
+                            {
+                                (window.location.pathname !== "/profile") &&
+                                <div className="link" onClick={() => navegar("/profile")}>
+                                    Gráficos
+                                </div>
+                            }
+                            {
+                                (window.location.pathname === "/profile") &&
+                                <div className="link" onClick={() => navegar("/profile")}>
+                                    <b>Alarmas</b>
+                                </div>
+                            }
+                            {
+                                (window.location.pathname !== "/profile") &&
+                                <div className="link" onClick={() => navegar("/profile")}>
+                                    Alarmas
+                                </div>
+                            }
+                            {
+                                (window.location.pathname === "/profile") &&
+                                <div className="link" onClick={() => navegar("/profile")}>
+                                    <b>Eventos</b>
+                                </div>
+                            }
+                            {
+                                (window.location.pathname !== "/profile") &&
+                                <div className="link" onClick={() => navegar("/profile")}>
+                                    Eventos
+                                </div>
+                            }
+                            {
+                                (window.location.pathname === "/profile") &&
+                                <div className="link" onClick={() => navegar("/profile")}>
+                                    <b>Comunicaciones</b>
+                                </div>
+                            }
+                            {
+                                (window.location.pathname !== "/profile") &&
+                                <div className="link" onClick={() => navegar("/profile")}>
+                                    Comunicaciones
+                                </div>
+                            }
+                            {
+                                (window.location.pathname === "/profile") &&
+                                <div className="link" onClick={() => navegar("/profile")}>
+                                    <b>Conexiones</b>
+                                </div>
+                            }
+                            {
+                                (window.location.pathname !== "/profile") &&
+                                <div className="link" onClick={() => navegar("/profile")}>
+                                    Conexiones
+                                </div>
+                            }
+
+
+                        </div>
+
+                    </div>
+                }
+                {
+                    window.location.pathname === "/display" &&
+                    (
+
+                        <div className="siderSpace logoDesign">
+                            {/* <img className="logoDisplay" src={require('../../img/volver.png')} alt="logo" onClick={() => navegar("/film")}></img> */}
+                        </div>
+
+                    )
+                }
+            </div>
+
+        )
+    }
+
+
+
 }
+
+
+
 
 export default connect((state) => ({
+  user: state.user,
   hideFooter: state.hideFooter
 }))(SiderG);

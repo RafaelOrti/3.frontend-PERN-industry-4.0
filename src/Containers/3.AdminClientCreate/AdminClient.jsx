@@ -37,7 +37,7 @@ const AdminClient = (props) => {
     let navigate = useNavigate();
 
     //1-Hooks (equivalen al estado en los componentes de clase)
-    const [dataUser, setDataUser] = useState({ name:"", email: "", password: "", passwordConfirmation: "" });
+    const [dataUser, setDataUser] = useState({ name: "", email: "", authorizationLevel: "", password: "", passwordConfirmation: "" });
     const [users, setUsers] = useState("");
     // const [msgError, setMsgError] = useState("");
     // const [msgError2, setMsgError2] = useState("");
@@ -103,134 +103,158 @@ const AdminClient = (props) => {
         navigate(location);
     };
 
+
     const register = async () => {
-        console.log("dataUser", dataUser)
-        if (dataUser.password !== dataUser.passwordConfirmation) {
-            notifications.showNotification({
-                message: "Las contraseñas no son iguales",
-                icon: <ZoomExclamation />,
-                autoClose: 2000,
-                id: "letters"
-            });
-        } else {
-            try {
-                let body = {
-                    name: dataUser.name,
-                    email: dataUser.email,
-                    password: dataUser.password
-                }
-                let resultado = await axios.post(raiz + "users/Register", body);
-                
-                let x = resultado.data
-                console.log("x", x)
-                 if (resultado.data.msg === "this user already exists") {
+
+        if (dataUser.password === "" || dataUser.passwordConfirmation === "" || dataUser.name === "" || dataUser.email === "" || dataUser.authorizationLevel === "") {
+            console.log("dataUser", dataUser)
+                notifications.showNotification({
+                    message: "Introduce todos los campos",
+                    icon: <ZoomExclamation />,
+                    autoClose: 2000,
+                    id: "letters"
+                });
+            } else {
+                console.log("dataUser", dataUser)
+                if (dataUser.password !== dataUser.passwordConfirmation) {
                     notifications.showNotification({
-                        message: "El User con este e-mail ya existe en nuestra base de datos",
+                        message: "Las contraseñas no son iguales",
                         icon: <ZoomExclamation />,
                         autoClose: 2000,
                         id: "letters"
                     });
+                } else {
+                    try {
+                        let body = {
+                            name: dataUser.name,
+                            email: dataUser.email,
+                            authorizationLevel: dataUser.authorizationLevel,
+                            password: dataUser.password
+                        }
+                        let resultado = await axios.post(raiz + "users/client", body);
+
+                        let x = resultado.data
+                        console.log("x", x)
+                        if (resultado.data.msg === "this user already exists") {
+                            notifications.showNotification({
+                                message: "El User con este e-mail ya existe en nuestra base de datos",
+                                icon: <ZoomExclamation />,
+                                autoClose: 2000,
+                                id: "letters"
+                            });
+
+                        }
+                        else if ((resultado.data.msg.includes('DB error')) === true) {
+                            notifications.showNotification({
+                                message: "Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com",
+                                icon: <ZoomExclamation />,
+                                autoClose: 2000,
+                                id: "letters"
+                            });
+
+                        }
+                        else if ((resultado.data.msg.includes('Welcome')) === true) {
+                            console.log("88888: " + resultado)
+                            props.dispatch({ type: REGISTER, payload: resultado.data });
+                            setTimeout(() => {
+                                navigate("/Home");
+                            }, 1000);
+                        }
+                    } catch (error) {
+                        console.log(error)
+                    }
 
                 }
-                else if ((resultado.data.msg.includes('DB error'))===true) {
-                    notifications.showNotification({
-                        message: "Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com",
-                        icon: <ZoomExclamation />,
-                        autoClose: 2000,
-                        id: "letters"
-                    });
-
-                }
-                else if ((resultado.data.msg.includes('Welcome'))===true) {
-                    console.log("88888: " + resultado)
-                    props.dispatch({ type: REGISTER, payload: resultado.data });
-                    setTimeout(() => {
-                        navigate("/Home");
-                    }, 1000);
-                }
-            } catch (error) {
-                console.log(error)
             }
-
-        }
-    };
+        };
 
 
 
 
-    //2-Render (lo que pinta en pantalla)
+        //2-Render (lo que pinta en pantalla)
 
-    return (
+        return (
 
-        <div className="designLogin">
-            <div className="adminForm">
-                <div className="selectorSection">
-                    <div className="btnAdmin adminSelected"><UserPlus name="search"></UserPlus><p> &nbsp;&nbsp;Usuarios </p></div>
-                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Crear usuario</p></div>
-                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Editar usuario</p></div>
-                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Eliminar usuario</p></div>
-                    
-                </div>
-                <div className="formLoginSection">
-                    {/* <div className="logoSection">
+            <div className="designLogin">
+                <div className="adminForm">
+                    <div className="selectorSection">
+                        <div className="btnAdmin adminSelected"><UserPlus name="search"></UserPlus><p> &nbsp;&nbsp;Usuarios </p></div>
+                        <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Crear usuario</p></div>
+                        <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Editar usuario</p></div>
+                        <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Eliminar usuario</p></div>
+
+                    </div>
+                    <div className="formLoginSection">
+                        {/* <div className="logoSection">
                         <div className="logoImg" />
                         <div className="title">Super Dev</div>
                     </div> */}
-                    <div className="inputSection noMarginTop">
-                        <label >Email</label>
-                        <div className="search">
-                            <input type="email" className="search__input" name="email" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e) }} />
-                            <div className="search__icon">
-                                <Photo name="search"></Photo>
+                        <div className="inputSection noMarginTop">
+                            <label >Email</label>
+                            <div className="search">
+                                <input type="email" className="search__input" name="email" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e) }} />
+                                <div className="search__icon">
+                                    <Photo name="search"></Photo>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="inputSection">
-                        <label >Name</label>
-                        <div className="search">
-                            <input type="text" className="search__input" name="name" id="name" title="name" placeholder="name" autoComplete="off" onChange={(e) => { fillData(e); }} />
-                            <div className="search__icon">
-                                <Photo name="search"></Photo>
+                        <div className="inputSection">
+                            <label >Name</label>
+                            <div className="search">
+                                <input type="text" className="search__input" name="name" id="name" title="name" placeholder="name" autoComplete="off" onChange={(e) => { fillData(e); }} />
+                                <div className="search__icon">
+                                    <Photo name="search"></Photo>
+                                </div>
                             </div>
+
+
                         </div>
-
-
-                    </div>
-                    <div className="inputSection">
-                        <label >Password</label>
-                        <div className="search">
-                            <input type="password" className="search__input" name="password" id="password" title="password" placeholder="********" autoComplete="off" onChange={(e) => { fillData(e); checkPassword(e); }} />
-                            <div className="search__icon">
-                                <Photo name="search"></Photo>
+                        <div className="inputSection">
+                            <label >authorizationLevel</label>
+                            <div className="search">
+                                <input type="number" className="search__input" name="authorizationLevel" id="authorizationLevel" title="authorizationLevel" placeholder="1" autoComplete="off" onChange={(e) => { fillData(e); }} />
+                                <div className="search__icon">
+                                    <Photo name="search"></Photo>
+                                </div>
                             </div>
+
+
                         </div>
-
-
-                    </div>
-                    <div className="inputSection">
-                        <label >Password confirmation</label>
-                        <div className="search">
-                            <input type="password" className="search__input" name="passwordConfirmation" id="password2" title="password2" placeholder="********" autoComplete="off" onChange={(e) => { fillData(e); checkPassword(e); }} />
-                            <div className="search__icon">
-                                <Photo name="search"></Photo>
+                        <div className="inputSection">
+                            <label >Password</label>
+                            <div className="search">
+                                <input type="password" className="search__input" name="password" id="password" title="password" placeholder="********" autoComplete="off" onChange={(e) => { fillData(e); checkPassword(e); }} />
+                                <div className="search__icon">
+                                    <Photo name="search"></Photo>
+                                </div>
                             </div>
+
+
                         </div>
+                        <div className="inputSection">
+                            <label >Password confirmation</label>
+                            <div className="search">
+                                <input type="password" className="search__input" name="passwordConfirmation" id="password2" title="password2" placeholder="********" autoComplete="off" onChange={(e) => { fillData(e); checkPassword(e); }} />
+                                <div className="search__icon">
+                                    <Photo name="search"></Photo>
+                                </div>
+                            </div>
 
 
-                    </div>
-                    <div className="inputSection loginSection">
-                        <div className="btn btnBlue" onClick={() => register()}><p>Log In</p></div>
+                        </div>
+                        <div className="inputSection loginSection">
+                            <div className="btn btnBlue" onClick={() => register()}><p>Crear usuario</p></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div >
+            </div >
 
 
-    );
+        );
 
 
 
-};
+    };
 
 
-export default connect()(AdminClient);
+    export default connect()(AdminClient);

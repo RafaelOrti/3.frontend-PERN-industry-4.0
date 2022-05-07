@@ -22,23 +22,26 @@ import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "t
 
 //REDUX
 import { connect } from 'react-redux';
-import { LOGIN } from '../../redux/actions';
-import { IS_HOME } from "../../redux/actions";
+import { NOT_HOME } from "../../redux/actions";
+import { REGISTER } from "../../redux/actions";
 
 let a = false;
 
 const AdminClient = (props) => {
 
     useEffect(() => {
-        console.log('Created')
-        props.dispatch({ type: IS_HOME })
+        props.dispatch({ type: NOT_HOME })
+        readUsers();
+        console.log("rrrrrr", props.user)
     }, [])
 
     const notifications = useNotifications();
     let navigate = useNavigate();
 
     //1-Hooks (equivalen al estado en los componentes de clase)
-    const [dataUser, setDataUser] = useState({ email: "", password: "" });
+    const [dataUser, setDataUser] = useState({ name: "", email: "", password: "", passwordConfirmation: "" });
+    const [users, setUsers] = useState("");
+    const [page, setPage] = useState(0);
     // const [msgError, setMsgError] = useState("");
     // const [msgError2, setMsgError2] = useState("");
 
@@ -49,21 +52,36 @@ const AdminClient = (props) => {
         // console.log("dataUser", dataUser)
     };
 
-    // const checkEmail = (e) => {
-    //     console.log(e.target.value)
-    //     if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(e.target.value)) {
+    const advancePage = () => {
 
-    //         notifications.showNotification({
-    //             message: "Introduce un email válido",
-    //             icon: <ZoomExclamation />,
-    //             autoClose: false,
-    //             id: 'email'
-    //         })
-    //     } else {
-    //         notifications.hideNotification("email");
-    //     }
-    // }
-
+        let numberSections=Object.keys(users).length/10
+        numberSections++
+        console.log("numberSect", numberSections)
+        // if(page!==0){
+        //     setPage(page-10)
+        //     }else{
+        //         notifications.showNotification({
+        //             message: "No hay más paginas a la derecha",
+        //             icon: <ZoomExclamation />,
+        //             autoClose: 2000,
+        //             id: "leftPage"
+        //         });
+        //     }
+    };
+    const goBackPage = () => {
+        if(page!==0){
+        setPage(page-10)
+        }else{
+            notifications.showNotification({
+                message: "No hay más paginas a la izquierda",
+                icon: <ZoomExclamation />,
+                autoClose: 2000,
+                id: "leftPage"
+            });
+        }
+        // console.log("dataUser", dataUser)
+    };
+    
 
     const checkPassword = (e) => {
 
@@ -115,48 +133,79 @@ const AdminClient = (props) => {
 
     };
 
-    const navigateRegisters = () => {
-        navigate("/register");
+    const navigateLocation = (location) => {
+        navigate(location);
     };
 
-    const login = async () => {
+    const register = async () => {
+        console.log("dataUser", dataUser)
+        if (dataUser.password !== dataUser.passwordConfirmation) {
+            notifications.showNotification({
+                message: "Las contraseñas no son iguales",
+                icon: <ZoomExclamation />,
+                autoClose: 2000,
+                id: "letters"
+            });
+        } else {
+            try {
+                let body = {
+                    name: dataUser.name,
+                    email: dataUser.email,
+                    password: dataUser.password
+                }
+                let resultado = await axios.post(raiz + "users/Register", body);
 
-        setTimeout(() => {
-            navigate("/home");
-        }, 1000);
-        // console.log(dataUser.email)
-        // if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(dataUser.email)) {
+                let x = resultado.data
+                console.log("x", x)
+                if (resultado.data.msg === "this user already exists") {
+                    notifications.showNotification({
+                        message: "El User con este e-mail ya existe en nuestra base de datos",
+                        icon: <ZoomExclamation />,
+                        autoClose: 2000,
+                        id: "letters"
+                    });
 
-        //     notifications.showNotification({
-        //         message: "Introduce un email válido",
-        //         icon: <ZoomExclamation />,
-        //         autoClose: 2000,
-        //         id: 'email'
-        //     })
-        // } else {
+                }
+                else if ((resultado.data.msg.includes('DB error')) === true) {
+                    notifications.showNotification({
+                        message: "Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com",
+                        icon: <ZoomExclamation />,
+                        autoClose: 2000,
+                        id: "letters"
+                    });
 
-        //     try {
-        //         let body = {
-        //             email: dataUser.email,
-        //             password: dataUser.password
-        //         }
-        //         let resultado = await axios.post(raiz + "users/login", body);
-        //         console.log(resultado);
-        //         if (resultado.data === "Usuario o contraseña inválido") {
-        //             // setMsgError2("Usuario o contraseña inválido")
-        //         } else {
-                    // props.dispatch({ type: LOGIN, payload: resultado.data });
-                    // setTimeout(() => {
-                    //     navigate("/");
-                    // }, 1000);
-        //         }
-        //     } catch (error) {
-        //         console.log(error)
-        //     }
-        // }
+                }
+                else if ((resultado.data.msg.includes('Welcome')) === true) {
+                    console.log("88888: " + resultado)
+                    props.dispatch({ type: REGISTER, payload: resultado.data });
+                    setTimeout(() => {
+                        navigate("/Home");
+                    }, 1000);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+
+        }
     };
 
+    const readUsers = async () => {
 
+        try {
+
+            let config = {
+                headers: { Authorization: `Bearer ${props.user?.token}` }
+            };
+            let res = await axios.get(raiz + "users/client", config);
+            console.log("99999999", res)
+            console.log("99999999", res.data)
+            setTimeout(() => {
+                setUsers(res.data);
+            }, 2);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
 
     //2-Render (lo que pinta en pantalla)
@@ -164,40 +213,58 @@ const AdminClient = (props) => {
     return (
 
         <div className="designLogin">
-            <div className="form">
+            <div className="adminForm">
                 <div className="selectorSection">
-                    <div className="selected"><UserCircle name="search"></UserCircle><p> &nbsp;&nbsp; Log In</p></div>
-                    <div className="btn btnGrey" onClick={() => navigateRegisters()}><UserPlus name="search"></UserPlus><p>&nbsp;&nbsp;Register</p></div>
-                </div>
-                <div className="formLoginSection">
-                    <div className="logoSection">
-                        <div className="logoImg" />
-                        <div className="title">Super Dev</div>
-                    </div>
-                    <div className="inputSection noMarginTop">
-                        <label >Email</label>
-                        <div className="search">
-                            <input type="email" className="search__input" id="email" title="email" placeholder="example@test.com" autoComplete="off" onChange={(e) => { fillData(e);  }} />
-                            <div className="search__icon">
-                                <Photo name="search"></Photo>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="inputSection">
-                        <label >Password</label>
-                        <div className="search">
-                            <input type="password" className="search__input" id="password" title="password" placeholder="********" autoComplete="off" onChange={(e) => { fillData(e); checkPassword(e); }} />
-                            <div className="search__icon">
-                                <Photo name="search"></Photo>
-                            </div>
-                        </div>
+                    <div className="btnAdmin adminSelected"><UserPlus name="search"></UserPlus><p> &nbsp;&nbsp;Usuarios </p></div>
+                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Crear usuario</p></div>
+                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Editar usuario</p></div>
+                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Eliminar usuario</p></div>
 
-                        {/* {msgError}
-                        {msgError2} */}
+                </div>
+                <div className="adminClientForm">
+                    <div className="userRow bold" >
+                        <div className="userElement" >Nombre</div>
+                        <div className="userElement" >email</div>
+                        <div className="userElement" >authorizationLevel</div>
+                        <div className="userElement" >createdAt</div>
+                        <div className="userElement" >updatedAt</div>
                     </div>
-                    <div className="inputSection loginSection">
-                        <div className="btn btnBlue" onClick={() => login()}><p>Log In</p></div>
-                    </div>
+                    {
+                        console.log("users", users)
+                    }
+                    {
+                        Object.keys(users).slice(0, 10).map(key => {
+                            // console.log(key); // 👉️ name, country
+                            // console.log(users[key]); // 👉️ James, Chile
+                            return (
+                                <div className="userRow" key={key} >
+                                    <div className="userColumn" >
+                                        <div className="userElement" >{users[key].name}</div>
+                                    </div>
+                                    <div className="userColumn" >
+                                        <div className="userElement" >{users[key].email}</div>
+                                    </div>
+                                    <div className="userColumn" >
+                                        <div className="userElement" >{users[key].authorizationLevel}</div>
+                                    </div>
+                                    <div className="userColumn" >
+                                        <div className="userElement" >{users[key].createdAt}</div>
+                                    </div>
+                                    <div className="userColumn" >
+                                        <div className="userElement" >{users[key].updatedAt}</div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                    <ul className="pagination">
+                        <li key="0" onClick={() => goBackPage()}>«</li>
+                        <li key="1" onClick={() => advancePage()}>1</li>
+                        <li key="2"><a className="active" href="/">2</a></li>
+                        <li key="3">3</li>
+                        <li key="4">4</li>
+                        <li key="5" onClick={() => advancePage()}>»</li>
+                    </ul>
                 </div>
             </div>
         </div >
@@ -209,4 +276,9 @@ const AdminClient = (props) => {
 
 };
 
-export default connect()(AdminClient);
+
+export default connect((state) => ({
+    user: state.user,
+    // token: state.token,
+    hideFooter: state.hideFooter
+}))(AdminClient);

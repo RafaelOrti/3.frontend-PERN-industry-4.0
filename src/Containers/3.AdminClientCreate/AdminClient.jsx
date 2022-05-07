@@ -10,7 +10,7 @@ import { useNotifications } from "@mantine/notifications";
 import axios from 'axios';
 
 /*DISEÑO*/
-import './Register.scss';
+import './AdminClient.scss';
 
 //ICONS
 import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "tabler-icons-react";
@@ -22,15 +22,15 @@ import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from "t
 
 //REDUX
 import { connect } from 'react-redux';
-import { IS_HOME } from "../../redux/actions";
+import { NOT_HOME } from "../../redux/actions";
 import { REGISTER } from "../../redux/actions";
 
 let a = false;
 
-const Register = (props) => {
+const AdminClient = (props) => {
 
     useEffect(() => {
-        props.dispatch({ type: IS_HOME })
+        props.dispatch({ type: NOT_HOME })
     }, [])
 
     const notifications = useNotifications();
@@ -38,6 +38,7 @@ const Register = (props) => {
 
     //1-Hooks (equivalen al estado en los componentes de clase)
     const [dataUser, setDataUser] = useState({ name:"", email: "", password: "", passwordConfirmation: "" });
+    const [users, setUsers] = useState("");
     // const [msgError, setMsgError] = useState("");
     // const [msgError2, setMsgError2] = useState("");
 
@@ -98,8 +99,8 @@ const Register = (props) => {
 
     };
 
-    const navigateLogin = () => {
-        navigate("/");
+    const navigateLocation = (location) => {
+        navigate(location);
     };
 
     const register = async () => {
@@ -118,9 +119,10 @@ const Register = (props) => {
                     email: dataUser.email,
                     password: dataUser.password
                 }
-                let resultado = await axios.post(raiz + "users/register", body);
+                let resultado = await axios.post(raiz + "users/Register", body);
                 
-
+                let x = resultado.data
+                console.log("x", x)
                  if (resultado.data.msg === "this user already exists") {
                     notifications.showNotification({
                         message: "El User con este e-mail ya existe en nuestra base de datos",
@@ -161,11 +163,13 @@ const Register = (props) => {
     return (
 
         <div className="designLogin">
-            <div className="form">
+            <div className="adminForm">
                 <div className="selectorSection">
-
-                    <div className="btn btnGreyL " onClick={() => navigateLogin()}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Log In</p></div>
-                    <div className="selected"><UserPlus name="search"></UserPlus><p> &nbsp;&nbsp;Register </p></div>
+                    <div className="btnAdmin adminSelected"><UserPlus name="search"></UserPlus><p> &nbsp;&nbsp;Usuarios </p></div>
+                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Crear usuario</p></div>
+                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Editar usuario</p></div>
+                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Eliminar usuario</p></div>
+                    
                 </div>
                 <div className="formLoginSection">
                     {/* <div className="logoSection">
@@ -229,4 +233,4 @@ const Register = (props) => {
 };
 
 
-export default connect()(Register);
+export default connect()(AdminClient);

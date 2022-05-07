@@ -16,8 +16,8 @@ import './Header.scss';
 
 const Header = (props) => {
 
-    console.log("props.credentials?.user.rol")
-    console.log(props)
+    // console.log("props.credentials?.user.rol")
+    // console.log(props)
     let navigate = useNavigate();
 
     const [titulo, setTitulo] = useState("");
@@ -53,7 +53,7 @@ const Header = (props) => {
     // }
    
     // console.log(window.location.pathname);
-    console.log("34567",props)
+    // console.log("34567",props)
     if (props.user?.user) {
         return (
             <div className='headerGlobalDesign' style={{
@@ -75,12 +75,12 @@ const Header = (props) => {
                             
                             {
                                 (props.user?.user.authorizationLevel === 3) && (window.location.pathname === "/admin") &&
-                                <div className="link" onClick={() => navegar("/admin")}><b>Admin</b></div>
+                                <div className="link" onClick={() => navegar("/clientAdmin")}><b>ClientAdmin</b></div>
 
                             }
                             {
                                 (props.user?.user.authorizationLevel === 3) && (window.location.pathname !== "/admin") &&
-                                <div className="link" onClick={() => navegar("/admin")}>Admin</div>
+                                <div className="link" onClick={() => navegar("/clientAdmin")}>ClientAdmin</div>
                             }
                             {
                                 (props.user?.user.authorizationLevel === 5) && (window.location.pathname === "/admin") &&

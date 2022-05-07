@@ -74,8 +74,7 @@ const Login = (props) => {
 
             a = true
         }
-        console.log(e.target.value.length)
-        console.log("gggg", a)
+
         if (a && (e.target.value.length < 4)) {
 
             notifications.showNotification({

@@ -35,8 +35,8 @@ import './SiderG.scss';
 
 const SiderG = (props) => {
 
-    console.log("props.credentials?.user.rol")
-    console.log(props)
+    // console.log("props.credentials?.user.rol")
+    // console.log(props)
     let navigate = useNavigate();
 
     const [titulo, setTitulo] = useState("");

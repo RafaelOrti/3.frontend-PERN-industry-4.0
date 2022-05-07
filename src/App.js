@@ -45,6 +45,8 @@ function App() {
 
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/clientAdmin" element={<AdminClient />} />
+          <Route path="/admin" element={<Admin />} />
 
           {/* <Route path="/graph" element={<Graph />} />
           <Route path="/alarms" element={<Alarms />} />
@@ -52,12 +54,12 @@ function App() {
 
           <Route path="/installation" element={<Installation />} />
 
-          <Route path="/clientAdmin" element={<AdminClient />} />
+          
 
           <Route path="/maintennace" element={<Maintenance />} />
 
           
-          <Route path="/admin" element={<Admin />} />
+          
           
           <Route path="/industrialPlant" element={<IndustrialPlant />} />
           <Route path="/map" element={<Map />} /> */}

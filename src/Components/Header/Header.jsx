@@ -54,11 +54,13 @@ const Header = (props) => {
    
     // console.log(window.location.pathname);
     // console.log("34567",props)
+    
     if (props.user?.user) {
         return (
             <div className='headerGlobalDesign' style={{
                 display: props.hideFooter.isHome ? 'none' : undefined
             }} >
+                {console.log("77777",props.user?.user.authorizationLevel)}
                 {
                     (window.location.pathname !== "/" || window.location.pathname !== "/register") &&
 
@@ -90,6 +92,12 @@ const Header = (props) => {
                             {
                                 (props.user?.user.authorizationLevel === 5) && (window.location.pathname !== "/admin") &&
                                 <div className="link" onClick={() => navegar("/admin")}>Admin</div>
+                            }
+                            {
+                                (window.location.pathname === "/profile") &&
+                                <div className="link" onClick={() => navegar("/profile")}>
+                                    <b>{props.user?.user.authorizationLevel}</b>
+                                </div>
                             }
                             {
                                 (window.location.pathname === "/profile") &&

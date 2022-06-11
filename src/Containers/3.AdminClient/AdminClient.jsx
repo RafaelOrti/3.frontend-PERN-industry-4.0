@@ -216,9 +216,9 @@ const AdminClient = (props) => {
             <div className="adminForm">
                 <div className="selectorSection">
                     <div className="btnAdmin adminSelected"><UserPlus name="search"></UserPlus><p> &nbsp;&nbsp;Usuarios </p></div>
-                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Crear usuario</p></div>
-                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Editar usuario</p></div>
-                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/home")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Eliminar usuario</p></div>
+                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/clientAdminCreate")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Crear usuario</p></div>
+                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/clientAdminUpdate")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Editar usuario</p></div>
+                    <div className="btnAdmin adminBtnGreyL " onClick={() => navigate("/clientAdminDelete")}><UserCircle name="search"></UserCircle><p>&nbsp;&nbsp;Eliminar usuario</p></div>
 
                 </div>
                 <div className="adminClientForm">

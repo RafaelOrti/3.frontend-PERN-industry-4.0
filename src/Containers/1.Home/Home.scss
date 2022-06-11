@@ -1,7 +1,7 @@
 
 
 
-.designHome {
+.homeDesign {
 
   background-image: url("../../img/logo.png");
   width: 100vw;
@@ -13,6 +13,48 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 }
+
+.homeCardTitleHome{
+  width: 40vw;
+  height: 40vh;
+  background-color: #ffffff;
+
+  padding: 0.7em;
+  border: 1em solid #000000;
+  border-radius: 1em;
+
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: rgb(8, 8, 8);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  
+  
+  
+  
+
+
+}
+
+.datosHome{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+// .valoresHome{
+//   width: 50%;
+//   height: 25%;
+
+
+// }

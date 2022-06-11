@@ -86,7 +86,7 @@ const SiderG = (props) => {
                         
                         <div className="siderLinksDesign">
 
-                            {
+                            {/* {
                                 (props.user?.user.authorizationLevel === 3) && (window.location.pathname === "/admin") &&
                                 <div className="link" onClick={() => navegar("/admin")}><b>Admin</b></div>
 
@@ -103,56 +103,56 @@ const SiderG = (props) => {
                             {
                                 (props.user?.user.authorizationLevel === 5) && (window.location.pathname !== "/admin") &&
                                 <div className="link" onClick={() => navegar("/admin")}>Admin</div>
-                            }
+                            } */}
                             {
-                                (window.location.pathname === "/profile") &&
-                                <div className="link" onClick={() => navegar("/")}>
+                                (window.location.pathname === "/home") &&
+                                <div className="link" onClick={() => navegar("/home")}>
                                     <b>Home</b>
                                 </div>
                             }
                             {
-                                (window.location.pathname !== "/profile") &&
-                                <div className="link" onClick={() => navegar("/")}>
+                                (window.location.pathname !== "/home") &&
+                                <div className="link" onClick={() => navegar("/home")}>
                                     Home
                                 </div>
                             }
                             {
-                                (window.location.pathname === "/profile") &&
-                                <div className="link" onClick={() => navegar("/profile")}>
+                                (window.location.pathname === "/graph") &&
+                                <div className="link" onClick={() => navegar("/graph")}>
                                     <b>Gráficos</b>
                                 </div>
                             }
                             {
-                                (window.location.pathname !== "/profile") &&
-                                <div className="link" onClick={() => navegar("/profile")}>
+                                (window.location.pathname !== "/graph") &&
+                                <div className="link" onClick={() => navegar("/graph")}>
                                     Gráficos
                                 </div>
                             }
                             {
-                                (window.location.pathname === "/profile") &&
-                                <div className="link" onClick={() => navegar("/profile")}>
+                                (window.location.pathname === "/alarms") &&
+                                <div className="link" onClick={() => navegar("/alarms")}>
                                     <b>Alarmas</b>
                                 </div>
                             }
                             {
-                                (window.location.pathname !== "/profile") &&
-                                <div className="link" onClick={() => navegar("/profile")}>
+                                (window.location.pathname !== "/alarms") &&
+                                <div className="link" onClick={() => navegar("/alarms")}>
                                     Alarmas
                                 </div>
                             }
                             {
-                                (window.location.pathname === "/profile") &&
-                                <div className="link" onClick={() => navegar("/profile")}>
-                                    <b>Eventos</b>
+                                (window.location.pathname === "/actionsRecord") &&
+                                <div className="link" onClick={() => navegar("/installationAV")}>
+                                    <b>AV</b>
                                 </div>
                             }
                             {
-                                (window.location.pathname !== "/profile") &&
-                                <div className="link" onClick={() => navegar("/profile")}>
-                                    Eventos
+                                (window.location.pathname !== "/actionsRecord") &&
+                                <div className="link" onClick={() => navegar("/installationAV")}>
+                                    AV
                                 </div>
                             }
-                            {
+                            {/* {
                                 (window.location.pathname === "/profile") &&
                                 <div className="link" onClick={() => navegar("/profile")}>
                                     <b>Comunicaciones</b>
@@ -175,7 +175,7 @@ const SiderG = (props) => {
                                 <div className="link" onClick={() => navegar("/profile")}>
                                     Conexiones
                                 </div>
-                            }
+                            } */}
 
 
                         </div>

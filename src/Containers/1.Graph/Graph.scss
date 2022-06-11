@@ -1,0 +1,27 @@
+
+.homeCardTitleGraph{
+    width: 60vw;
+    height: 70vh;
+    background-color: #ffffff;
+  
+    padding: 0.7em;
+    border: 1em solid #000000;
+    border-radius: 1em;
+  
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: rgb(8, 8, 8);
+  
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+
+  .graph{
+    width: 20em;
+    height: 100vh;
+
+  }

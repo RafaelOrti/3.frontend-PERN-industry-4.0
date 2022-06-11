@@ -16,8 +16,15 @@ import Alarms from './Containers/1.Alarms/Alarms';
 import ActionsRecord from './Containers/1.ActionsRecord/ActionsRecord';
 
 import Installation from './Containers/2.Installation/Installation';
+import InstallationAV from './Containers/1.InstallationAV/InstallationAV';
+
 
 import AdminClient from './Containers/3.AdminClient/AdminClient';
+import AdminClientCreate from './Containers/3.AdminClientCreate/AdminClientCreate';
+import AdminClientUpdate from './Containers/3.AdminClientUpdate/AdminClientUpdate';
+import AdminClientDelete from './Containers/3.AdminClientDelete/AdminClientDelete';
+
+
 
 import Maintenance from './Containers/4.Maintenance/Maintenance';
 
@@ -46,22 +53,25 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/clientAdmin" element={<AdminClient />} />
+          <Route path="/clientAdminCreate" element={<AdminClientCreate />} />
+          <Route path="/clientAdminUpdate" element={<AdminClientUpdate />} />
+          <Route path="/clientAdminDelete" element={<AdminClientDelete />} />
           <Route path="/admin" element={<Admin />} />
 
-          {/* <Route path="/graph" element={<Graph />} />
-          <Route path="/alarms" element={<Alarms />} />
-          <Route path="/actionsRecord" element={<ActionsRecord />} />
+          <Route path="/graph" element={<Graph />} />
+          {/* <Route path="/alarms" element={<Alarms />} /> */}
+          {/* <Route path="/actionsRecord" element={<ActionsRecord />} /> */}
 
           <Route path="/installation" element={<Installation />} />
+          {/* <Route path="/installationAV" element={<InstallationAV />} /> */}
 
           
+          {/* <Route path="/maintenance" element={<Maintenance />} /> */}
 
-          <Route path="/maintennace" element={<Maintenance />} />
-
           
           
           
-          <Route path="/industrialPlant" element={<IndustrialPlant />} />
+          {/* <Route path="/industrialPlant" element={<IndustrialPlant />} />
           <Route path="/map" element={<Map />} /> */}
           
         </Routes>

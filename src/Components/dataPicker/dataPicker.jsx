@@ -25,8 +25,7 @@ const DataPicker = (props) => {
   const [value2, setValue2] = useState({ endDate: new Date() });
   const [dataGraph, setDataGraph] = useState({});
   let now = new Date();
-  console.log("rrr", now);
-  console.log("rrr", value1);
+
   useEffect(() => {
     props.dispatch({ type: NOT_HOME })
   }, [])

@@ -49,8 +49,8 @@ const Home = (props) => {
         let config = { headers: { Authorization: `Bearer ${props.user?.token}` } };
         let res = await axios.get(raiz + "installation/communication", config);
         setTimeout(() => {
-            setDataHome({ temp: res.data[0], H2O: res.data[1], C2O: res.data[2], C2H4: res.data[3] })
-        }, 2000)
+            setDataHome({ temp: res.data.temperature, H2O: res.data.h2o, CO2: res.data.co2, C2H4: res.data.c2h4 })
+        }, 1000)
         console.log("x", res.data)
     }
 
@@ -72,7 +72,7 @@ const Home = (props) => {
                     <div className='datosHome'>
                         <div>{dataHome.temp}</div>
                         <div>{dataHome.H2O}</div>
-                        <div>{dataHome.C2O}</div>
+                        <div>{dataHome.CO2}</div>
                         <div>{dataHome.C2H4}</div>
                     </div>
                 </div>

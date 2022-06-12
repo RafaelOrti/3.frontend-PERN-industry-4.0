@@ -32,7 +32,7 @@ const AdminClient = (props) => {
     useEffect(() => {
         props.dispatch({ type: NOT_HOME })
         readUsers();
-        console.log("rrrrrr", props.user)
+
     }, [])
 
     const notifications = useNotifications();

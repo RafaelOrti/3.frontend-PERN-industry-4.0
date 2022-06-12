@@ -1,0 +1,37 @@
+.homeCardTitleAV{
+    width: 85vw;
+    height: 90vh;
+    background-color: #ffffff;
+    margin-bottom: -2em;
+    margin-right: -4em;
+
+    padding: 0.7em;
+    border: 1em solid #000000;
+    border-radius: 1em;
+  
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: rgb(8, 8, 8);
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  .imageAV{
+    width: 18vw;
+    height: 30vh;
+    margin: 0.3em;
+  }
+
+  .datosAV{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  
+  }

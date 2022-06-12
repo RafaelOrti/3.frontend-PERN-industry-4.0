@@ -59,11 +59,11 @@ function App() {
           <Route path="/admin" element={<Admin />} />
 
           <Route path="/graph" element={<Graph />} />
-          {/* <Route path="/alarms" element={<Alarms />} /> */}
+          <Route path="/alarms" element={<Alarms />} />
           {/* <Route path="/actionsRecord" element={<ActionsRecord />} /> */}
 
           <Route path="/installation" element={<Installation />} />
-          {/* <Route path="/installationAV" element={<InstallationAV />} /> */}
+          <Route path="/installationAV" element={<InstallationAV />} />
 
           
           {/* <Route path="/maintenance" element={<Maintenance />} /> */}

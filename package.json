@@ -38,13 +38,18 @@
     "web-vitals": "2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --max_old_space_size=8048 start",
+    "build": "react-scripts --max_old_space_size=8048 build",
     "test": "react-scripts test",
+    "lint": "standard",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
+    "parserOptions": {
+      "project": "./config.json"
+    },
     "extends": [
+      "./node_modules/standard/eslintrc.json",
       "react-app",
       "react-app/jest"
     ]
@@ -62,6 +67,7 @@
     ]
   },
   "devDependencies": {
-    "@types/three": "^0.141.0"
+    "@types/three": "^0.141.0",
+    "standard": "^17.0.0"
   }
 }

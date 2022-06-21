@@ -1,18 +1,15 @@
 
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
+import { connect } from 'react-redux'
 
-import { connect } from "react-redux";
+import { raiz } from '../../utiles'
 
+import 'antd/dist/antd.css'
+import './SiderG.scss'
 
-import { raiz } from '../../utiles';
-
-import 'antd/dist/antd.css';
-import './SiderG.scss';
-
-//ICONS
-
+// ICONS
 
 import {
   HomeOutlined,
@@ -20,73 +17,63 @@ import {
   PieChartOutlined,
   FileOutlined,
   TeamOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+  UserOutlined
+} from '@ant-design/icons'
 
-
-
-
-
-import axios from 'axios';
-
-
-
-import './SiderG.scss';
+import axios from 'axios'
 
 const SiderG = (props) => {
+  // ("props.credentials?.user.rol")
+  // (props)
+  const navigate = useNavigate()
 
-    // console.log("props.credentials?.user.rol")
-    // console.log(props)
-    let navigate = useNavigate();
+  const [titulo, setTitulo] = useState('')
 
-    const [titulo, setTitulo] = useState("");
+  useEffect(() => {
+    // ("props.credentials");
+    // (props.credentials);
+  })
 
-    useEffect(() => {
-        // console.log("props.credentials");
-        // console.log(props.credentials);
-    })
+  const navegar = (lugar) => {
+    setTimeout(() => {
+      navigate(lugar)
+    }, 200)
+  }
 
-    const navegar = (lugar) => {
+  // const logOut = () => {
+  //     //Borrar de RDX las credenciales
+  //     props.dispatch({ type: LOGOUT });
 
-        setTimeout(() => {
-            navigate(lugar);
-        }, 200);
+  //     setTimeout(() => {
+  //         navigate("/");
+  //     }, 1500);
+  // }
 
-    }
+  const manejador = (ev) => {
+    setTitulo(ev.target.value)
+  }
+  // {
+  //     window.location.pathname === "/add" &&
+  //     <div className="link" onClick={() => navegar("/film")}>Film</div>
+  // }
 
-    // const logOut = () => {
-    //     //Borrar de RDX las credenciales
-    //     props.dispatch({ type: LOGOUT });
+  // (window.location.pathname);
 
-    //     setTimeout(() => {
-    //         navigate("/");
-    //     }, 1500);
-    // }
+  if (props.user?.user) {
+    return (
+      <div
+        className='designSiderGlobal' style={{
+          display: props.hideFooter.isHome ? 'none' : undefined
+        }}
+      >
+        {
+                    window.location.pathname !== '/display' &&
 
-    const manejador = (ev) => {
-        setTitulo(ev.target.value);
-    }
-    // {
-    //     window.location.pathname === "/add" &&
-    //     <div className="link" onClick={() => navegar("/film")}>Film</div>
-    // }
-   
-    // console.log(window.location.pathname);
+                      <div className='designSider'>
 
-    if (props.user?.user) {
-        return (
-            <div className='designSiderGlobal' style={{
-                display: props.hideFooter.isHome ? 'none' : undefined
-            }} >
-                {
-                    window.location.pathname !== "/display" &&
+                        <div className='siderLinksDesign'>
 
-                    <div className='designSider'>
-
-                        
-                        <div className="siderLinksDesign">
-
-                            {/* {
+                          {/* {
                                 (props.user?.user.authorizationLevel === 3) && (window.location.pathname === "/admin") &&
                                 <div className="link" onClick={() => navegar("/admin")}><b>Admin</b></div>
 
@@ -104,55 +91,55 @@ const SiderG = (props) => {
                                 (props.user?.user.authorizationLevel === 5) && (window.location.pathname !== "/admin") &&
                                 <div className="link" onClick={() => navegar("/admin")}>Admin</div>
                             } */}
-                            {
-                                (window.location.pathname === "/home") &&
-                                <div className="link" onClick={() => navegar("/home")}>
+                          {
+                                (window.location.pathname === '/home') &&
+                                  <div className='link' onClick={() => navegar('/home')}>
                                     <b>Home</b>
-                                </div>
+                                  </div>
                             }
-                            {
-                                (window.location.pathname !== "/home") &&
-                                <div className="link" onClick={() => navegar("/home")}>
+                          {
+                                (window.location.pathname !== '/home') &&
+                                  <div className='link' onClick={() => navegar('/home')}>
                                     Home
-                                </div>
+                                  </div>
                             }
-                            {
-                                (window.location.pathname === "/graph") &&
-                                <div className="link" onClick={() => navegar("/graph")}>
+                          {
+                                (window.location.pathname === '/graph') &&
+                                  <div className='link' onClick={() => navegar('/graph')}>
                                     <b>Gráficos</b>
-                                </div>
+                                  </div>
                             }
-                            {
-                                (window.location.pathname !== "/graph") &&
-                                <div className="link" onClick={() => navegar("/graph")}>
+                          {
+                                (window.location.pathname !== '/graph') &&
+                                  <div className='link' onClick={() => navegar('/graph')}>
                                     Gráficos
-                                </div>
+                                  </div>
                             }
-                            {
-                                (window.location.pathname === "/alarms") &&
-                                <div className="link" onClick={() => navegar("/alarms")}>
+                          {
+                                (window.location.pathname === '/alarms') &&
+                                  <div className='link' onClick={() => navegar('/alarms')}>
                                     <b>Alarmas</b>
-                                </div>
+                                  </div>
                             }
-                            {
-                                (window.location.pathname !== "/alarms") &&
-                                <div className="link" onClick={() => navegar("/alarms")}>
+                          {
+                                (window.location.pathname !== '/alarms') &&
+                                  <div className='link' onClick={() => navegar('/alarms')}>
                                     Alarmas
-                                </div>
+                                  </div>
                             }
-                            {
-                                (window.location.pathname === "/actionsRecord") &&
-                                <div className="link" onClick={() => navegar("/installationAV")}>
+                          {
+                                (window.location.pathname === '/actionsRecord') &&
+                                  <div className='link' onClick={() => navegar('/installationAV')}>
                                     <b>AV</b>
-                                </div>
+                                  </div>
                             }
-                            {
-                                (window.location.pathname !== "/actionsRecord") &&
-                                <div className="link" onClick={() => navegar("/installationAV")}>
+                          {
+                                (window.location.pathname !== '/actionsRecord') &&
+                                  <div className='link' onClick={() => navegar('/installationAV')}>
                                     AV
-                                </div>
+                                  </div>
                             }
-                            {/* {
+                          {/* {
                                 (window.location.pathname === "/profile") &&
                                 <div className="link" onClick={() => navegar("/profile")}>
                                     <b>Comunicaciones</b>
@@ -177,34 +164,27 @@ const SiderG = (props) => {
                                 </div>
                             } */}
 
-
                         </div>
 
-                    </div>
+                      </div>
                 }
-                {
-                    window.location.pathname === "/display" &&
+        {
+                    window.location.pathname === '/display' &&
                     (
 
-                        <div className="siderSpace logoDesign">
-                            {/* <img className="logoDisplay" src={require('../../img/volver.png')} alt="logo" onClick={() => navegar("/film")}></img> */}
-                        </div>
+                      <div className='siderSpace logoDesign'>
+                        {/* <img className="logoDisplay" src={require('../../img/volver.png')} alt="logo" onClick={() => navegar("/film")}></img> */}
+                      </div>
 
                     )
                 }
-            </div>
+      </div>
 
-        )
-    }
-
-
-
+    )
+  }
 }
-
-
-
 
 export default connect((state) => ({
   user: state.user,
   hideFooter: state.hideFooter
-}))(SiderG);
+}))(SiderG)

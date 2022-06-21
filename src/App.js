@@ -1,83 +1,133 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.scss';
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from 'react-router-dom'
+import './App.scss'
 
-//components
-import Header from './Components/Header/Header';
-import SiderG from './Components/SiderG/SiderG';
+// components
+import Header from './Components/Header/Header'
+import SiderG from './Components/SiderG/SiderG'
 
+import Login from './Containers/Login/Login'
+import Register from './Containers/Register/Register'
 
-import Login from './Containers/0.Login/Login';
-import Register from './Containers/0.Register/Register';
+import Home from './Containers/Home/Home'
+import Profile from './Containers/Profile/Profile'
+import Graph from './Containers/Graph/Graph'
+import Alarms from './Containers/Alarms/Alarms'
+import ActionsRecord from './Containers/ActionsRecord/ActionsRecord'
 
-import Home from './Containers/1.Home/Home';
-import Profile from './Containers/1.Profile/Profile';
-import Graph from './Containers/1.Graph/Graph';
-import Alarms from './Containers/1.Alarms/Alarms';
-import ActionsRecord from './Containers/1.ActionsRecord/ActionsRecord';
+import Installation from './Containers/Installation/Installation'
+import InstallationAV from './Containers/InstallationAV/InstallationAV'
 
-import Installation from './Containers/2.Installation/Installation';
-import InstallationAV from './Containers/1.InstallationAV/InstallationAV';
+import AdminClient from './Containers/AdminClient/AdminClient'
+import AdminClientCreate from './Containers/AdminClientCreate/AdminClientCreate'
+import AdminClientUpdate from './Containers/AdminClientUpdate/AdminClientUpdate'
+import AdminClientDelete from './Containers/AdminClientDelete/AdminClientDelete'
 
+import Maintenance from './Containers/Maintenance/Maintenance'
 
-import AdminClient from './Containers/3.AdminClient/AdminClient';
-import AdminClientCreate from './Containers/3.AdminClientCreate/AdminClientCreate';
-import AdminClientUpdate from './Containers/3.AdminClientUpdate/AdminClientUpdate';
-import AdminClientDelete from './Containers/3.AdminClientDelete/AdminClientDelete';
+import Admin from './Containers/Admin/Admin'
 
+import IndustrialPlant from './Containers/IndustrialPlant/IndustrialPlant'
+import Map from './Containers/Map/Map'
 
-
-import Maintenance from './Containers/4.Maintenance/Maintenance';
-
-import Admin from './Containers/5.Admin/Admin';
-
-import IndustrialPlant from './Containers/6.IndustrialPlant/IndustrialPlant';
-import Map from './Containers/6.Map/Map';
-
-
-
-
-function App() {
+function App () {
   return (
-    <div className="App">
-      <BrowserRouter> 
-      <SiderG/>
-      <Header/>
-      
-        <Routes> 
+    <div className='App'>
+      <BrowserRouter>
+        <SiderG />
+        <Header />
+        <Routes>
+          <Route
+            path='/'
+            element={
+              <Login />
+      }
+          /> <Route
+            path='/register'
+            element={
+              <Register />
+      }
+             />
 
-          
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route
+            path='/home'
+            element={
+              <Home />
+      }
+          /> <Route
+            path='/profile'
+            element={
+              <Profile />
+      }
+             /> <Route
+               path='/clientAdmin'
+               element={
+                 <AdminClient />
+      }
+                /> <Route
+                  path='/clientAdminCreate'
+                  element={
+                    <AdminClientCreate />
+      }
+                   /> <Route
+                     path='/clientAdminUpdate'
+                     element={
+                       <AdminClientUpdate />
+      }
+                      /> <Route
+                        path='/clientAdminDelete'
+                        element={
+                          <AdminClientDelete />
+      }
+                         /> <Route
+                           path='/admin'
+                           element={
+                             <Admin />
+      }
+                            />
 
+          <Route
+            path='/graph'
+            element={
+              <Graph />
+      }
+          /> <Route
+            path='/alarms'
+            element={
+              <Alarms />
+      }
+             /> {
+      /* <Route path="/actionsRecord" element={<ActionsRecord />} /> */
+    }
 
-          <Route path="/home" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/clientAdmin" element={<AdminClient />} />
-          <Route path="/clientAdminCreate" element={<AdminClientCreate />} />
-          <Route path="/clientAdminUpdate" element={<AdminClientUpdate />} />
-          <Route path="/clientAdminDelete" element={<AdminClientDelete />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route
+            path='/installation'
+            element={
+              <Installation />
+  }
+          /> <Route
+            path='/installationAV'
+            element={
+              <InstallationAV />
+  }
+             />
 
-          <Route path="/graph" element={<Graph />} />
-          <Route path="/alarms" element={<Alarms />} />
-          {/* <Route path="/actionsRecord" element={<ActionsRecord />} /> */}
+          {
+    /* <Route path="/maintenance" element={<Maintenance />} /> */
+  }
 
-          <Route path="/installation" element={<Installation />} />
-          <Route path="/installationAV" element={<InstallationAV />} />
+          {
+    /* <Route path="/industrialPlant" element={<IndustrialPlant />} />
+              <Route path="/map" element={<Map />} /> */
+  }
 
-          
-          {/* <Route path="/maintenance" element={<Maintenance />} /> */}
-
-          
-          
-          
-          {/* <Route path="/industrialPlant" element={<IndustrialPlant />} />
-          <Route path="/map" element={<Map />} /> */}
-          
         </Routes>
       </BrowserRouter>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

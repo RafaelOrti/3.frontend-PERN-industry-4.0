@@ -110,7 +110,7 @@ const Login = props => {
     // setTimeout(() => {
     //     navigate("/home");
     // }, 1000);
-    if (/^([\da-z_-]+)@([\da-z-]+)([a-z]{2,6})$/.exec(dataUser.email)) {
+    if (/^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i.exec(dataUser.email)) {
       try {
         const body = {
           email: dataUser.email,

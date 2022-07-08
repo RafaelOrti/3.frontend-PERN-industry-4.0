@@ -56,7 +56,6 @@ const Header = props => {
           display: props.hideFooter.isHome ? 'none' : undefined
         }}
       >
-        {('77777', props.user?.user.authorizationLevel)}
         {(window.location.pathname !== '/' ||
           window.location.pathname !== '/register') && (
             <div className='headerDesign'>

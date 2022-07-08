@@ -16,7 +16,7 @@ import Home from './Containers/Home/Home'
 import Profile from './Containers/Profile/Profile'
 import Graph from './Containers/Graph/Graph'
 import Alarms from './Containers/Alarms/Alarms'
-import ActionsRecord from './Containers/ActionsRecord/ActionsRecord'
+// import ActionsRecord from './Containers/ActionsRecord/ActionsRecord'
 
 import Installation from './Containers/Installation/Installation'
 import InstallationAV from './Containers/InstallationAV/InstallationAV'
@@ -26,12 +26,12 @@ import AdminClientCreate from './Containers/AdminClientCreate/AdminClientCreate'
 import AdminClientUpdate from './Containers/AdminClientUpdate/AdminClientUpdate'
 import AdminClientDelete from './Containers/AdminClientDelete/AdminClientDelete'
 
-import Maintenance from './Containers/Maintenance/Maintenance'
+// import Maintenance from './Containers/Maintenance/Maintenance'
 
 import Admin from './Containers/Admin/Admin'
 
-import IndustrialPlant from './Containers/IndustrialPlant/IndustrialPlant'
-import Map from './Containers/Map/Map'
+// import IndustrialPlant from './Containers/IndustrialPlant/IndustrialPlant'
+// import Map from './Containers/Map/Map'
 
 function App () {
   return (

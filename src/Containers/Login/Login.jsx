@@ -29,7 +29,7 @@ import { LOGIN, LOGOUT, IS_HOME } from '../../redux/actions'
 let a = false
 
 const Login = props => {
-  useEffect((props) => {
+  useEffect(() => {
     ('Created')
     props.dispatch({ type: IS_HOME })
     props.dispatch({ type: LOGOUT })

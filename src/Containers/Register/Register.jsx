@@ -27,7 +27,7 @@ import { IS_HOME, REGISTER } from '../../redux/actions'
 let a = false
 
 const Register = (props) => {
-  useEffect((props) => {
+  useEffect(() => {
     props.dispatch({ type: IS_HOME })
   }, [])
 

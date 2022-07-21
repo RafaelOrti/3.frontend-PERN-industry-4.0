@@ -74,13 +74,13 @@ const Header = props => {
                 {props.user?.user.authorizationLevel === 3 &&
                 window.location.pathname === '/admin' && (
                   <div className='link' onClick={() => navegar('/clientAdmin')}>
-                    <b>ClientAdmin</b>
+                    <b>Client Admin</b>
                   </div>
                 )}
                 {props.user?.user.authorizationLevel === 3 &&
                 window.location.pathname !== '/admin' && (
                   <div className='link' onClick={() => navegar('/clientAdmin')}>
-                    ClientAdmin
+                    Client Admin
                   </div>
                 )}
                 {props.user?.user.authorizationLevel === 5 &&

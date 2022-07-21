@@ -24,7 +24,7 @@ import { UPDATE, NOT_HOME } from '../../redux/actions'
 let a = false
 
 const Profile = (props) => {
-  useEffect((props) => {
+  useEffect(() => {
     props.dispatch({ type: NOT_HOME })
   }, [])
 
@@ -107,7 +107,7 @@ const Profile = (props) => {
         })
       } else if ((resultado.data.msg.includes('DB error')) === true) {
         notifications.showNotification({
-          message: 'Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com',
+          message: 'Hemos tenido un problema con nuestra basde de datos, por favor cualquier duda o queja escriba a raorcar3@gmail.com',
           icon: <ZoomExclamation />,
           autoClose: 2000,
           id: 'letters'
@@ -192,7 +192,7 @@ const Profile = (props) => {
       <div className='form'>
         <div className='selectorSection'>
 
-          <div className='btn btnRed' onClick={() => deleteUser()}><UserCircle name='search' /><p>&nbsp;&nbsp;ELIMINAR</p></div>
+          <div className='btn btnRed' onClick={() => deleteUser()}><UserCircle name='search' />&nbsp;&nbsp;ELIMINAR</div>
           <div className='selected' />
         </div>
         <div className='formLoginSection'>
@@ -237,8 +237,8 @@ const Profile = (props) => {
             </div>
           </div>
           <div className='inputSection loginSection'>
-            <div className='btn btnBlue' onClick={() => update()}><p>Log In</p></div>
-            <div className='btn btnBlue' onClick={() => navigateLogin()}><p>Log In</p></div>
+            <div className='btn btnBlue' onClick={() => update()}><p>Cambiar datos</p></div>
+            <div className='btn btnBlue' onClick={() => navigateLogin()}><p>Cambiar usuario</p></div>
           </div>
         </div>
       </div>

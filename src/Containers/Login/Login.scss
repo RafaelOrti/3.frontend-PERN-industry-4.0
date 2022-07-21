@@ -104,7 +104,7 @@ inset -.2rem -.2rem .5rem var(--white);
   }
 }
 
-.btnGrey {
+#btnGrey {
   width: 50%;
   grid-column: 1 / 2;
   grid-row: 5 / 6;
@@ -260,9 +260,10 @@ inset -.2rem -.2rem .5rem var(--white);
     position: absolute;
     font-size: 2rem;
     padding: 1.5rem 1rem 1rem 1rem;
-    display: flex;
+    // display: flex;
     color: var(--greyDark);
     transition: .3s ease;
+    top: -1em
   }
 
   &__input {
@@ -290,6 +291,7 @@ inset -.2rem -.2rem .5rem var(--white);
       color: #555;
       +.search__icon {
         color: var(--primary);
+        
         
       }
     }

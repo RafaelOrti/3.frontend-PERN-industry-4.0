@@ -166,7 +166,14 @@ const AdminClient = (props) => {
       }
       const res = await axios.get(raiz + 'users/client', config)
       setTimeout(() => {
-        setUsers(res.data)
+        console.log(res.data)
+        const output = res.data.map(function (obj) {
+          return Object.keys(obj).sort().map(function (key) {
+            return obj[key]
+          })
+        })
+        setUsers(output)
+        console.log(output)
       }, 2)
     } catch (error) {
       console.log(error)
@@ -194,9 +201,9 @@ const AdminClient = (props) => {
             <div className='userElement'>createdAt</div>
             <div className='userElement'>updatedAt</div>
           </div>
-          {
+          {/* {
                         ('users', users)
-                    }
+                    } */}
           {
                         Object.keys(users).slice(0, 10).map(key => {
                           // (key); // 👉️ name, country
@@ -204,19 +211,19 @@ const AdminClient = (props) => {
                           return (
                             <div className='userRow' key={key}>
                               <div className='userColumn'>
-                                <div className='userElement'>{users[key].name}</div>
+                                <div className='userElement'>{users[key][0]}</div>
                               </div>
                               <div className='userColumn'>
-                                <div className='userElement'>{users[key].email}</div>
+                                <div className='userElement'>{users[key][2]}</div>
                               </div>
                               <div className='userColumn'>
-                                <div className='userElement'>{users[key].authorizationLevel}</div>
+                                <div className='userElement'>{users[key][0]}</div>
                               </div>
                               <div className='userColumn'>
-                                <div className='userElement'>{users[key].createdAt}</div>
+                                <div className='userElement'>{users[key][1]}</div>
                               </div>
                               <div className='userColumn'>
-                                <div className='userElement'>{users[key].updatedAt}</div>
+                                <div className='userElement'>{users[key][6]}</div>
                               </div>
                             </div>
                           )

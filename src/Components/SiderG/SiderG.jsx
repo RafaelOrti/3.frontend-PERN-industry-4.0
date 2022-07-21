@@ -115,7 +115,7 @@ const SiderG = (props) => {
                                     Gráficos
                                   </div>
                             }
-                          {
+                          {/* {
                                 (window.location.pathname === '/alarms') &&
                                   <div className='link' onClick={() => navegar('/alarms')}>
                                     <b>Alarmas</b>
@@ -138,7 +138,7 @@ const SiderG = (props) => {
                                   <div className='link' onClick={() => navegar('/installationAV')}>
                                     AV
                                   </div>
-                            }
+                            } */}
                           {/* {
                                 (window.location.pathname === "/profile") &&
                                 <div className="link" onClick={() => navegar("/profile")}>

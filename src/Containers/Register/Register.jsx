@@ -15,7 +15,8 @@ import {
   ZoomExclamation,
   Photo,
   UserCircle,
-  UserPlus
+  UserPlus,
+  Api
 } from 'tabler-icons-react'
 
 /* DISEÑO */
@@ -144,13 +145,11 @@ const Register = (props) => {
     <div className='designLogin'>
       <div className='form'>
         <div className='selectorSection'>
-          <div className='btn btnGreyL ' onClick={() => navigateLogin()}>
-            <UserCircle name='search' />
-            <p>&nbsp;&nbsp;Log In</p>
+          <div className='btn' id='btnGreyL' onClick={() => navigateLogin()}>
+            <UserCircle name='search' />&nbsp;&nbsp; Log In
           </div>
           <div className='selected'>
-            <UserPlus name='search' />
-            <p> &nbsp;&nbsp;Register </p>
+            <UserPlus name='search' />&nbsp;&nbsp;Register
           </div>
         </div>
         <div className='formLoginSection'>
@@ -174,7 +173,7 @@ const Register = (props) => {
                 }}
               />
               <div className='search__icon'>
-                <Photo name='search' />
+                <UserCircle name='search' />
               </div>
             </div>
           </div>
@@ -194,7 +193,7 @@ const Register = (props) => {
                 }}
               />
               <div className='search__icon'>
-                <Photo name='search' />
+                <UserCircle name='search' />
               </div>
             </div>
           </div>
@@ -215,7 +214,7 @@ const Register = (props) => {
                 }}
               />
               <div className='search__icon'>
-                <Photo name='search' />
+                <Api name='search' />
               </div>
             </div>
           </div>
@@ -236,13 +235,13 @@ const Register = (props) => {
                 }}
               />
               <div className='search__icon'>
-                <Photo name='search' />
+                <Api name='search' />
               </div>
             </div>
           </div>
           <div className='inputSection loginSection'>
             <div className='btn btnBlue' onClick={() => register()}>
-              <p>Log In</p>
+              <p>Register</p>
             </div>
           </div>
         </div>

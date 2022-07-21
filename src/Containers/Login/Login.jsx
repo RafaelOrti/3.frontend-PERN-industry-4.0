@@ -17,7 +17,8 @@ import {
   ZoomExclamation,
   Photo,
   UserCircle,
-  UserPlus
+  UserPlus,
+  Api
 } from 'tabler-icons-react'
 
 /* DISEÑO */
@@ -165,12 +166,10 @@ const Login = props => {
       <div className='form'>
         <div className='selectorSection'>
           <div className='selected'>
-            <UserCircle name='search' />
-            <p> &nbsp;&nbsp; Log In</p>
+            <UserCircle name='search' />&nbsp;&nbsp; Log In
           </div>
-          <div className='btn btnGrey' onClick={() => navigateRegisters()}>
-            <UserPlus name='search' />
-            <p>&nbsp;&nbsp;Register</p>
+          <div className='btn' id='btnGrey' onClick={() => navigateRegisters()}>
+            <UserPlus name='search' />&nbsp;&nbsp;Register
           </div>
         </div>
         <div className='formLoginSection'>
@@ -194,7 +193,7 @@ const Login = props => {
                 }}
               />
               <div className='search__icon'>
-                <Photo name='search' />
+                <UserCircle name='search' />
               </div>
             </div>
           </div>
@@ -215,7 +214,7 @@ const Login = props => {
                 }}
               />
               <div className='search__icon'>
-                <Photo name='search' />
+                <Api name='search' />
               </div>
             </div>
 

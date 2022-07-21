@@ -138,7 +138,7 @@ const AdminCreate = (props) => {
             })
           } else if ((res.data.msg.includes('Only users with 1 to 3 allowed')) === true) {
             notifications.showNotification({
-              message: 'Sólo puede crear usuarios de nivel 1 al 3',
+              message: 'Sólo puede crear usuarios de nivel 1 al 5',
               icon: <ZoomExclamation />,
               autoClose: 2000,
               id: 'letters'

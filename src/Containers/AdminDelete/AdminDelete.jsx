@@ -118,7 +118,7 @@ const AdminDelete = (props) => {
         })
       } else if ((resultado.data.msg.includes('you only can delete 1 to 3 level user')) === true) {
         notifications.showNotification({
-          message: 'Sólo puedes eliminar usuarios del 1 al 3',
+          message: 'Sólo puedes eliminar usuarios del 1 al 5',
           icon: <ZoomExclamation />,
           autoClose: 2000,
           id: 'letters'
@@ -147,7 +147,7 @@ const AdminDelete = (props) => {
 
         if (resultado.data.msg === 'you only can delete 1 to 3 level user') {
           notifications.showNotification({
-            message: 'you only can delete 1 to 3 level user',
+            message: 'Sólo puedes borrar usuarios del nivel 1 al 5',
             icon: <ZoomExclamation />,
             autoClose: 2000,
             id: 'letters'

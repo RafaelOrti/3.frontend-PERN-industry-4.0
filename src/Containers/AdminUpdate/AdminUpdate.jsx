@@ -138,7 +138,7 @@ const AdminUpdate = (props) => {
             })
           } else if ((resultado.data.msg.includes('you only can update 1 to 3 level user')) === true) {
             notifications.showNotification({
-              message: 'Sólo puede modificar usuarios de nivel 1 al 3',
+              message: 'Sólo puede modificar usuarios de nivel 1 al 5',
               icon: <ZoomExclamation />,
               autoClose: 2000,
               id: 'letters'

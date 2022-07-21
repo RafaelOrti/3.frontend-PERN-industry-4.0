@@ -11,6 +11,7 @@ import axios from 'axios'
 
 /* DISEÑO */
 import './AdminClient.scss'
+import Pagination, { usePagination } from '@mui/material/Pagination'
 
 // ICONS
 import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from 'tabler-icons-react'
@@ -36,6 +37,7 @@ const AdminClient = (props) => {
   const [dataUser, setDataUser] = useState({ name: '', email: '', password: '', passwordConfirmation: '' })
   const [users, setUsers] = useState('')
   const [page, setPage] = useState(0)
+  const [i, setI] = useState(0)
   // const [msgError, setMsgError] = useState("");
   // const [msgError2, setMsgError2] = useState("");
 
@@ -187,10 +189,10 @@ const AdminClient = (props) => {
     <div className='designLogin'>
       <div className='adminForm'>
         <div className='selectorSection'>
-          <div className='btnAdmin adminSelected'><UserPlus name='search' /><p> &nbsp;&nbsp;Usuarios </p></div>
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminCreate')}><UserCircle name='search' /><p>&nbsp;&nbsp;Crear usuario</p></div>
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminUpdate')}><UserCircle name='search' /><p>&nbsp;&nbsp;Editar usuario</p></div>
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminDelete')}><UserCircle name='search' /><p>&nbsp;&nbsp;Eliminar usuario</p></div>
+          <div className='btnAdmin adminSelected'><UserPlus name='search' /> &nbsp;&nbsp;Usuarios </div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminCreate')}><UserCircle name='search' />&nbsp;&nbsp;Crear usuario</div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminUpdate')}><UserCircle name='search' />&nbsp;&nbsp;Editar usuario</div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminDelete')}><UserCircle name='search' />&nbsp;&nbsp;Eliminar usuario</div>
 
         </div>
         <div className='adminClientForm'>
@@ -205,7 +207,7 @@ const AdminClient = (props) => {
                         ('users', users)
                     } */}
           {
-                        Object.keys(users).slice(0, 10).map(key => {
+                        Object.keys(users).slice(page * 10 + 0, page * 10 + 10).map(key => {
                           // (key); // 👉️ name, country
                           // (users[key]); // 👉️ James, Chile
                           return (
@@ -229,14 +231,9 @@ const AdminClient = (props) => {
                           )
                         })
                     }
-          <ul className='pagination'>
-            <li key='0' onClick={() => goBackPage()}>«</li>
-            <li key='1' onClick={() => advancePage()}>1</li>
-            <li key='2'><a className='active' href='/'>2</a></li>
-            <li key='3'>3</li>
-            <li key='4'>4</li>
-            <li key='5' onClick={() => advancePage()}>»</li>
-          </ul>
+          {/*
+          <Pagination setPage={setPage} page={page} count={11} color='primary' defaultPage={1} onClick={console.log(page)} /> */}
+
         </div>
       </div>
     </div>

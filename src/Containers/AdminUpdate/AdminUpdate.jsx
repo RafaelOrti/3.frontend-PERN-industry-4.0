@@ -10,7 +10,7 @@ import { useNotifications } from '@mantine/notifications'
 import axios from 'axios'
 
 /* DISEÑO */
-import './AdminClientCreate.scss'
+import './AdminUpdate.scss'
 
 // ICONS
 import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from 'tabler-icons-react'
@@ -23,7 +23,7 @@ import { NOT_HOME, REGISTER } from '../../redux/actions'
 
 let a = false
 
-const AdminClientCreate = (props) => {
+const AdminUpdate = (props) => {
   useEffect(() => {
     props.dispatch({ type: NOT_HOME })
   }, [])
@@ -85,7 +85,7 @@ const AdminClientCreate = (props) => {
     navigate(location)
   }
 
-  const register = async () => {
+  const update = async () => {
     if (dataUser.password === '' || dataUser.passwordConfirmation === '' || dataUser.name === '' || dataUser.email === '' || dataUser.authorizationLevel === '') {
       notifications.showNotification({
         message: 'Introduce todos los campos',
@@ -113,37 +113,36 @@ const AdminClientCreate = (props) => {
             headers: { Authorization: `Bearer ${props.user?.token}` }
           }
 
-          const res = await axios.post(raiz + 'users/client', body, config)
+          const resultado = await axios.put(raiz + 'users/admin/update', body, config)
 
-          if (res.data.msg === 'this user already exists') {
+          if (resultado.data.msg === 'this user doesnt exists') {
             notifications.showNotification({
-              message: 'El usuario con este e-mail ya existe en nuestra base de datos',
+              message: 'El User con este e-mail ya existe en nuestra base de datos',
               icon: <ZoomExclamation />,
               autoClose: 2000,
               id: 'letters'
             })
-          } else if ((res.data.msg.includes('DB error')) === true) {
+          } else if ((resultado.data.msg.includes('DB error')) === true) {
             notifications.showNotification({
               message: 'Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com',
               icon: <ZoomExclamation />,
               autoClose: 2000,
               id: 'letters'
             })
-          } else if ((res.data.msg.includes('Welcome')) === true) {
+          } else if ((resultado.data.msg.includes('updated')) === true) {
             notifications.showNotification({
-              message: 'Usuario Creado',
+              message: 'Usuario Editado',
               icon: <ZoomExclamation />,
               autoClose: 2000,
               id: 'letters'
             })
-          } else if ((res.data.msg.includes('Only users with 1 to 3 allowed')) === true) {
+          } else if ((resultado.data.msg.includes('you only can update 1 to 3 level user')) === true) {
             notifications.showNotification({
-              message: 'Sólo puede crear usuarios de nivel 1 al 3',
+              message: 'Sólo puede modificar usuarios de nivel 1 al 3',
               icon: <ZoomExclamation />,
               autoClose: 2000,
               id: 'letters'
             })
-
             // setTimeout(() => {
             //     navigate("/Home");
             // }, 1000);
@@ -163,10 +162,11 @@ const AdminClientCreate = (props) => {
       <div className='adminForm'>
         <div className='selectorSection'>
 
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdmin')}><UserCircle name='search' />&nbsp;&nbsp;Usuarios</div>
-          <div className='btnAdmin adminSelected'><UserPlus name='search' /> &nbsp;&nbsp;Crear usuario </div>
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminUpdate')}><UserCircle name='search' />&nbsp;&nbsp;Editar usuario</div>
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminDelete')}><UserCircle name='search' />&nbsp;&nbsp;Eliminar usuario</div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/admin')}><UserCircle name='search' />&nbsp;&nbsp;Usuarios</div>
+
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/adminCreate')}><UserCircle name='search' />&nbsp;&nbsp;Crear usuario</div>
+          <div className='btnAdmin adminSelected'><UserPlus name='search' /> &nbsp;&nbsp;Editar usuario </div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/adminDelete')}><UserCircle name='search' />&nbsp;&nbsp;Eliminar usuario</div>
 
         </div>
         <div className='formLoginSection'>
@@ -224,7 +224,7 @@ const AdminClientCreate = (props) => {
 
           </div>
           <div className='inputSection loginSection'>
-            <div className='btn btnBlue' onClick={() => register()}><p>Crear usuario</p></div>
+            <div className='btn btnBlue' onClick={() => update()}><p>Editar usuario</p></div>
           </div>
         </div>
       </div>
@@ -237,4 +237,4 @@ export default connect((state) => ({
   user: state.user,
   // token: state.token,
   hideFooter: state.hideFooter
-}))(AdminClientCreate)
+}))(AdminUpdate)

@@ -26,10 +26,12 @@ import AdminClientCreate from './Containers/AdminClientCreate/AdminClientCreate'
 import AdminClientUpdate from './Containers/AdminClientUpdate/AdminClientUpdate'
 import AdminClientDelete from './Containers/AdminClientDelete/AdminClientDelete'
 
-// import Maintenance from './Containers/Maintenance/Maintenance'
-
 import Admin from './Containers/Admin/Admin'
+import AdminCreate from './Containers/AdminCreate/AdminCreate'
+import AdminUpdate from './Containers/AdminUpdate/AdminUpdate'
+import AdminDelete from './Containers/AdminDelete/AdminDelete'
 
+// import Maintenance from './Containers/Maintenance/Maintenance'
 // import IndustrialPlant from './Containers/IndustrialPlant/IndustrialPlant'
 // import Map from './Containers/Map/Map'
 
@@ -87,8 +89,22 @@ function App () {
                            element={
                              <Admin />
       }
-                            />
-
+                            /> <Route
+                              path='/adminCreate'
+                              element={
+                                <AdminCreate />
+      }
+                               /> <Route
+                                 path='/adminUpdate'
+                                 element={
+                                   <AdminUpdate />
+      }
+                                  /> <Route
+                                    path='/adminDelete'
+                                    element={
+                                      <AdminDelete />
+      }
+                                     />
           <Route
             path='/graph'
             element={

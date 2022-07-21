@@ -11,6 +11,7 @@ import axios from 'axios'
 
 /* DISEÑO */
 import './Admin.scss'
+import Pagination, { usePagination } from '@mui/material/Pagination'
 
 // ICONS
 import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from 'tabler-icons-react'
@@ -19,21 +20,24 @@ import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from 't
 
 // REDUX
 import { connect } from 'react-redux'
-import { LOGIN, IS_HOME } from '../../redux/actions'
+import { NOT_HOME, REGISTER } from '../../redux/actions'
 
 let a = false
 
 const Admin = (props) => {
   useEffect(() => {
-    ('Created')
-    props.dispatch({ type: IS_HOME })
+    props.dispatch({ type: NOT_HOME })
+    readUsers()
   }, [])
 
   const notifications = useNotifications()
   const navigate = useNavigate()
 
   // 1-Hooks (equivalen al estado en los componentes de clase)
-  const [dataUser, setDataUser] = useState({ email: '', password: '' })
+  const [dataUser, setDataUser] = useState({ name: '', email: '', password: '', passwordConfirmation: '' })
+  const [users, setUsers] = useState('')
+  const [page, setPage] = useState(0)
+  const [i, setI] = useState(0)
   // const [msgError, setMsgError] = useState("");
   // const [msgError2, setMsgError2] = useState("");
 
@@ -43,20 +47,33 @@ const Admin = (props) => {
     // ("dataUser", dataUser)
   }
 
-  // const checkEmail = (e) => {
-  //     (e.target.value)
-  //     if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(e.target.value)) {
-
-  //         notifications.showNotification({
-  //             message: "Introduce un email válido",
-  //             icon: <ZoomExclamation />,
-  //             autoClose: false,
-  //             id: 'email'
-  //         })
-  //     } else {
-  //         notifications.hideNotification("email");
-  //     }
-  // }
+  const advancePage = () => {
+    let numberSections = Object.keys(users).length / 10
+    numberSections++
+    // if(page!==0){
+    //     setPage(page-10)
+    //     }else{
+    //         notifications.showNotification({
+    //             message: "No hay más paginas a la derecha",
+    //             icon: <ZoomExclamation />,
+    //             autoClose: 2000,
+    //             id: "leftPage"
+    //         });
+    //     }
+  }
+  const goBackPage = () => {
+    if (page !== 0) {
+      setPage(page - 10)
+    } else {
+      notifications.showNotification({
+        message: 'No hay más paginas a la izquierda',
+        icon: <ZoomExclamation />,
+        autoClose: 2000,
+        id: 'leftPage'
+      })
+    }
+    // ("dataUser", dataUser)
+  }
 
   const checkPassword = (e) => {
     if (e.target.value.length > 4) {
@@ -96,43 +113,72 @@ const Admin = (props) => {
     }
   }
 
-  const navigateRegisters = () => {
-    navigate('/register')
+  const navigateLocation = (location) => {
+    navigate(location)
   }
 
-  const login = async () => {
-    setTimeout(() => {
-      navigate('/home')
-    }, 1000)
-    // (dataUser.email)
-    // if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(dataUser.email)) {
+  const register = async () => {
+    if (dataUser.password !== dataUser.passwordConfirmation) {
+      notifications.showNotification({
+        message: 'Las contraseñas no son iguales',
+        icon: <ZoomExclamation />,
+        autoClose: 2000,
+        id: 'letters'
+      })
+    } else {
+      try {
+        const body = {
+          name: dataUser.name,
+          email: dataUser.email,
+          password: dataUser.password
+        }
+        const resultado = await axios.post(raiz + 'users/Register', body)
 
-    //     notifications.showNotification({
-    //         message: "Introduce un email válido",
-    //         icon: <ZoomExclamation />,
-    //         autoClose: 2000,
-    //         id: 'email'
-    //     })
-    // } else {
-    //     try {
-    //         let body = {
-    //             email: dataUser.email,
-    //             password: dataUser.password
-    //         }
-    //         let resultado = await axios.post(raiz + "users/login", body);
-    //         (resultado);
-    //         if (resultado.data === "Usuario o contraseña inválido") {
-    //             // setMsgError2("Usuario o contraseña inválido")
-    //         } else {
-    // props.dispatch({ type: LOGIN, payload: resultado.data });
-    // setTimeout(() => {
-    //     navigate("/");
-    // }, 1000);
-    //         }
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+        if (resultado.data.msg === 'this user already exists') {
+          notifications.showNotification({
+            message: 'El User con este e-mail ya existe en nuestra base de datos',
+            icon: <ZoomExclamation />,
+            autoClose: 2000,
+            id: 'letters'
+          })
+        } else if ((resultado.data.msg.includes('DB error')) === true) {
+          notifications.showNotification({
+            message: 'Hemos tenido un problema con nuestra basde de datos, por favor vualquier duda o queja escriba a raorcar3@gmail.com',
+            icon: <ZoomExclamation />,
+            autoClose: 2000,
+            id: 'letters'
+          })
+        } else if ((resultado.data.msg.includes('Welcome')) === true) {
+          props.dispatch({ type: REGISTER, payload: resultado.data })
+          setTimeout(() => {
+            navigate('/Home')
+          }, 1000)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
+  const readUsers = async () => {
+    try {
+      const config = {
+        headers: { Authorization: `Bearer ${props.user?.token}` }
+      }
+      const res = await axios.get(raiz + 'users/admin', config)
+      setTimeout(() => {
+        console.log(res.data)
+        const output = res.data.map(function (obj) {
+          return Object.keys(obj).sort().map(function (key) {
+            return obj[key]
+          })
+        })
+        setUsers(output)
+        console.log(output)
+      }, 2)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   // 2-Render (lo que pinta en pantalla)
@@ -140,40 +186,53 @@ const Admin = (props) => {
   return (
 
     <div className='designLogin'>
-      <div className='form'>
+      <div className='adminForm'>
         <div className='selectorSection'>
-          <div className='selected'><UserCircle name='search' /><p> &nbsp;&nbsp; Log In</p></div>
-          <div className='btn btnGrey' onClick={() => navigateRegisters()}><UserPlus name='search' /><p>&nbsp;&nbsp;Register</p></div>
-        </div>
-        <div className='formLoginSection'>
-          <div className='logoSection'>
-            <div className='logoImg' />
-            <div className='title'>Super Dev</div>
-          </div>
-          <div className='inputSection noMarginTop'>
-            <label>Email</label>
-            <div className='search'>
-              <input type='email' className='search__input' id='email' title='email' placeholder='example@test.com' autoComplete='off' onChange={(e) => { fillData(e) }} />
-              <div className='search__icon'>
-                <Photo name='search' />
-              </div>
-            </div>
-          </div>
-          <div className='inputSection'>
-            <label>Password</label>
-            <div className='search'>
-              <input type='password' className='search__input' id='password' title='password' placeholder='********' autoComplete='off' onChange={(e) => { fillData(e); checkPassword(e) }} />
-              <div className='search__icon'>
-                <Photo name='search' />
-              </div>
-            </div>
+          <div className='btnAdmin adminSelected'><UserPlus name='search' /> &nbsp;&nbsp;Usuarios </div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/adminCreate')}><UserCircle name='search' />&nbsp;&nbsp;Crear usuario</div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/adminUpdate')}><UserCircle name='search' />&nbsp;&nbsp;Editar usuario</div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/adminDelete')}><UserCircle name='search' />&nbsp;&nbsp;Eliminar usuario</div>
 
-            {/* {msgError}
-                        {msgError2} */}
+        </div>
+        <div className='adminClientForm'>
+          <div className='userRow bold'>
+            <div className='userElement'>Nombre</div>
+            <div className='userElement'>email</div>
+            <div className='userElement'>authorizationLevel</div>
+            <div className='userElement'>createdAt</div>
+            <div className='userElement'>updatedAt</div>
           </div>
-          <div className='inputSection loginSection'>
-            <div className='btn btnBlue' onClick={() => login()}><p>Log In</p></div>
-          </div>
+          {/* {
+                        ('users', users)
+                    } */}
+          {
+                        Object.keys(users).slice(page * 10 + 0, page * 10 + 10).map(key => {
+                          // (key); // 👉️ name, country
+                          // (users[key]); // 👉️ James, Chile
+                          return (
+                            <div className='userRow' key={key}>
+                              <div className='userColumn'>
+                                <div className='userElement'>{users[key][0]}</div>
+                              </div>
+                              <div className='userColumn'>
+                                <div className='userElement'>{users[key][2]}</div>
+                              </div>
+                              <div className='userColumn'>
+                                <div className='userElement'>{users[key][0]}</div>
+                              </div>
+                              <div className='userColumn'>
+                                <div className='userElement'>{users[key][1]}</div>
+                              </div>
+                              <div className='userColumn'>
+                                <div className='userElement'>{users[key][6]}</div>
+                              </div>
+                            </div>
+                          )
+                        })
+                    }
+          {/*
+          <Pagination setPage={setPage} page={page} count={11} color='primary' defaultPage={1} onClick={console.log(page)} /> */}
+
         </div>
       </div>
     </div>
@@ -181,4 +240,8 @@ const Admin = (props) => {
   )
 }
 
-export default connect()(Admin)
+export default connect((state) => ({
+  user: state.user,
+  // token: state.token,
+  hideFooter: state.hideFooter
+}))(Admin)

@@ -115,7 +115,6 @@ const AdminClientUpdate = (props) => {
 
           const resultado = await axios.put(raiz + 'users/client/update', body, config)
 
-          const x = resultado.data
           if (resultado.data.msg === 'this user doesnt exists') {
             notifications.showNotification({
               message: 'El User con este e-mail ya existe en nuestra base de datos',
@@ -133,6 +132,13 @@ const AdminClientUpdate = (props) => {
           } else if ((resultado.data.msg.includes('updated')) === true) {
             notifications.showNotification({
               message: 'Usuario Editado',
+              icon: <ZoomExclamation />,
+              autoClose: 2000,
+              id: 'letters'
+            })
+          } else if ((resultado.data.msg.includes('you only can update 1 to 3 level user')) === true) {
+            notifications.showNotification({
+              message: 'Sólo puede modificar usuarios de nivel 1 al 3',
               icon: <ZoomExclamation />,
               autoClose: 2000,
               id: 'letters'
@@ -156,11 +162,11 @@ const AdminClientUpdate = (props) => {
       <div className='adminForm'>
         <div className='selectorSection'>
 
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdmin')}><UserCircle name='search' /><p>&nbsp;&nbsp;Usuarios</p></div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdmin')}><UserCircle name='search' />&nbsp;&nbsp;Usuarios</div>
 
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminCreate')}><UserCircle name='search' /><p>&nbsp;&nbsp;Crear usuario</p></div>
-          <div className='btnAdmin adminSelected'><UserPlus name='search' /><p> &nbsp;&nbsp;Editar usuario </p></div>
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminDelete')}><UserCircle name='search' /><p>&nbsp;&nbsp;Eliminar usuario</p></div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminCreate')}><UserCircle name='search' />&nbsp;&nbsp;Crear usuario</div>
+          <div className='btnAdmin adminSelected'><UserPlus name='search' /> &nbsp;&nbsp;Editar usuario </div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminDelete')}><UserCircle name='search' />&nbsp;&nbsp;Eliminar usuario</div>
 
         </div>
         <div className='formLoginSection'>

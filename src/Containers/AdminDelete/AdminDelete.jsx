@@ -10,7 +10,7 @@ import { useNotifications } from '@mantine/notifications'
 import axios from 'axios'
 
 /* DISEÑO */
-import './AdminClientDelete.scss'
+import './AdminDelete.scss'
 
 // ICONS
 import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from 'tabler-icons-react'
@@ -23,7 +23,7 @@ import { UPDATE, LOGOUT, NOT_HOME } from '../../redux/actions'
 
 let a = false
 
-const AdminClientDelete = (props) => {
+const AdminDelete = (props) => {
   useEffect(() => {
     props.dispatch({ type: NOT_HOME })
   }, [])
@@ -93,7 +93,7 @@ const AdminClientDelete = (props) => {
 
         email: dataUser.email
       }
-      const resultado = await axios.post(raiz + 'users/client/delete', body, config)
+      const resultado = await axios.post(raiz + 'users/admin/delete', body, config)
       console.log(resultado)
       if (resultado.data.msg === 'invalid password') {
         notifications.showNotification({
@@ -142,7 +142,7 @@ const AdminClientDelete = (props) => {
         const config = {
           headers: { Authorization: `Bearer ${props.user?.token}` }
         }
-        const resultado = await axios.delete(raiz + 'users/client/delete', body, config)
+        const resultado = await axios.delete(raiz + 'users/admin/delete', body, config)
         const x = resultado.data
 
         if (resultado.data.msg === 'you only can delete 1 to 3 level user') {
@@ -193,9 +193,9 @@ const AdminClientDelete = (props) => {
     <div className='designLogin'>
       <div className='adminForm'>
         <div className='selectorSection'>
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdmin')}><UserCircle name='search' />&nbsp;&nbsp;Usuarios</div>
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminCreate')}><UserCircle name='search' />&nbsp;&nbsp;Crear usuarios</div>
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminUpdate')}><UserCircle name='search' />&nbsp;&nbsp;Editar usuario</div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/admin')}><UserCircle name='search' />&nbsp;&nbsp;Usuarios</div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/adminCreate')}><UserCircle name='search' />&nbsp;&nbsp;Crear usuarios</div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/adminUpdate')}><UserCircle name='search' />&nbsp;&nbsp;Editar usuario</div>
           <div className='btnAdmin adminSelected'><UserPlus name='search' />&nbsp;&nbsp;Eliminar usuario </div>
         </div>
         <div className='formLoginSection'>
@@ -221,4 +221,4 @@ export default connect((state) => ({
   user: state.user,
   // token: state.token,
   hideFooter: state.hideFooter
-}))(AdminClientDelete)
+}))(AdminDelete)

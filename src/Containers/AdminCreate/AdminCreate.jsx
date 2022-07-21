@@ -10,7 +10,7 @@ import { useNotifications } from '@mantine/notifications'
 import axios from 'axios'
 
 /* DISEÑO */
-import './AdminClientCreate.scss'
+import './AdminCreate.scss'
 
 // ICONS
 import { At, Lock, Check, ZoomExclamation, Photo, UserCircle, UserPlus } from 'tabler-icons-react'
@@ -23,7 +23,7 @@ import { NOT_HOME, REGISTER } from '../../redux/actions'
 
 let a = false
 
-const AdminClientCreate = (props) => {
+const AdminCreate = (props) => {
   useEffect(() => {
     props.dispatch({ type: NOT_HOME })
   }, [])
@@ -113,7 +113,7 @@ const AdminClientCreate = (props) => {
             headers: { Authorization: `Bearer ${props.user?.token}` }
           }
 
-          const res = await axios.post(raiz + 'users/client', body, config)
+          const res = await axios.post(raiz + 'users/admin', body, config)
 
           if (res.data.msg === 'this user already exists') {
             notifications.showNotification({
@@ -163,10 +163,10 @@ const AdminClientCreate = (props) => {
       <div className='adminForm'>
         <div className='selectorSection'>
 
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdmin')}><UserCircle name='search' />&nbsp;&nbsp;Usuarios</div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/admin')}><UserCircle name='search' />&nbsp;&nbsp;Usuarios</div>
           <div className='btnAdmin adminSelected'><UserPlus name='search' /> &nbsp;&nbsp;Crear usuario </div>
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminUpdate')}><UserCircle name='search' />&nbsp;&nbsp;Editar usuario</div>
-          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/clientAdminDelete')}><UserCircle name='search' />&nbsp;&nbsp;Eliminar usuario</div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/adminUpdate')}><UserCircle name='search' />&nbsp;&nbsp;Editar usuario</div>
+          <div className='btnAdmin adminBtnGreyL ' onClick={() => navigate('/adminDelete')}><UserCircle name='search' />&nbsp;&nbsp;Eliminar usuario</div>
 
         </div>
         <div className='formLoginSection'>
@@ -237,4 +237,4 @@ export default connect((state) => ({
   user: state.user,
   // token: state.token,
   hideFooter: state.hideFooter
-}))(AdminClientCreate)
+}))(AdminCreate)
